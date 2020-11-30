@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="doctor.com">
+
+	<update id="createComnonCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS COMMON_CODE ( 
+	    OTH_CLASS 		TEXT		/* 코드 그룹 */
+	    ,OTH_CD    		TEXT		/* 코드 */
+	    ,OTH_CD_NM 	TEXT 		/* 코드명 */
+	    ,SORT		TEXT		/* 정렬순서 */
+	);
+	CREATE INDEX IDX_OTH_CLASS ON COMMON_CODE ( 
+	    OTH_CLASS ASC
+	    ,OTH_CD ASC
+	);
+	]]>	
+	</update>
+
+	<update id="dropCommonCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS COMMON_CODE
+	]]>		
+	</update>
+		
+	<delete id="deleteCommonCodeData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM COMMON_CODE
+	]]>	
+	</delete>
+	
+	<insert id="insertCommonCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorCommonCodeDO">
+	<![CDATA[
+	INSERT INTO COMMON_CODE (
+		OTH_CLASS, OTH_CD, OTH_CD_NM, SORT
+	) VALUES (
+		#{OTH_CLASS}, #{OTH_CD}, #{OTH_CD_NM}, #{SORT}
+	)
+	]]>		
+	</insert>
+	
+	<update id="updateCommonCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorCommonCodeDO">
+	<![CDATA[
+	UPDATE COMMON_CODE
+	SET OTH_CD_NM = #{OTH_CD_NM}, SORT = #{SORT}
+	WHERE OTH_CLASS = #{OTH_CLASS}
+		AND OTH_CD = #{OTH_CD}
+	]]>		
+	</update>
+
+	<select id="selectCommonCodeData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		OTH_CD_NM
+	FROM COMMON_CODE
+	WHERE OTH_CLASS = #{oth_class, mode=IN, jdbcType=VARCHAR}
+		AND OTH_CD = #{oth_cd, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+			
+	<update id="createQtCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS QT_CODE ( 
+	    DIV_CD           			TEXT		/* 코드분류 */
+	    ,PRDHA            		TEXT		/* 제품계층구조 */
+	    ,CODEGROUP        	TEXT		/* 그룹코드 */
+	    ,CODEGROUP_DTL    	TEXT		/* 그룹상세코드 */
+	    ,CODEGROUP_NM     	TEXT		/* 그룹코드명 */
+	    ,CODEGROUP_DTL_NM TEXT		/* 그룹상세코드명 */
+	    ,PL_YN            			TEXT		/* PL 여부 */
+	    ,PROC_DTL_OPT     		TEXT		/* 처리형태 상세제한 구분 */
+	    ,PART_CHG_YN      		TEXT		/* 부품교환 필수여부 */
+	    ,AS_IN_YN         		TEXT		/* 수리입고 구분 필수여부 */
+	    ,CAUSEBYCUST_YN   	TEXT 		/* 고객과실 여부 */
+	);
+	CREATE INDEX IDX_CODEGROUP ON QT_CODE ( 
+	    CODEGROUP ASC
+	    ,CODEGROUP_DTL ASC
+	);
+	]]>	
+	</update>	
+
+	<update id="dropQtCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS QT_CODE
+	]]>		
+	</update>
+		
+	<delete id="deleteQtCodeData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM QT_CODE
+	]]>	
+	</delete>
+	
+	<insert id="insertQtCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQtCodeDO">
+	<![CDATA[
+	INSERT INTO QT_CODE (
+		DIV_CD, PRDHA, CODEGROUP, CODEGROUP_DTL, CODEGROUP_NM, CODEGROUP_DTL_NM, PL_YN, PROC_DTL_OPT, PART_CHG_YN, AS_IN_YN, CAUSEBYCUST_YN
+	) VALUES (
+		#{DIV_CD}, #{PRDHA}, #{CODEGROUP}, #{CODEGROUP_DTL}, #{CODEGROUP_NM}, #{CODEGROUP_DTL_NM}, #{PL_YN}, #{PROC_DTL_OPT}, #{PART_CHG_YN}, #{AS_IN_YN}, #{CAUSEBYCUST_YN}
+	)
+	]]>		
+	</insert>
+	
+	<update id="updateQtCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQtCodeDO">
+	<![CDATA[
+	UPDATE QT_CODE
+	SET DIV_CD = #{DIV_CD}
+		,PRDHA = #{PRDHA}
+		,CODEGROUP_NM = #{CODEGROUP_NM}
+		,CODEGROUP_DTL_NM = #{CODEGROUP_DTL_NM}
+		,PL_YN = #{PL_YN}
+		,PROC_DTL_OPT = #{PROC_DTL_OPT}
+		,PART_CHG_YN = #{PART_CHG_YN}
+		,AS_IN_YN = #{AS_IN_YN}
+		,CAUSEBYCUST_YN = #{CAUSEBYCUST_YN}
+	WHERE CODEGROUP = #{CODEGROUP}
+		AND CODEGROUP_DTL = #{CODEGROUP_DTL, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</update>
+
+	<select id="selectQtCodeData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		DIV_CD
+		,CODEGROUP_NM
+		,CODEGROUP_DTL_NM
+		,PL_YN
+		,PROC_DTL_OPT
+		,PART_CHG_YN
+		,AS_IN_YN
+		,CAUSEBYCUST_YN
+	FROM QT_CODE
+	WHERE CODEGROUP = #{codegroup, mode=IN, jdbcType=VARCHAR}
+		AND CODEGROUP_DTL = #{codegroup_dtl, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+	
+<!--
+	2014-01-17 홀딩스 요청(닥터)
+	WD_COM 품질자료실 정보 테이블 추가
+	신규테이블 	QC_BBS
+-->
+ 	
+	<update id="createQcBBSTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS QC_BBS ( 
+	    GUBUN           TEXT		/* BC구분(B,C)	1	*/
+	    ,CODE        	TEXT		/* 제품군/제품코드	18	*/
+	    ,SEQ        	TEXT		/* 순번 			20	*/
+	    ,TITLE    		TEXT		/* 제목 			255	*/
+	);
+	CREATE INDEX IDX_QC_BBS_GUBUN ON QC_BBS ( 
+	    GUBUN ASC
+	    ,CODE ASC
+	);
+	]]>	
+	</update>	
+
+	<update id="dropQcBBSTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS QC_BBS
+	]]>		
+	</update>
+		
+	<delete id="deleteQcBBSData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM QC_BBS
+	]]>	
+	</delete>
+	
+	<insert id="insertQcBBSData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQcBBSDO">
+	<![CDATA[
+	INSERT INTO QC_BBS (
+		GUBUN, CODE, SEQ, TITLE
+	) VALUES (
+		#{GUBUN}, #{CODE}, #{SEQ}, #{TITLE}
+	)
+	]]>		
+	</insert>
+	
+	<update id="updateQcBBSData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQcBBSDO">
+	<![CDATA[
+	UPDATE QC_BBS
+	SET TITLE = #{TITLE}
+	WHERE GUBUN = #{GUBUN}
+		AND CODE = #{CODE, mode=IN, jdbcType=VARCHAR}
+		AND SEQ = #{SEQ, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</update>
+
+	<select id="selectQcBBSData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		GUBUN
+		,CODE
+		,SEQ
+		,TITLE
+	FROM QC_BBS
+	WHERE GUBUN = #{GUBUN, mode=IN, jdbcType=VARCHAR}
+		AND CODE = #{CODE, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+	
+	
+<!--
+	2014-01-17 홀딩스 요청(닥터)
+	WD_COM 품질자료실 정보 테이블 추가
+	신규테이블 	BBS_IMG
+ -->
+
+	<update id="createBBSImgTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS BBS_IMG ( 
+	    GUBUN           TEXT		/* BC구분(B,C)	1	*/
+	    ,CODE        	TEXT		/* 제품군/제품코드	18	*/
+	    ,SEQ        	TEXT		/* 순번 			20	*/
+	    ,FILENAME  		TEXT		/* 첨부파일명		200	*/
+	   	,PATH_FILENAME  TEXT		/* 첨부파일경로		200	*/
+	);
+	
+	CREATE INDEX IDX_BBS_IMG_GUBUN ON BBS_IMG ( 
+	    GUBUN ASC
+	    ,CODE ASC
+	);
+	]]>	
+	</update>	
+
+	<update id="dropBBSImgTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS BBS_IMG
+	]]>		
+	</update>
+		
+	<delete id="deleteBBSImgData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM BBS_IMG
+	]]>	
+	</delete>
+	
+	<insert id="insertBBSImgData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorBBSImgDO">
+	<![CDATA[
+	INSERT INTO BBS_IMG (
+		GUBUN, CODE, SEQ, FILENAME, PATH_FILENAME
+	) VALUES (
+		#{GUBUN}, #{CODE}, #{SEQ}, #{FILENAME}, #{PATH_FILENAME}
+	)
+	]]>		
+	</insert>
+	
+	<update id="updateBBSImgData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorBBSImgDO">
+	<![CDATA[
+	UPDATE BBS_IMG
+	SET FILENAME = #{FILENAME}, PATH_FILENAME = #{PATH_FILENAME}
+	WHERE GUBUN = #{GUBUN}
+		AND CODE = #{CODE, mode=IN, jdbcType=VARCHAR}
+		AND SEQ = #{SEQ, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</update>
+
+	<select id="selectBBSImgData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		GUBUN
+		,CODE
+		,SEQ
+		,FILENAME
+		,PATH_FILENAME
+	FROM BBS_IMG
+	WHERE GUBUN = #{GUBUN, mode=IN, jdbcType=VARCHAR}
+		AND CODE = #{CODE, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+	
+</mapper>

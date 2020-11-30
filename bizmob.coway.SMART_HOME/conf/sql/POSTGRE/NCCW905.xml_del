@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="NCCW905">
+
+	<insert id="insertNFCData" statementType="PREPARED">
+		INSERT INTO "ZMOT8906"( "MANDT", "GOODS_SN", "TYPE", "SYS_DT", "SYS_TM" )
+		VALUES ( '100', #{I_GOODS_SN}, #{I_TYPE}, to_char(current_date,'YYYYMMDD'), to_char(now(), 'HH24MISS') )
+	</insert>
+	
+</mapper>

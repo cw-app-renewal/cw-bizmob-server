@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Device">
+    <resultMap id="DeviceInfoMap" type="DeviceInfo">
+        <result column="DEVICE_ID" property="deviceId"/>
+        <result column="DEVICE_TYPE" property="deviceType"/>
+        <result column="APPROVAL_STATE" property="approvalStatus"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="COMPANY_ID" property="companyId"/>
+        <result column="PHONE_NO" property="phoneNumber"/>
+        <result column="USE_FLAG" property="available" jdbcType="CHAR"/>
+    </resultMap>
+    <select id="getDeviceByAuthNo" parameterType="DefaultMap" resultMap="DeviceInfoMap">
+		SELECT DEVICE_ID, USE_FLAG, DEVICE_TYPE, APPROVAL_STATE, USER_ID, COMPANY_ID, PHONE_NO
+		FROM USE_DEVICE
+		WHERE DEVICE_AUTH_NO = #{authNo,mode=IN,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getDeviceByDeviceId" parameterType="DefaultMap" resultMap="DeviceInfoMap">
+		SELECT DEVICE_ID, USE_FLAG, DEVICE_TYPE, APPROVAL_STATE, USER_ID, COMPANY_ID, PHONE_NO
+		FROM USE_DEVICE
+		WHERE DEVICE_ID = #{deviceId,mode=IN,jdbcType=VARCHAR}
+    </select>
+    
+    <update id="updateDeviceStatusToActivate" parameterType="DefaultMap">
+		UPDATE USE_DEVICE
+		SET DEVICE_ID = #{device_id,mode=IN,jdbcType=VARCHAR}
+		, APPROVER_ID = 'bizmob'
+		, APPROVAL_DATE = Convert(varchar(10),Getdate(),112) + Replace(Convert(varchar(8),Getdate(),108),':','')
+		, UPDATER_ID = 'bizmob'
+		, UPDATE_DATE = Convert(varchar(10),Getdate(),112) + Replace(Convert(varchar(8),Getdate(),108),':','')
+		, PHONE_NO = #{phone_number,mode=IN,jdbcType=VARCHAR}
+		, APPROVAL_STATE = #{APPROVAL_STATUS,mode=IN,jdbcType=VARCHAR}    
+		WHERE DEVICE_AUTH_NO = #{auth_no,mode=IN,jdbcType=VARCHAR}
+    </update>
+</mapper>

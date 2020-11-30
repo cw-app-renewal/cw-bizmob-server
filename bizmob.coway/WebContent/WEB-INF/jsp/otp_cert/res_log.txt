@@ -1,0 +1,42 @@
+POST /00402200 HTTP/1.1\r\nContent-Length: 843\r\nAccept: */*\r\nHost: 192.168.0.14\r\nContent-Type: application/x-pay_form-urlencoded\r\nUser-Agent: java_client 1_13\r\nsite_cd: A7F6I\r\ntrace_no: A7F6I00FQO0IPNlj\r\nenc_info: 1eGlLUemJJD-FcTD79rHe74Y9aimRPB89MEl-c4QQqO0SO-mOQnWx-n3lVH9Y-tfL3d-wswFFt8tgJHVehRoTX1fbl0Q3jfDXPvVmPCKjhD6UvoIXX6IBo2p4Vcy9c7EC5YEovD7q1Ce5DuC-W75KJ.oAojT3nmx1v6aZohDhidFbpgbgwrS1-wboVbdJpKZHLmbiGmoaD3__%00\r\nenc_key: 2nSIdZ5CqcWuACsX8VEW-uvVcJbiTaefnlZw0Tfwty9ytgCUbotOHeADfRcE2tDmhQUfN0gkxtM9bnJBzVQkZU.1Rcju.inHZXjmb1yhmKBkgYcBH5xZZ4qh41UIKlzYFshhadPBGFwbB0eR8QUaP9MEZr9Sva-nH4CcSflUsldXxvumhnWdZhHOgr9TwXRV8iE7NNiEGwi__%00\r\n\r\nenc_data=4KHZ9AJXE-gf8CIk758MwDJ5TgLP.3ny3xgkXsmm9WaLSey114Y2boQwexDe4SiFc7624KcQJAlZ.TbV0jrUpGtM-PE8kZmb72NM-XmRVFX85g2l36z3lozPg6M97wkS2-f73HZnBvYwvGQlAHnGHmE3gL9FZxpagHj7dFoi3GUpbHdcaT-.rgFpqBhkqnE5q6FkRacrgYrQlcoucMWy9hsYGlNm6QOD44o.gz20geVPKOFU-tUsWy8e2UbdntdsrYRQrkV9nbeCrdRKVQiHklUykJSiACX.IkLy2pQjRnHMNCReqnY06.0cNuBrHid4nc2W-2jE1YF.o-89N4lXC0H2QAkz7X7J.hW9MsoW.uiKx.iqVgDwVfy8r4NHZD.07GJ8zsHhYvGzL0EDY96LvElKEGVLq5Htq6WRkriURhuZsmxZkdaY8z70mSoxSzcurDhaVpE.7KEoOtliF5CvKAZrDtxsxkVHhi1lJjUmMExO6Oj33QVNrzL3no2OCInYL6njePyEGUR2iOifWMtuAYTt-a91H0ScBYMYf1a0MY.qPyqByk3h5UsC.ywVcSkkhqrtQMdSwTPHouc1VLhssuJVddFNq5GQDopstyyC2DH1JKykAgx-v216KEGaq1xAR9XtzlOmgMD5q8ie26UiEztF.UU7URnR9QOfS65vMQ86oc7oAmBvB5pdDgAfKzmxmJVF-FYOYCMBoa.K7ZOP4WbRA.VTA82tZ4fD7SVXCIpEUg1bU4y8vQh1WfDMRcHjeivwWGIZ2sLE94DtfGT5JEddj7oJt3EpUDRHfQpJySfBmLD-ayAK.cJ2EnW2KiOTH
+
+
+
+
+CTA1
+������ ������ �ǽɰ�
+
+phone_no_hash >>>8E1A0F08658CB05DD8477BFC6F64B9EB50BF0ED0
+		 8E1A0F08658CB05DD8477BFC6F64B9EB50BF0ED0
+birth_day_hash >>>6EB1F9FFACD3A346B9D0220879624A56A6AEF221
+user_name_hash >>>0AB80298D6B7A693ABFF52BAEC8CF66E5B0D8AAB
+phone_no_hash >>>006CF12F4A481832BAE545E2010BD426C4223F2A
+phone_no_hash >>>006CF12F4A481832BAE545E2010BD426C4223F2A
+
+8E1A0F08658CB05DD8477BFC6F64B9EB50BF0ED0
+
+
+tx_type=2100cert_type=01kcp_web_yn=Nphone_no=01045257289comm_id=KTF
+birth_day=19871011user_name=고창재local_code=01sex_code=01
+cp_sms_msg=[KCPTEST]이용자번호는[000000]입니다cp_callback=01045257289
+phone_no_hash=8E1A0F08658CB05DD8477BFC6F64B9EB50BF0ED0
+birth_day_hash=6EB1F9FFACD3A346B9D0220879624A56A6AEF221
+user_name_hash=45DA65F857184B93657594E79085B4B617634A18
+local_code_hash=006CF12F4A481832BAE545E2010BD426C4223F2A
+sex_code_hash=006CF12F4A481832BAE545E2010BD426C4223F2A
+
+
+
+home=,site_cd=A7F6I,site_key=,tx_cd=00402200,pa_url=certgw.kcp.co.kr,pa_port=8092,
+ordr_idxx=TEST20170806164117393,
+payx_data=payx_data=common=amount=0cust_ip=10.8.0.6cert=tx_type=2100cert_type=01
+kcp_web_yn=Nphone_no=01045257289comm_id=KTFbirth_day=19871011user_name=고창재local_code=01
+sex_code=01cp_sms_msg=[KCPTEST]이용자번호는[000000]입니다
+cp_callback=01045257289phone_no_hash=8E1A0F08658CB05DD8477BFC6F64B9EB50BF0ED0
+birth_day_hash=6EB1F9FFACD3A346B9D0220879624A56A6AEF221
+user_name_hash=45DA65F857184B93657594E79085B4B617634A18
+local_code_hash=006CF12F4A481832BAE545E2010BD426C4223F2A
+sex_code_hash=006CF12F4A481832BAE545E2010BD426C4223F2A,
+ordr_data=ordr_data=ordr_idxx=TEST20170806164117393,rcvr_data=,escw_data=,
+modx_data=,rcpt_data=,corp_data=,enc_data=,enc_info=,trace_no=,
+cust_ip=10.8.0.6,log_level=3,log_path=D:/serverSource/coway_cody/bizmob.coway.SMART_HOME/logs,opt=0,time_out=0

@@ -1,0 +1,25 @@
+{
+  "license_no" : "120813010001",
+  "customer_no" : "12081301",
+  "deploy_type" : "TEST",
+  "validation" : {
+    "from_license" : "20120801",
+    "to_license" : "20121231",
+    "license_type" : "DEVICE",
+    "company_count" : 1,
+    "admin_count" : 3,
+    "user_count" : 0,
+    "device_count" : 500,
+    "server_ips" : [ "127.0.0.1" ]
+  },
+  "app_license" : [ {
+    "app_key" : "COCDANP0",
+    "app_name" : "Coway Cody Android"
+  }, {
+    "app_key" : "COHCANP0",
+    "app_name" : "Coway Homecare Doctor"
+  }, {
+    "app_key" : "CODTANP0",
+    "app_name" : "Coway Doctor Android"
+  } ]
+}

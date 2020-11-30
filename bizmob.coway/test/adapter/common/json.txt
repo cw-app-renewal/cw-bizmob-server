@@ -1,0 +1,18 @@
+{
+"header": {
+"login_session_id": "",
+"trcode": "ZZ0009",
+"message_version": "1.0.1",
+"result": true,
+"error_code": "",
+"error_text": "",
+"info_text": ""
+},
+"body": {
+"appbuildversion": 9,
+"appminorversion": 0,
+"appmajorversion": 1,
+"verificationCode": "dLizSq1hSJDh1eJ4ZgVKkjbolLZR8oog21nO\/RKWjReTMj42XVhI2uaNgJi1vP6X",
+"appKey": "COWMANP0"
+}
+}

@@ -1,0 +1,26 @@
+{
+ "header": {
+        "error_code": "",
+        "error_text": "",
+        "info_text": "",
+        "login_session_id": "",
+        "message_version": "",
+        "result": true,
+        "trcode": "CGR900",
+        "rfc_name": "",
+        "common_adapter": false,
+        "trId": ""
+    },
+    "body": {
+        "I_PHN_ID": "",   
+        "I_INVNR": "",    
+        "I_DEPT_CD": "",  
+        "I_TITLE": "",    
+        "I_CONTENT": "",  
+        "I_UID": "HXAFI00000001358314742780",      
+        "I_FLAG" :"",
+        "I_TEST_MODE" : ""
+    }
+
+}
+

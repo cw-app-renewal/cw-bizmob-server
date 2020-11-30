@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="NCCR901">
+	<select id="selectMonthDrinkList" statementType="PREPARED" resultType="adapter.model.NCCR901.NCCR901Response_Body_O_ITAB">
+		
+		
+		SELECT Z.month as "O_MONTH", COALESCE(X."O_SUM_COLD_INT", 0) as "O_SUM_COLD_INT", 
+			   COALESCE(X."O_SUM_HOT_INT", 0) as "O_SUM_HOT_INT", COALESCE(X."O_SUM_NORMAL_INT",0) as "O_SUM_NORMAL_INT"
+		FROM (
+			   SELECT to_char(A, 'YYYYMM') as month
+			   FROM generate_series(
+									to_date((to_char(current_date - interval '1year', 'YYYY')||'12'), 'YYYYMM'), 
+									to_date(to_char(current_date, 'YYYY')||'11', 'YYYYMM'), 
+									interval '1month') as A
+					) as Z
+		LEFT JOIN ( SELECT substring("RAW_DATE",1,6) as "O_MONTH", SUM("COLD_INT") as "O_SUM_COLD_INT",
+ 					SUM("HOT_INT") as "O_SUM_HOT_INT", SUM("NORMAL_INT") as "O_SUM_NORMAL_INT"
+					FROM "ZMOT8904"
+					WHERE "GOODS_SN" = #{I_GOODS_SN}		
+					GROUP BY substring("RAW_DATE",1,6)
+				  ) as X
+		ON Z.month = X."O_MONTH";
+		
+		
+	</select>
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="doctor.info">
+
+	<!-- ================================================================================== -->
+	<update id="createSyncInfoTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS SYNC_INFO (
+		SYNC_ITEM TEXT			/* 동기화 항목 */
+		,SYNC_DATE TEXT			/* 동기화 일자 */
+		,SYNC_TIME TEXT			/* 동기화 시간 */
+	);
+	]]>	
+	</update>
+
+	<update id="dropSyncInfoTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS SYNC_INFO
+	]]>		
+	</update>
+		
+	<delete id="deleteSyncInfoData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM SYNC_INFO
+	]]>	
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<update id="createUserInfoTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS USER_INFO (
+		O_PERNR TEXT  /* 사용자번호 */
+		,O_ATWRT TEXT  /* 패스워드 */
+		,O_USER_TP TEXT  /* 사용자구분 */
+		,O_SNAME TEXT  /* 사용자 이름 */
+		,O_DEPT_CD TEXT  /* 사용자 부서 */
+		,O_DEPT_NM TEXT  /* 사용자 부서명 */
+	);
+	]]>	
+	</update>
+
+	<update id="dropUserInfoTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS USER_INFO
+	]]>		
+	</update>
+		
+	<delete id="deleteUserInfoData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM USER_INFO
+	]]>	
+	</delete>
+
+	<!-- ================================================================================== -->
+	<update id="createUserCompanyTable" statementType="STATEMENT">
+	<![CDATA[
+	 CREATE TABLE IF NOT EXISTS USER_COMPANY (
+		COM_CD TEXT   /* 회사구분 */
+		,BUSI_NO TEXT  /* 사업자번호 */
+		,BUSI_NM TEXT  /* 회사명 */
+		,BOSS_NM TEXT  /* 대표자명 */
+		,ADDR1 TEXT   /* 주소1 */
+		,ADDR2 TEXT   /* 주소2 */
+		,BUSI_STATUS TEXT /* 업태 */
+		,IND TEXT   /* 업종 */
+		,TEL_AREA TEXT  /* 전화번호1 */
+		,TEL_EXT TEXT  /* 전화번호2 */
+		,TEL_NO TEXT  /* 전화번호3 */
+		,WEB_ADDR TEXT  /* 웹주소 */
+	 );
+	]]>	
+	</update>
+
+	<update id="dropUserCompanyTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS USER_COMPANY
+	]]>		
+	</update>
+		
+	<delete id="deleteUserCompanyData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM USER_COMPANY
+	]]>	
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<update id="createUserTeamTable" statementType="STATEMENT">
+	<![CDATA[
+	 CREATE TABLE IF NOT EXISTS USER_TEAM (
+		GUBUN1    TEXT   /* 구분1(소속) */
+		,GUBUN2    TEXT   /* 구분2(직급) */
+		,UEMPL_NM   TEXT   /* 이름 */
+		,MOB_NUMBER   TEXT   /* 연락처 */
+		,TEL_NUMBER   TEXT   /* 사무실연락처 */
+		,FAVER    TEXT   /* 즐겨찾기여부(Y/N) */
+		,SYNC_DATE   TEXT   /* 서버 동기화 일자 */
+	 );
+	]]>	
+	</update>
+
+	<update id="dropUserTeamTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS USER_TEAM
+	]]>		
+	</update>
+		
+	<delete id="deleteUserTeamData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM USER_TEAM
+	]]>	
+	</delete>	
+
+</mapper>

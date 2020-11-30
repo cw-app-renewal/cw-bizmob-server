@@ -1,0 +1,17 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "COMMON",
+    "rfc_name" : "ZPDA_IF_SP_CODY_RD012"
+  },
+  "body" : {
+    "I_INVNR" : "01035689214",
+    "I_UEMPL_NO" : "20147856",
+    "I_SYNC_YN" : "Y"
+  }
+}

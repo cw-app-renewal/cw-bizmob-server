@@ -1,0 +1,94 @@
+{
+   "body": {
+      "I_INVNR": "01099999999",
+      "I_CONTENT": "",
+      "I_TEST_MODE": true,
+      "I_TITLE": "",
+      "I_FLAG": "codyreceipt",
+      "I_ITAB": [
+         {
+            "TEXT2": "",
+            "TEXT1": "코웨이(주) 모바일 영수증",
+            "SECTOR_SEQ": "",
+            "SECTOR": "01"
+         },
+         {
+            "TEXT2": "100000000029",
+            "TEXT1": "영수증번호",
+            "SECTOR_SEQ": "01",
+            "SECTOR": "02"
+         },
+         {
+            "TEXT2": "삼성생명보험(주)인계동사옥",
+            "TEXT1": "고객명",
+            "SECTOR_SEQ": "02",
+            "SECTOR": "02"
+         },
+         {
+            "TEXT2": "20AIL1201456외 1건",
+            "TEXT1": "주문번호",
+            "SECTOR_SEQ": "03",
+            "SECTOR": "02"
+         },
+         {
+            "TEXT2": "법인26지국 김혜순 ( 20181189 )",
+            "TEXT1": "수납자",
+            "SECTOR_SEQ": "04",
+            "SECTOR": "02"
+         },
+         {
+            "TEXT2": "2013. 12. 10  11 : 13",
+            "TEXT1": "발행시간",
+            "SECTOR_SEQ": "05",
+            "SECTOR": "02"
+         },
+         {
+            "TEXT2": "50,000",
+            "TEXT1": "렌탈료",
+            "SECTOR_SEQ": "01",
+            "SECTOR": "03"
+         },
+         {
+            "TEXT2": "삼성카드",
+            "TEXT1": "카드구분",
+            "SECTOR_SEQ": "01",
+            "SECTOR": "04"
+         },
+         {
+            "TEXT2": "삼성카드",
+            "TEXT1": "매입사",
+            "SECTOR_SEQ": "02",
+            "SECTOR": "04"
+         },
+         {
+            "TEXT2": "3791-8410-040*-***",
+            "TEXT1": "카드번호",
+            "SECTOR_SEQ": "03",
+            "SECTOR": "04"
+         },
+         {
+            "TEXT2": "",
+            "TEXT1": "* 2013년 05월 16일 총 50,000원 수납되었습니다.",
+            "SECTOR_SEQ": "",
+            "SECTOR": "05"
+         }
+      ],
+      "I_MMS_SEQ": "100000000029",
+      "I_UID": "",
+      "I_DEPT_CD": "AUP",
+      "I_PHN_ID": "01096589372"
+   },
+   "requestURL": "https://210.92.63.156:443/bizmob/CGW902.json",
+   "header": {
+      "common_adapter": false,
+      "result": true,
+      "info_text": "",
+      "login_session_id": "",
+      "rfc_name": "",
+      "error_text": "",
+      "message_version": "",
+      "error_code": "",
+      "trcode": "CGW902",
+      "trId": "CGW902_20131210111353238_864"
+   }
+}

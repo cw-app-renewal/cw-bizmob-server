@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HDP000">
+	
+	
+	<!-- = SELECT =============================================================================== -->
+	<select id="AUTH_LEGACY" parameterType="adapter.model.HDP000.HDP000Request_Body" resultType="adapter.model.HDP000.HDP000Response_Body">
+	<![CDATA[
+		
+		SELECT 
+            USER_ID, USER_NAME, DEPT_NAME, DUTY_NAME, MOBILE, PASSWORD
+        FROM 
+            TB_USER_INFO
+        WHERE 
+            USER_ID = #{user_id} and PASSWORD = #{password}
+    	
+	]]>	
+	</select>
+	
+	
+</mapper> 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Java Project Packaging" default="package" basedir=".">
+    <description>description</description>
+
+	<property file="build.properties"/>
+
+	<property name="ver" value="1.0.0" />
+	<property name="project.name" value="bizmob.coway.batch" />
+	<property name="java.src" value="./src" />
+	<property name="java.classes" value="./bin" />
+	
+	<echo message="Creating the working directories"/>
+
+	<path id="build.classpath">
+		<fileset dir="../bizmob.coway/WebContent/WEB-INF/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="clean" description="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${java.classes}" includes="**/*"/>
+  		</delete>
+	</target>
+	 
+	<target name="compile" depends="clean" description="Compile web application">
+		<echo message="Compiling the java module" />
+		<javac srcdir="${java.src}"	destdir="${java.classes}">
+			<classpath refid="build.classpath" />
+		</javac>
+	</target>
+	
+	<target name="package" depends="compile">
+		<echo message="Building the JAR file in one step" />
+		<tstamp/>
+		<jar destfile="${project.name}-${ver}.jar"	
+				duplicate="preserve" 
+				compress="false">
+			<fileset dir="${java.classes}"/>
+		</jar>
+	</target>
+</project>

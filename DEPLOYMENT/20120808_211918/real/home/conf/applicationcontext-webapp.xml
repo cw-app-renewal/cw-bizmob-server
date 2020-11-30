@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+                            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+        					http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd		
+                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	<description>webapp</description>
+
+	<bean id="journalService" class="com.mcnc.smart.journal.ConsoleJournalService" />
+	<!-- DB Journaling -->
+	<!-- 
+	<bean id="journalService" class="web.QueuedFakeDBJournalService" destroy-method="flushAll">
+		<constructor-arg value="100" index="0" />
+	</bean>
+	-->
+	
+	<!-- mybatis dao -->
+	<bean id="gDBDao" class="com.mcnc.smart.db.dao.MyBatisDao" />
+
+	<!--  uploader 설정 	-->
+	<bean id="uploadStorageAccessor" class="com.mcnc.smart.hybrid.server.web.dao.LocalFileStorageAccessor" destroy-method="removeAll">
+		<constructor-arg index="0">
+			<value>#{contextParameters.SMART_HOME}/upload_temp</value>
+		</constructor-arg>
+	</bean>
+
+	
+	<!-- Scheduling (DB Journaling 사용 시) 
+	<task:annotation-driven scheduler="smartScheduler" executor="smartExecutor" />
+	<task:executor id="smartExecutor" pool-size="20-50" queue-capacity="20" keep-alive="3" rejection-policy="CALLER_RUNS" />
+	<task:scheduler id="smartScheduler" pool-size="5"/>
+	-->
+	
+	<!-- AOP -->
+	<aop:aspectj-autoproxy />
+
+</beans>

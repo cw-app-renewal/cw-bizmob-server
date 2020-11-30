@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="CowayLogSqlMap">
+
+
+	<insert id="saveLog" parameterType="java.util.HashMap">
+        <![CDATA[
+        insert into crush_info (
+			SEQ,
+			USER_ID,
+			CREATE_DATE,
+			CREATE_TIME,
+			DEVICE_NAME,
+			LAST_CMD_ID,
+			ZXING_CNT,
+			ZEM128_CNT,
+			ZEMQR_CNT,
+			ZXING_SUCCESS_CNT,
+			ZEM128_SUCCESS_CNT,
+			ZEMQR_SUCCESS_CNT,
+			BARCODE_STATUS,
+			CRASH_YN
+        ) SELECT
+        	CRUSH_INFO_SEQ.NEXTVAL,
+            #{user_id, jdbcType=VARCHAR},
+			to_char(to_date(#{crushInfo.inserted_date, jdbcType=VARCHAR}, 'YYYY/MM/DD HH24:MI:SS'), 'YYYYMMDD'),
+  			to_char(to_date(#{crushInfo.inserted_date, jdbcType=VARCHAR}, 'YYYY/MM/DD HH24:MI:SS'), 'HH24MISS'),
+			#{crushInfo.device_name, jdbcType=VARCHAR},
+			#{crushInfo.last_cmd_id, jdbcType=VARCHAR},
+			#{crushInfo.zxing_cnt, jdbcType=INTEGER},
+			#{crushInfo.zem128_cnt, jdbcType=INTEGER},
+			#{crushInfo.zemqr_cnt, jdbcType=INTEGER},
+			#{crushInfo.zxing_success_cnt, jdbcType=INTEGER},
+			#{crushInfo.zem128_success_cnt, jdbcType=INTEGER},
+			#{crushInfo.zemqr_success_cnt, jdbcType=INTEGER},
+			#{crushInfo.barcode_status, jdbcType=VARCHAR},
+			#{crushInfo.crash_yn, jdbcType=VARCHAR}
+          FROM DUAL
+        ]]>
+	</insert>
+</mapper>

@@ -1,0 +1,10 @@
+#ABAP_AS_WITH_POOL
+#Tue Nov 13 14:27:54 KST 2012
+jco.client.lang=KO
+jco.client.client=100
+jco.client.passwd=123456
+jco.client.sysnr=00
+jco.client.user=RFCTEST
+jco.client.mshost=192.1.1.149
+jco.client.group=TITAN
+jco.client.r3name=COQ

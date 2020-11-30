@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="NCCW901">
+
+	<select id="selectDrinkData" statementType="PREPARED" resultType="Integer">
+		SELECT count(*)
+		FROM "ZMOT8904"
+		WHERE 
+			"GOODS_SN" = #{I_GOODS_SN}
+		AND "RAW_DATE" = #{I_RAW_DATE}
+	</select>
+	
+	<insert id="insertDrinkData" statementType="PREPARED">
+		INSERT INTO "ZMOT8904"( "MANDT", "GOODS_SN", "RAW_DATE", "COLD", "COLD_INT", "HOT", "HOT_INT", "NORMAL", "NORMAL_INT", "EQUNR", "ORDER_NO", "SYS_DT", "SYS_TM" )
+		VALUES ( '100', #{I_GOODS_SN}, #{I_RAW_DATE}, #{I_COLD}, #{I_COLD_INT}, #{I_HOT}, #{I_HOT_INT}, #{I_NORMAL}, #{I_NORMAL_INT}, #{I_EQUNR}, #{I_ORDER_NO}, to_char(current_date,'YYYYMMDD'), to_char(now(), 'HH24MISS') )
+	</insert>
+	
+	<update id="updateDrinkData" statementType="PREPARED">
+		UPDATE "ZMOT8904"
+		SET	
+			"COLD"		= #{I_COLD}
+		,	"COLD_INT"	= #{I_COLD_INT}
+		,	"HOT"		= #{I_HOT}
+		,	"HOT_INT"	= #{I_HOT_INT}
+		,	"NORMAL"	= #{I_NORMAL}
+		,	"NORMAL_INT"= #{I_NORMAL_INT}
+		,	"EQUNR"	= #{I_EQUNR}
+		,	"ORDER_NO"	= #{I_ORDER_NO}
+		,	"SYS_DT"	= to_char(current_date,'YYYYMMDD')
+		,	"SYS_TM"	= to_char(now(),'HH24MISS')
+		WHERE
+			"GOODS_SN"	= #{I_GOODS_SN}
+		AND	"RAW_DATE"	= #{I_RAW_DATE}
+	</update>
+		
+</mapper>

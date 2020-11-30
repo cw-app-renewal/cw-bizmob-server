@@ -1,0 +1,65 @@
+cowayImagedownloader
+
+http://127.0.0.1:8080/bizmob/LOGIN.json?message={
+   "header":{
+      "trcode":"LOGIN",
+      "error_text":"",
+      "info_text":"",
+      "message_version":"",
+      "result":"true",
+      "error_code":"",
+      "login_session_id":""
+   },
+   "body":{
+      "user_id":"test01",
+      "os_type":"emulator",
+      "legacy_message":{
+         "header":{
+            "common_adapter":false,
+            "error_code":"",
+            "error_text":"",
+            "info_text":"",
+            "login_session_id":"",
+            "message_version":"",
+            "result":false,
+            "rfc_name":"",
+            "trcode":"CDR000"
+         },
+         "body":{
+            "I_ATWRT":"",
+            "I_PERNR":""
+         }
+      },
+      "legacy_trcode":"CDR000",
+      "password":"",
+      "emulator_flag":true,
+      "device_id":"1",
+      "app_key":"BM20ANP0",
+      "phone_number":"",
+      "manual_phone_number":false
+   }
+}
+
+
+http://127.0.0.1:8080/bizmob/download/cowayImage/1?mode=1&img_type=4&job_dt=&job_tp=&order_no=&job_seq=&img_seq=&goods_cd=123456&parts_cd=&file_name=
+
+
+1. 고객제품 설치사진
+http://127.0.0.1:8080/bizmob/download/installImage/1?mode=1&file_name=inst_123456_1.jpg&order_no=123456&img_seq=1
+
+2. 고객주소사진
+http://127.0.0.1:8080/bizmob/download/addressImage/1?mode=1&file_name=addr_123456_1.jpg&order_no=123456&img_seq=1
+
+3. 고객메모사진
+http://127.0.0.1:8080/bizmob/download/memoImage/1?mode=1&file_name=memo_123456_1.jpg&tmp_order_no=123456&img_seq=1
+
+4. 제품사진
+http://127.0.0.1:8080/bizmob/download/goodsImage/1?mode=1&file_name=thn_123456.jpg&goods_cd=123466&thumbnail=Y
+
+5. 부품사진
+http://127.0.0.1:8080/bizmob/download/partsImage/1?mode=1&file_name=thn_123456.jpg&parts_cd=123456&thumbnail=Y
+
+
+
+
+

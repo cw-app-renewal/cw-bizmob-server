@@ -1,0 +1,18 @@
+{
+  "header" : {
+    "common_adapter" : false,
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : false,
+    "rfc_name" : "",
+    "trcode" : "CHS002"
+  },
+  "body" : {
+    "I_INVNR" : "01099999999",
+    "I_UEMPL_NO" : "20120518",
+    "I_SYNC_YN" : "Y"
+  }
+}

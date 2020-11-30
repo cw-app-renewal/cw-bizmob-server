@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cody.com">
+
+	<update id="createComnonCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS COMMON_CODE ( 
+	    OTH_CLASS 		TEXT		/* 코드 그룹 */
+	    ,OTH_CD    		TEXT		/* 코드 */
+	    ,OTH_CD_NM 	TEXT 		/* 코드명 */
+	);
+	CREATE INDEX IDX_OTH_CLASS ON COMMON_CODE ( 
+	    OTH_CLASS ASC
+	    ,OTH_CD ASC
+	);
+	]]>	
+	</update>
+
+	<update id="dropCommonCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS COMMON_CODE
+	]]>		
+	</update>
+		
+	<delete id="deleteCommonCodeData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM COMMON_CODE
+	]]>	
+	</delete>
+	
+	<insert id="insertCommonCodeData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyCommonCodeDO">
+	<![CDATA[
+	INSERT INTO COMMON_CODE (
+		OTH_CLASS, OTH_CD, OTH_CD_NM
+	) VALUES (
+		#{OTH_CLASS}, #{OTH_CD}, #{OTH_CD_NM}
+	)
+	]]>		
+	</insert>	
+	
+	<update id="updateCommonCodeData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyCommonCodeDO">
+	<![CDATA[
+	UPDATE COMMON_CODE
+	SET OTH_CD_NM = #{OTH_CD_NM}
+	WHERE OTH_CLASS = #{OTH_CLASS}
+		AND OTH_CD = #{OTH_CD}
+	]]>		
+	</update>
+
+	<select id="selectCommonCodeData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		OTH_CD_NM
+	FROM COMMON_CODE
+	WHERE OTH_CLASS = #{oth_class, mode=IN, jdbcType=VARCHAR}
+		AND OTH_CD = #{oth_cd, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+			
+
+
+
+</mapper>

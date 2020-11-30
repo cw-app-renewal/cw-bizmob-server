@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="doctor.work">
+
+	<!-- 약속 정보 -->
+	<update id="createRD129_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD129_O_ITAB (
+		JOB_DT				TEXT			/* 작업예정일자 */
+		,JOB_TP				TEXT			/* 작업 구분 */
+		,ORDER_NO			TEXT			/* 고객주문번호 */
+		,JOB_SEQ			TEXT			/* 작업일련번호 */
+		,PLAN_DT			TEXT			/* 약속일자 */
+		,PLAN_TM			TEXT			/* 약속시간 */
+		,FIRST_DT			TEXT			/* 최초예정일자 */
+		,PLAN_DESC			TEXT			/* 약속상세 내용 */
+		,PLAN_TP			TEXT			/* 약속종류(1:방문,2:전화,3:기타) */
+		,CUST_NM			TEXT			/* 고객명 */
+		,GOODS_CD			TEXT			/* 제품코드 */
+		,GOODS_NM			TEXT			/* 제품명 */
+		,TEL_NUMBER1		TEXT			/* 전화번호1 */
+		,TEL_NUMBER2		TEXT			/* 전화번호2 */
+		,TEL_NUMBER3		TEXT			/* 전화번호3 */
+		,MOB_NUMBER1		TEXT			/* 이동전화번호1 */
+		,MOB_NUMBER2		TEXT			/* 이동전화번호2 */
+		,MOB_NUMBER3		TEXT			/* 이동전화번호3 */
+	);
+	]]>		
+	</update>		
+
+	<update id="dropRD129_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS RD129_O_ITAB
+	]]>		
+	</update>
+		
+	<delete id="deleteRD129_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM RD129_O_ITAB
+	]]>	
+	</delete>	
+	
+	<!-- 하트 서비스 월 대상 목록 -->
+	<update id="createRD035_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD035_O_ITAB (
+		JOB_DT				TEXT			/* 기준년월 */
+		,JOB_TP				TEXT			/* 작업구분 */
+		,ORDER_NO			TEXT			/* 웹주문번호 */
+		,JOB_SEQ			TEXT			/* 작업순번 */
+		,STATUS				TEXT			/* 작업상태 */
+		,SYNC_YN			TEXT			/* 전송여부 */
+		,PLAN_DT			TEXT			/* 작업예정일자 */
+		,PLAN_TM			TEXT			/* 작업예정시간 */
+		,EQUNR				TEXT			/* 설비번호 */
+		,CUST_NM			TEXT			/* 고객명 */
+		,GOODS_NM			TEXT			/* 제품명 */
+		,ZIP_SEQ			TEXT			/* 우편일련번호 */
+		,ZIP1				TEXT			/* 우편번호1 */
+		,ZIP2				TEXT			/* 우편번호2 */
+		,ADDR1				TEXT			/* 우편주소 */
+		,ADDR2				TEXT			/* 상세주소 */
+		,TEL_NUMBER1		TEXT			/* 전화번호1 */
+		,TEL_NUMBER2		TEXT			/* 전화번호2 */
+		,TEL_NUMBER3		TEXT			/* 전화번호3 */
+		,MOB_NUMBER1		TEXT			/* 이동전화번호1 */
+		,MOB_NUMBER2		TEXT			/* 이동전화번호2 */
+		,MOB_NUMBER3		TEXT			/* 이동전화번호3 */
+		,MAP_REMARK			TEXT			/* 약도 */
+		,CUST_REQ_DESC		TEXT			/* 특이사항 */
+		,TPLNR				TEXT			/* 기능위치 */
+		,CHG_TERM			TEXT			/* 점검회차 */
+		,FROM_DAY			TEXT			/* 선택가능일(시작일) */
+		,TO_DAY				TEXT			/* 선택가능일(종료일) */
+		,HEART_PLUS_YN		TEXT			/* 하트플러스 서비스 대상여부(당월) */
+		,DUE_CODY_YN		TEXT			/* 본인계정여부 */
+		,CUST_TP			TEXT			/* 고객구분 */
+		,PASS_USER_NM		TEXT			/* 이관자 이름(이관자+사번) */
+		,PASS_USER_MOB1		TEXT			/* 이관자 연락처1 */
+		,PASS_USER_MOB2		TEXT			/* 이관자 연락처2 */
+		,PASS_USER_MOB3		TEXT			/* 이관자 연락처3 */
+	);
+	]]>		
+	</update>
+		
+	<update id="dropRD035_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS RD035_O_ITAB
+	]]>		
+	</update>
+		
+	<delete id="deleteRD035_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM RD035_O_ITAB
+	]]>	
+	</delete>	
+		
+			
+</mapper>

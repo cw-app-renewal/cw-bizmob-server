@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="NCCW904">
+
+	<select id="selectErrorData" statementType="PREPARED" resultType="Integer">
+		SELECT count(*)
+		FROM "TROUBLE_HISTORY"
+		WHERE 
+			"ORDER_NO"	= #{I_ORDER_NO}
+		AND "ERROR_DATE"= #{I_ERROR_DATE}
+		AND "E_CODE"	= #{I_E_CODE}
+	</select>
+	
+	<insert id="insertErrorData" statementType="PREPARED">
+		INSERT INTO "TROUBLE_HISTORY"( "MANDT", "GOODS_SN", "ORDER_NO", "EQUNR", "ERROR_DATE", "E_CODE", "USER_ID", "SYS_DT", "SYS_TM" )
+		VALUES ( '100', #{I_GOODS_SN}, #{I_ORDER_NO}, #{I_EQUNR}, #{I_ERROR_DATE}, #{I_E_CODE}, #{I_USER_ID}, to_char(current_date,'YYYYMMDD'), to_char(now(), 'HH24MISS') )
+	</insert>
+	
+	<update id="updateErrorData" statementType="PREPARED">
+		UPDATE "TROUBLE_HISTORY"
+		SET	
+			"GOODS_SN"	= #{I_GOODS_SN}
+		,	"EQUNR"		= #{I_EQUNR}		
+		,	"USER_ID"	= #{I_USER_ID}
+		,	"SYS_DT"	= to_char(current_date,'YYYYMMDD')
+		,	"SYS_TM"	= to_char(now(),'HH24MISS')
+		WHERE
+			"ORDER_NO"	= #{I_ORDER_NO}
+		AND	"ERROR_DATE"= #{I_ERROR_DATE}
+		AND "E_CODE"	= #{I_E_CODE}
+	</update>
+
+</mapper>

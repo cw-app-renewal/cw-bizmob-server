@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="NCCW902">
+	
+	<select id="selectRsvnData" statementType="PREPARED" resultType="Integer">
+		SELECT count(*)
+		FROM "ZSMT7000"
+		WHERE 
+			"ORDER_NO"		= #{I_ORDER_NO}
+		AND "CREATED_DATE"	= #{I_CREATED_DATE}
+	</select>
+	
+	<insert id="insertRsvnData" statementType="PREPARED">
+		INSERT INTO "ZSMT7000"( "MANDT", "ORDER_NO", "CREATED_DATE", "GOODS_SN", "CYCLE_MODE", "RSVN_HOUR", "RSVN_MINUTE", "CYCLE_DATE", "POST_TYPE", "SYS_DT", "SYS_TM" )
+		VALUES ( '100', #{I_ORDER_NO}, #{I_CREATED_DATE}, #{I_GOODS_SN}, #{I_CYCLE_MODE}, #{I_RSVN_HOUR}, #{I_RSVN_MINUTE}, #{I_CYCLE_DATE}, #{I_POST_TYPE}, to_char(current_date,'YYYYMMDD'), to_char(now(), 'HH24MISS') )
+	</insert>
+	
+	<update id="updateRsvnData" statementType="PREPARED">
+		UPDATE "ZSMT7000"
+		SET
+			"GOODS_SN"		= #{I_GOODS_SN}
+		,	"CYCLE_MODE"	= #{I_CYCLE_MODE}
+		,	"RSVN_HOUR"		= #{I_RSVN_HOUR}
+		,	"RSVN_MINUTE"	= #{I_RSVN_MINUTE}
+		,	"CYCLE_DATE"	= #{I_CYCLE_DATE}		
+		,	"POST_TYPE"		= #{I_POST_TYPE}		
+		,	"SYS_DT"		= to_char(current_date,'YYYYMMDD')
+		,	"SYS_TM"		= to_char(now(),'HH24MISS')
+		WHERE
+			"ORDER_NO"		= #{I_ORDER_NO}		
+		AND	"CREATED_DATE"	= #{I_CREATED_DATE}		
+	</update>
+
+</mapper>

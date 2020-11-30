@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PropValue">
+    <resultMap id="resultPropValue" type="PropValue">
+        <result column="target_id" property="targetId"/>
+        <result column="prop_id" property="propId"/>
+        <result column="prop_value" property="propValue"/>
+        <result column="creator_id" property="creatorId"/>
+        <result column="create_date" property="createDate"/>
+        <result column="updater_id" property="updaterId"/>
+        <result column="update_date" property="updateDate"/>
+        <!--  ========== 추가 컬럼 ==========  -->
+    </resultMap>
+
+    <!--  ==================== INSERT ====================  -->
+    <insert id="insertPropValue" parameterType="PropValue">
+        INSERT INTO prop_value (target_id, prop_id, prop_value, creator_id, create_date, updater_id, update_date)
+        VALUES (#{targetId}, #{propId}, #{propValue,jdbcType=VARCHAR}, #{creatorId}, #{createDate}, #{updaterId}, #{updateDate})
+    </insert>
+
+    <!--  ==================== UPDATE ====================  -->
+    <update id="updatePropValueByPk" parameterType="PropValue">
+        UPDATE prop_value
+        SET
+            prop_value = #{propValue,jdbcType=VARCHAR},
+            creator_id = #{creatorId},
+            create_date = #{createDate},
+            updater_id = #{updaterId},
+            update_date = #{updateDate}
+        WHERE target_id = #{targetId}
+          AND prop_id = #{propId}
+    </update>
+
+    <!--  ==================== DELETE ====================  -->
+    <delete id="deletePropValueByPk" parameterType="PropValue">
+        DELETE FROM prop_value
+        WHERE target_id = #{targetId}
+    </delete>
+
+    <!--  ==================== SELECT ====================  -->
+    <select id="selectPropValueByPk" parameterType="PropValue" resultMap="resultPropValue">
+        SELECT target_id, prop_id, prop_value, creator_id, create_date, updater_id, update_date
+        FROM prop_value
+        WHERE target_id = #{targetId}
+         AND prop_id = #{propId}
+    </select>
+
+    <select id="selectPropValueList" parameterType="PropValue" resultMap="resultPropValue">
+        SELECT
+          b.target_id, a.prop_id, NVL(b.prop_value,a.default_value) prop_value,
+          b.creator_id, b.create_date, b.updater_id, b.update_date
+        FROM prop a
+          left outer join prop_value  b
+              on b.prop_id = a.prop_id and a.prop_type=#{propType} and b.target_id = #{targetId}
+    </select>
+
+</mapper>

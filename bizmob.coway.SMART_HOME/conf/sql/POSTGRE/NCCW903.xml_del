@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NCCW903">
+
+	<select id="selectSterilizationData" statementType="PREPARED" resultType="Integer">
+		SELECT count(*)
+		FROM "ZMOT8905"
+		WHERE 
+			"GOODS_SN" = #{I_GOODS_SN}
+		AND "RAW_DATE" = #{I_RAW_DATE}
+	</select>
+	
+	<insert id="insertSterilizationData" statementType="PREPARED">
+		INSERT INTO "ZMOT8905"( "MANDT", "GOODS_SN", "RAW_DATE", "CYCLE", "FLOW", "FAUCET", "EQUNR", "ORDER_NO", "SYS_DT", "SYS_TM" )
+		VALUES ( '100', #{I_GOODS_SN}, #{I_RAW_DATE}, #{I_CYCLE}, #{I_FLOW}, #{I_FAUCET}, #{I_EQUNR}, #{I_ORDER_NO}, to_char(current_date,'YYYYMMDD'), to_char(now(), 'HH24MISS') )
+	</insert>
+	
+	<update id="updateSterilizationData" statementType="PREPARED">
+		UPDATE "ZMOT8905"
+		SET	
+			"CYCLE"		= #{I_CYCLE}
+		,	"FLOW"		= #{I_FLOW}
+		,	"FAUCET"	= #{I_FAUCET}
+		,	"EQUNR"		= #{I_EQUNR}
+		,	"ORDER_NO"	= #{I_ORDER_NO}
+		,	"SYS_DT"	= to_char(current_date,'YYYYMMDD')
+		,	"SYS_TM"	= to_char(now(),'HH24MISS')
+		WHERE
+			"GOODS_SN"	= #{I_GOODS_SN}
+		AND	"RAW_DATE"	= #{I_RAW_DATE}
+	</update>
+
+</mapper>

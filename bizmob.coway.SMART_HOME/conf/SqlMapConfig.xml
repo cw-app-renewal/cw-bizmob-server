@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties>
+		
+<!-- 		<property name="SMART_HOME" value="/app/webapp/SMART_HOME" />		 -->
+	<property name="SMART_HOME" value="D:\serverSource\coway_cody\bizmob.coway.SMART_HOME" />
+		<property name="DATABASE" value="ORACLE" />
+		<!-- nfc DATABASE
+		<property name="NFC_DATABASE" value="POSTGRE" />
+		 -->
+	</properties>
+	<typeAliases>
+		<typeAlias type="com.mcnc.smart.db.type.DBMap" alias="DefaultMap" />
+		<typeAlias type="com.mcnc.portal.auth.model.SmartUpdaterVersion" alias="SmartUpdaterVersion" />
+		<typeAlias type="java.lang.Integer" alias="Integer" />
+		<typeAlias type="java.lang.String" alias="String" />
+		<!-- authserver-db.jar -->
+		<typeAlias type="com.mcnc.portal.auth.model.Env" alias="Env" /> 
+		<typeAlias type="com.mcnc.portal.auth.model.PropValue" alias="PropValue" /> 
+		<typeAlias type="com.mcnc.portal.auth.model.UserInfo" alias="UserInfo" /> 
+		<typeAlias type="com.mcnc.portal.auth.model.DeviceInfo" alias="DeviceInfo"	/> 		
+	</typeAliases>
+	<typeHandlers>
+		<typeHandler javaType="boolean" jdbcType="CHAR" handler="com.mcnc.common.mybatis.handler.BooleanCharTypeHandler" />
+		<typeHandler javaType="boolean" jdbcType="VARCHAR" handler="com.mcnc.common.mybatis.handler.BooleanCharTypeHandler" />
+	</typeHandlers>
+	<environments default="CowayErrorCode">
+<!-- 	<environments default="BIZMOBNFC"> -->
+		<environment id="JournalDB">
+			<transactionManager type="MANAGED" />
+			<dataSource type="JNDI">
+				<property name="data_source" value="java:comp/env/BIZMOB" />
+			</dataSource>
+		</environment>
+		<environment id="BizMOBDB">
+			<transactionManager type="MANAGED" />
+			<dataSource type="JNDI">
+				<property name="data_source" value="java:comp/env/BIZMOB" />
+			</dataSource>
+		</environment>
+		<environment id="CowayErrorCode">
+			<transactionManager type="MANAGED" />
+			<dataSource type="JNDI">
+				<property name="data_source" value="java:comp/env/BIZMOB" />
+			</dataSource>
+		 	<!-- 
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="org.sqlite.JDBC" />
+				<property name="url" value="jdbc:sqlite:${SMART_HOME}/conf/server/CowayErrorMessage.sqlite" />
+				<property name="poolMaximumActiveConnections" value="3" />
+				<property name="poolMaximumIdleConnections" value="1" />
+			</dataSource>
+			-->
+			
+		</environment>
+		<!-- NFC data_Source
+		<environment id="BIZMOBNFC">
+			<transactionManager type="MANAGED" />
+			<dataSource type="JNDI">
+				<property name="data_source" value="java:comp/env/BIZMOBNFC" />
+			</dataSource>
+		</environment>
+		 -->
+	</environments>
+	
+	
+	<!-- sql map file  -->
+	<mappers>
+		<!-- smart jorunal -->
+		<mapper url="file:///${SMART_HOME}/conf/sql/${DATABASE}/journalSqlMap.xml" />
+		<!-- authserver-db.jar -->
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Application.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Device.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Env.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/PropValue.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/ServerLicense.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/User.xml" />
+		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/ZZ0055.xml" />		
+		<!-- coway error message -->
+		<mapper url="file:///${SMART_HOME}/conf/sql/Coway/CowayErrorSqlMap.xml" />
+		<!-- device crush log -->
+		<mapper url="file:///${SMART_HOME}/conf/sql/Coway/CowayLogSqlMap.xml" />
+		<!-- nfc mapper
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR901.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR902.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW901.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW902.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW903.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW904.xml" />		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW905.xml" />
+		 -->		
+	</mappers>
+	
+</configuration>

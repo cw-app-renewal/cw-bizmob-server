@@ -1,0 +1,165 @@
+upload의 시나리오 정리
+
+1. 설정파일에서 크게 2가지를 추가
+ - CommonsMultiPartResolver 설정 (org.springframework.web.multipart.commons.CommonsMultiPartResolver)
+ - 업로드 디렉토리 지정용 FileSystemResource 설정 (org.springframework.core.io.FileSystemResource)
+2. MultipartFile을 담아 둘 빈 작성
+3. 업로드를 처리할 컨트롤러 작성
+4. 실제 업로드를 수행할 업로드용 빈 작성
+5. 설정 파일에서 빈 묶기
+
+
+1. controller-servlet.xml multipartResolver 등록
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>1048576000</value> <!-- 최대 Upload 크기 설정 -->
+		</property>
+		<property name="maxInMemorySize" value="1048576000" /> 			<!-- Upload처리할 Memory 크기 설정 -->
+		<property name="uploadTempDir" ref="uploadDirResource" />
+	</bean>
+  	<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg>
+			<value>#{contextParameters.SMART_HOME}/upload_temp</value>  <!-- Upload Temp Directory 설정 -->
+		</constructor-arg>
+	</bean>
+
+2. MultipartFile을 담을 빈을 작성
+	<!--  uploader 설정 	-->
+	<bean id="uploadStorageAccessor" class="com.mcnc.smart.hybrid.server.web.dao.LocalFileStorageAccessor" destroy-method="removeAll">
+		<constructor-arg index="0">
+			<value>#{contextParameters.SMART_HOME}/upload_temp</value>
+		</constructor-arg>
+	</bean>
+
+	/**
+	 * Local File 저장 후 Storage에 UID와 File명을 저장
+	 * 
+	 * @param UID {@inheritDoc}
+	 * @param fileName {@inheritDoc}
+	 * @param data {@inheritDoc}
+	 * @return {@inheritDoc}
+	 */
+	public boolean save(String UID, String fileName, byte[] data) {
+		logger.trace("Start::save()");
+		logger.trace("  > UID : " + UID);
+		logger.trace("  > fileName : " + fileName);
+		logger.trace("  > data length: " + ((data == null) ? 0 : data.length));
+
+		boolean result = false;
+		FileOutputStream fos = null;
+		FileChannel channel = null;
+
+		try {
+			fos = new FileOutputStream(uploadPath + File.separator + UID + "." + "mob");
+			channel = fos.getChannel();
+			ByteBuffer bytebuffer = ByteBuffer.allocate(IOHelper.READ_BLOCK);
+			int offset=0;
+			int length= data.length;
+
+			// Save File
+			while(offset < length){
+				int chunkSize = IOHelper.READ_BLOCK > (length-offset) ? length-offset : IOHelper.READ_BLOCK;
+				bytebuffer.put(data, offset, chunkSize);
+				bytebuffer.flip();
+				offset+=chunkSize;
+				channel.write(bytebuffer);
+				bytebuffer.clear();
+			}
+			
+			// Save Storage
+			if (fileName != null && fileName.trim().length() > 0) {
+				this.localFileStorage.put(UID, fileName);
+			}
+
+			result = true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			IOUtil.closeQuietly(channel);
+			IOUtil.closeQuietly(fos);
+		}
+		
+		logger.trace("  > RV(result) : " + result);
+		logger.trace("End::save()");
+		
+		return result;
+	}
+	
+	
+	
+3. Controller 작성
+	<context:component-scan base-package="com.mcnc.smart.hybrid.server.web.control" />
+	
+@Controller
+@RequestMapping(value = "upload")
+public class UploadController {
+
+	@Autowired
+	StorageAccessor uploadStorageAccessor;
+
+	/**
+	 * HTTP FORM 방식의 FILE UPLOAD 처리 함수
+	 * 
+	 * @param request HttpRequest
+	 * @param response HttpResponse
+	 * @throws IOException
+	 * @throws HttpUploadException
+	 * @throws HttpUploadException
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseStatus(HttpStatus.OK)
+	public void upload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("===== Start FileUploadController [Save] >>>>> ");
+
+		Enumeration headers = request.getHeaderNames();
+		
+		while (headers.hasMoreElements()) {
+			String headerName = (String) headers.nextElement();
+			String value = request.getHeader(headerName);
+			logger.trace(String.format("Header Name : %s , Value : %s", headerName, value));
+		}
+
+		try {
+			//HttpServletRequest를 MultipartServletRequest로 캐스팅(Casting)한 다음 첨부된 파일을 직접 얻어냄
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;			
+			Iterator fileNameIterator = multipartRequest.getFileNames();
+
+			ArrayList<String> fileUIDList = new ArrayList<String>();
+
+			while (fileNameIterator.hasNext()) {
+				MultipartFile multiFile = multipartRequest.getFile((String) fileNameIterator.next());
+
+				if (multiFile.getSize() > 0) {
+					// 파일 저장 처리
+					logger.trace(String.format("File Name : %s ", multiFile.getOriginalFilename()));
+					logger.trace(String.format("UID : %s ", multiFile.getName()));
+
+					Boolean result = uploadStorageAccessor.save(multiFile.getName(), multiFile.getOriginalFilename(),
+							multiFile.getBytes());
+
+					logger.trace(String.format("Flie Save Result : %s", result.toString()));
+
+					if (result) {
+						fileUIDList.add(multiFile.getName());
+					} 
+					
+					else {
+						Iterator iList = fileUIDList.iterator();
+						
+						while (iList.hasNext()) {
+							uploadStorageAccessor.remove(iList.next().toString());
+						}
+						
+						throw new HttpDownloadException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorMessageDao.getMessage(
+								"HTTP_" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR, new Object[] { "mode" }));
+					}
+				}
+			}
+		} finally {
+		}
+
+		logger.info("<<<<<  End FileUploadController [Save] =====");
+	}
+}
+ 

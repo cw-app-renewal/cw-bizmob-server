@@ -1,0 +1,22 @@
+{
+  "header" : {
+    "common_adapter" : false,
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : false,
+    "rfc_name" : "",
+    "trcode" : "CDS003"
+  },
+  "body" : {
+    "I_JOB_DT" : "20120822",
+    "I_UEMPL_NO" : "20209505",
+    "I_INVNR" : "01031109265",
+    "I_ON_YN" : "N",
+    "I_JOB_TP" : "",
+    "I_ORDER_NO" : "",
+    "I_JOB_SEQ" : ""
+  }
+}

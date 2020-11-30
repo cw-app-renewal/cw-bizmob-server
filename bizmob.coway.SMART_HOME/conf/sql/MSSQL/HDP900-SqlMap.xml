@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HDP900">
+	
+	
+	<!-- = SELECT =============================================================================== -->
+	<select id="SELECT_VISITOR" parameterType="java.lang.Integer" resultType="adapter.model.HDP900.HDP900Response_Body">
+	<![CDATA[
+		SELECT sid, visitor_name, visitor_phone FROM TB_VISITOR_INFO WHERE sid = #{sid}
+	]]>
+	</select>
+	
+	<!-- ========================================================================================== -->
+	
+	<delete id="DELTE_VISITOR" parameterType="java.lang.Integer">
+	<![CDATA[
+		DELETE FROM TB_VISITOR_INFO WHERE sid = #{sid,jdbcType=NUMERIC}
+	]]>
+	</delete>
+	
+	<!-- ========================================================================================== -->
+	
+	<update id="UPDATE_APPROVAL_STATE" parameterType="java.lang.Integer">
+	<![CDATA[
+		UPDATE
+			TB_VISITOR_INFO
+		SET
+			isapprove = 'Y'
+		WHERE 
+			sid = #{sid,jdbcType=NUMERIC}
+	]]>
+	</update>
+	
+	
+	
+</mapper> 

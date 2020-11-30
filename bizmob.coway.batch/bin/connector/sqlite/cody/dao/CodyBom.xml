@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cody.bom">
+
+	<update id="createProductTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS PRODUCT ( 
+	    GOODS_CD			TEXT		/* 제품코드 */
+	    ,PART_CD				TEXT		/* 부품코드 */
+	    ,PART_NM			TEXT		/* 부품명 */
+	    ,BARCODE_YN		TEXT		/* 바코드필수여부 */
+	    ,EXPEND_YN			TEXT		/* 소모성자재여부 */
+	    ,GB_TP 				TEXT		/* 구분코드 */
+		,KIT_REG_YN			TEXT		/* 순환키드 등록 대상 여부 */
+	    ,FILTER_TP			TEXT		/* 필터구분(1:항바이러스 옵션필터) */
+	);
+	CREATE INDEX IDX_GOODS_CD ON PRODUCT ( 
+	    GOODS_CD ASC
+	    ,PART_CD ASC
+	);
+	]]>	
+	</update>
+
+	<update id="dropProductTable" statementType="STATEMENT">
+	<![CDATA[
+	DROP TABLE IF EXISTS PRODUCT
+	]]>		
+	</update>
+		
+	<delete id="deleteProductData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM PRODUCT
+	]]>	
+	</delete>
+	
+	<insert id="insertProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
+	<![CDATA[
+	INSERT INTO PRODUCT (
+		GOODS_CD, PART_CD, PART_NM, BARCODE_YN, EXPEND_YN, GB_TP, KIT_REG_YN, FILTER_TP
+	) VALUES (
+		#{GOODS_CD}, #{PART_CD}, #{PART_NM}, #{BARCODE_YN}, #{EXPEND_YN}, #{GB_TP}, #{KIT_REG_YN}, #{FILTER_TP}
+	)
+	]]>		
+	</insert>
+	
+	<update id="updateProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
+	<![CDATA[
+	UPDATE PRODUCT
+	SET PART_NM = #{PART_NM}, BARCODE_YN = #{BARCODE_YN}, EXPEND_YN = #{EXPEND_YN}, GB_TP = #{GB_TP, MODE=IN}, KIT_REG_YN = #{KIT_REG_YN}, FILTER_TP = #{FILTER_TP}
+	WHERE GOODS_CD = #{GOODS_CD} AND PART_CD = #{PART_CD}
+	]]>		
+	</update>
+
+	<select id="selectProductData" statementType="PREPARED" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT
+		GOODS_CD, PART_CD, PART_NM, BARCODE_YN, EXPEND_YN, GB_TP, KIT_REG_YN, FILTER_TP
+	FROM PRODUCT
+	WHERE GOODS_CD = #{goods_cd, mode=IN, jdbcType=VARCHAR}
+		AND PART_CD = #{part_cd, mode=IN, jdbcType=VARCHAR}
+	]]>		
+	</select>
+
+	<update id="createRD007_ExportTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD007_EXPORT (
+		 O_KIT_SN TEXT			/* 순환키트 바코드 */
+	);
+	]]>	
+	</update>
+	
+	<update id="createRD007_O_ITAB1Table" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD007_O_ITAB1 (
+		PART_SN TEXT			/* 바코드정보 */
+		,PART_CD TEXT			/* 부품코드 */
+		,PROC_YN TEXT 			/* 사용여부 */ 
+	);
+	]]>	
+	</update>
+
+	<update id="createRD007_O_ITAB2Table" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD007_O_ITAB2 (
+		PART_CD TEXT			/* 부품코드 */
+		,RENT_QTY TEXT			/* 차용수량 */
+		,PROC_QTY TEXT 			/* 사용수량 */ 
+	);
+	]]>	
+	</update>
+	
+
+</mapper>

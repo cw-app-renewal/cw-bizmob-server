@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 
+	 <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+                <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                        <property name="targetClass" value="java.lang.System" />
+                        <property name="targetMethod" value="getProperties" />
+                </bean>
+        </property>
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments">
+                <util:properties>
+                        <prop key="SMART_HOME">D:\work\bizmob\server\eclipse\workspace\SMART_HOME</prop>
+                </util:properties>
+        </property>
+	</bean>
+	-->
+	
+	<util:map id="contextParameters" map-class="java.util.HashMap">
+        <entry key="SMART_HOME" value="D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME"/>
+    </util:map>
+	
+	<import resource="file:D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-adapter.xml"/>
+	<import resource="file:D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-auth.xml"/>
+	<import resource="file:D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-bizlogic.xml"/>
+	<import resource="file:D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-resources.xml"/>
+	<import resource="file:D:\bizmob_coway\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-webapp.xml"/>
+	
+	<!-- dev system 
+	<bean id="jcoProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+ 		<property name="properties">
+ 			<props>
+ 				<prop key="jco.client.client">210</prop>
+ 				<prop key="jco.client.mshost">192.1.1.145</prop>
+ 				<prop key="jco.client.sysnr">00</prop>
+ 				<prop key="jco.client.r3name">COD</prop>
+ 				<prop key="jco.client.group">TITAN</prop>
+ 				<prop key="jco.client.user">RFCTEST</prop>
+ 				<prop key="jco.client.passwd">qwer1234</prop>
+ 				<prop key="jco.client.lang">KO</prop>
+ 			</props>
+ 		</property>
+ 	</bean>	
+ 	-->
+ 	<!-- QA sap system 
+	<bean id="jcoProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+ 		<property name="properties">
+ 			<props>
+ 				<prop key="jco.client.mshost">192.1.1.149</prop>
+ 				<prop key="jco.client.sysnr">00</prop>
+ 				<prop key="jco.client.r3name">COQ</prop>
+ 				<prop key="jco.client.group">TITAN</prop>
+ 				<prop key="jco.client.client">100</prop>
+ 				<prop key="jco.client.user">RFCTEST</prop>
+ 				<prop key="jco.client.passwd">qwer1234</prop>
+ 				<prop key="jco.client.lang">KO</prop>
+ 			</props>
+ 		</property>
+ 	</bean> 	
+ 	-->
+ 	<!-- sap connector 
+ 	<bean id="sapConnector" class="com.mcnc.bizmob.connector.sap.SapConnector">
+		<constructor-arg ref="jcoProps"/>
+	</bean>
+	-->
+	<!-- LEGACY AUDIT AOP 
+	<bean class="com.mcnc.bizmob.adapter.aspect.AuditAspect"/>
+	-->
+
+	
+</beans>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="journal">
+	<insert id="SQL_KEEP" parameterType="com.mcnc.smart.journal.JournalInfo">
+		<![CDATA[
+		insert into smart_journals (
+			TRANSACTION_ID,
+			SESSION_ID,
+			DEVICE_ID,
+			TRCODE,
+			USER_ID,
+			TIME_STAMP,
+			JOURNAL_TYPE,
+			JOURNAL_RESULT,
+			ERROR_CODE,
+			ERROR_TEXT,
+			INFO_TEXT,
+			SERVER_IP,
+			CLIENT_IP,
+			CREATE_DATE 
+		)
+		values(
+			#{transactionId,mode=IN,jdbcType=NUMERIC},
+			#{sessionId,mode=IN,jdbcType=VARCHAR},
+			#{deviceId,mode=IN,jdbcType=VARCHAR},
+			#{trCode,mode=IN,jdbcType=CHAR},
+			#{userId,mode=IN,jdbcType=VARCHAR},
+			#{time,mode=IN,jdbcType=NUMERIC},
+			#{type,mode=IN,jdbcType=INTEGER},
+			#{result,mode=IN,jdbcType=NUMERIC},
+			#{errorCode,mode=IN,jdbcType=CHAR},
+			#{errorText,mode=IN,jdbcType=VARCHAR},
+			#{infoText,mode=IN,jdbcType=VARCHAR},
+			#{serverIP,mode=IN,jdbcType=CHAR},
+			#{clientIP,mode=IN,jdbcType=CHAR},
+			GETDATE() 
+		)
+		]]>
+	</insert>
+</mapper> 

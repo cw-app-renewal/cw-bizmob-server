@@ -1,0 +1,20 @@
+adapter trCode 규칙 정리
+ - module name 3자리
+ - sap function number 3자리
+
+CDRxxx (Coway Doctor Read : 닥터 데이터 조회)
+
+CDWxxx (Coway Doctor Write : 닥터 데이터 등록)
+ 
+CCRxxx (Coway Cody Read : 코디 데이터 조회)
+ 
+CCWxxx (Coway Cody Write : 코디 데이터 등록)
+ 
+CGRxxx (Coway General Read : 닥터/코디/홈케어 데이터 조회)
+ 
+CGWxxx (Coway General Write : 닥터/코디/홈케어 데이터 등록)
+
+CHRxxx (Coway Homecare Read : 홈케어 데이터 조회)
+
+CHWxxx (Coway Homecare Write : 홈케어 데이터 등록)
+

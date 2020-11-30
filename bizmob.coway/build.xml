@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Web Application Build" default="deployment" basedir=".">
+
+	<property file="build.properties"/>
+	
+	<property name="java.web.src" value="./src" />
+	<property name="java.web.classes" value="./build/classes" />
+	<property name="java.lib" value="./WebContent/WEB-INF/lib" />
+	<property name="appName.war" value="./bizmob.war" />
+	<property name="java.webcontent" value="./WebContent" />
+	<property name="java.webinf" value="./WebContent/WEB-INF" />
+
+	<target name="preBuild">
+		<delete dir="${java.lib}" />
+	</target>
+	
+	<target name="copyLib" depends="preBuild">
+		<copy todir="${java.lib}">
+			<fileset dir="../bizmob.coway.SMART_HOME/lib" includes="*.jar"/>
+		</copy>
+	</target>
+	
+	<target name="packageProjects" depends="copyLib">
+		
+		<ant antfile="../bizmob.coway.adapter.model/build.xml" dir="../bizmob.coway.adapter.model"/>
+		<move todir="${java.lib}">
+			<fileset dir="../bizmob.coway.adapter.model" includes="**/*.jar" />
+		</move>
+		
+		<ant antfile="../bizmob.coway.connect/build.xml" dir="../bizmob.coway.connect"/>
+		<move todir="${java.lib}">
+			<fileset dir="../bizmob.coway.connect" includes="**/*.jar" />
+		</move>
+		
+		<ant antfile="../bizmob.coway.batch/build.xml" dir="../bizmob.coway.batch"/>
+		<move todir="${java.lib}">
+			<fileset dir="../bizmob.coway.batch" includes="**/*.jar" />
+		</move>
+				
+	</target>
+	
+	<target name="clean" depends="packageProjects">
+		<delete includeemptydirs="true">
+			<fileset dir="${java.web.classes}" includes="**/*"/>
+  		</delete>
+	</target>
+
+	<path id="build.classpath">
+		<fileset dir="${java.lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compileWeb" depends="clean" description="Compile web application">
+		<echo message="Compiling the web application" />
+		<javac srcdir="${java.web.src}" destdir="${java.web.classes}">
+			<classpath refid="build.classpath" />
+		</javac>
+	</target>
+	
+	<target name="packageWeb" depends="compileWeb"
+		description="Build the WAR file in one step">
+		<echo message="Building the WAR file in one step" />
+		<war destfile="${appName.war}" basedir="${java.webcontent}" webxml="${java.webinf}/web.xml">
+			<classes dir="${java.web.classes}" />
+		</war>
+	</target>
+
+	<target name="postBuild" depends="packageWeb">
+		<!-- war file -->
+	  	<tstamp>
+	    	<format property="currentTime" pattern="yyyyMMdd_HHmmss" unit="second"/>
+	  	</tstamp>
+		<move file="${appName.war}" tofile="../DEPLOYMENT/${currentTime}/real/webapps/${appName.war}"/>
+
+		
+		<!-- home dir -->
+		<copy todir="../DEPLOYMENT/${currentTime}/real/home/conf">
+			<fileset dir="../bizmob.coway.SMART_HOME/conf"/>
+		</copy>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.json" tofile="../DEPLOYMENT/${currentTime}/real/home/conf/license/license.json"/>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.sign" tofile="../DEPLOYMENT/${currentTime}/real/home/conf/license/license.sign"/>
+
+		
+		<!-- configuration -->
+		<copy todir="../DEPLOYMENT/${currentTime}/real/home/conf" overwrite="true">
+			<fileset dir="../bizmob.coway.SMART_HOME/deployment/real/conf"/>
+		</copy>
+		
+		<!-- delete the used libraries of a war project -->
+		<delete dir="${java.lib}" />
+	</target>
+	
+	<target name="deployment" depends="postBuild">
+	</target>
+	
+
+</project>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="coway.mms">
+
+
+	<select id="getSystemTime" resultType="java.lang.String">
+	<![CDATA[
+	select to_char(sysdate, 'YYYYMMDD-HH24MISS') as time
+	from dual
+	]]>
+	</select>
+
+	<insert id="callSpMms" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_MMS (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+		,#{img_path, mode=IN, jdbcType=VARCHAR}
+		,''
+		,''
+	)
+	]]>
+	</insert>
+
+	<insert id="callSpMmsTest" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_MMS_TEST (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+		,#{img_path, mode=IN, jdbcType=VARCHAR}
+		,''
+		,''
+	)
+	]]>
+	</insert>
+	
+	<insert id="callSpLmsTest" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_LMS_TEST (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+	)
+	]]>
+	</insert>
+	
+	<insert id="callSpLms" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_LMS (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+	)
+	]]>
+	</insert>
+
+	<insert id="callSpMms3Image" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_MMS (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+		,#{img_path, mode=IN, jdbcType=VARCHAR}
+		,#{img_path2, mode=IN, jdbcType=VARCHAR}
+		,#{img_path3, mode=IN, jdbcType=VARCHAR}
+	)
+	]]>
+	</insert>
+
+	<insert id="callSpMms3ImageTest" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<![CDATA[
+	call CWSMS.SP_MMS_TEST (
+		#{rtn_code, mode=OUT, jdbcType=NUMERIC}
+		,#{rtn_msg, mode=OUT, jdbcType=VARCHAR}
+		
+		,#{rcv_phn_id, mode=IN, jdbcType=VARCHAR}
+		,#{callback, mode=IN, jdbcType=VARCHAR}
+		,#{snd_title, mode=IN, jdbcType=VARCHAR}
+		,#{snd_msg, mode=IN, jdbcType=VARCHAR}
+		,#{rsrvd_id, mode=IN, jdbcType=VARCHAR}
+		,#{img_path, mode=IN, jdbcType=VARCHAR}
+		,#{img_path2, mode=IN, jdbcType=VARCHAR}
+		,#{img_path3, mode=IN, jdbcType=VARCHAR}
+	)
+	]]>
+	</insert>
+
+</mapper>

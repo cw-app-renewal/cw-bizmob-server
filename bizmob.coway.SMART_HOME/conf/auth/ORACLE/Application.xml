@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Application">
+    <select id="getLatestAppId" parameterType="DefaultMap" resultType="java.lang.String">
+    	<![CDATA[
+			SELECT APP_ID
+			  FROM APP
+			 WHERE DEPLOY_TYPE = #{DEPLOY_TYPE}
+			   AND OS_CODE = #{OS_CODE}
+			   AND DISPLAY_TYPE IN ('ALL', #{DISPLAY_TYPE})
+			   AND OS_VERSIONS LIKE '%,' || #{VERSION} || ',%'
+			   AND APP_KEY = #{APP_KEY}
+			   AND ROWNUM < 2
+			 ORDER BY SORT_VERSION DESC  
+		 ]]>   
+ 	</select>
+    
+    <select id="getLatestAppInfo" parameterType="DefaultMap" resultType="SmartUpdaterVersion">
+    	<![CDATA[
+			SELECT *
+			  FROM (SELECT /*+ FIRST_ROWS */ * FROM (
+			  			SELECT APP_KEY,
+				               MAJOR_VERSION AS appMajorVersion,
+				               MINOR_VERSION AS appMinorVersion,
+				               BUILD_VERSION AS appBuildVersion,
+				               CASE WHEN OS_CODE = 'iOS' THEN APP_ENV_FILE_NAME
+							ELSE APP_FILE_NAME
+				               END appFilename
+				          FROM APP
+				         WHERE DEPLOY_TYPE IN ('REAL', #{DEPLOY_TYPE})
+				           AND OS_CODE = #{OS_CODE}
+				           AND DISPLAY_TYPE IN ('ALL', #{DISPLAY_TYPE})
+				           AND OS_VERSIONS LIKE '%,' || #{VERSION} || ',%'
+				           AND APP_KEY = #{APP_KEY}
+				           AND USE_FLAG = 'Y'
+				         ORDER BY SORT_VERSION DESC )
+			         WHERE ROWNUM < 2) APP 
+			    LEFT OUTER JOIN ( SELECT /*+ FIRST_ROWS */ * FROM (
+				    			SELECT APP_KEY,
+                                                            MAJOR_VERSION AS contentMajorVersion, 
+                                                            MINOR_VERSION AS contentMinorVersion, 
+                                                            FN_MAJOR_CONTENT_FILE_NAME(APP_KEY, MAJOR_VERSION) as contentMajorFilename, 
+                                                            CASE WHEN VERSION_TYPE = 'MAJOR' THEN NULL
+                                                             ELSE CONTENT_FILE_NAME
+                                                            END contentMinorFilename
+				                  FROM APP_CONTENT
+				                 WHERE DEPLOY_TYPE IN ('REAL', #{DEPLOY_TYPE})
+				                   AND DISPLAY_TYPE IN ('ALL', #{DISPLAY_TYPE})
+				                   AND APP_KEY = #{APP_KEY}
+				                 ORDER BY SORT_VERSION DESC )
+			                 WHERE ROWNUM < 2) CONTENT 
+			        ON APP.APP_KEY = CONTENT.APP_KEY    
+		 ]]>   
+	</select>
+</mapper>

@@ -1,0 +1,18 @@
+{
+    "header": {
+        "error_code": "",
+        "error_text": "",
+        "info_text": "",
+        "login_session_id": "",
+        "message_version": "",
+        "result": true,
+        "trcode": "CHR157",
+        "rfc_name": "ZSMT_IF_SP_HOME_RD157",
+        "common_adapter": true,
+        "trId": ""
+    },
+    "body": {
+        "I_UEMPL_NO": "20181189",
+        "I_STD_YM": "201211"
+    }
+}

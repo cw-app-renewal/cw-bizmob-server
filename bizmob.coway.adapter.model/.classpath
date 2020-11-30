@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/bizmob.coway.SMART_HOME/lib/jackson-core-lgpl-1.6.2.jar"/>
+	<classpathentry kind="lib" path="/bizmob.coway.SMART_HOME/lib/jackson-mapper-lgpl-1.6.2.jar"/>
+	<classpathentry kind="lib" path="/bizmob.coway.SMART_HOME/lib/json-schema-validator-0.0.1-RELEASE.jar"/>
+	<classpathentry kind="lib" path="/bizmob.coway.SMART_HOME/lib/messageframework-common-2.5.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

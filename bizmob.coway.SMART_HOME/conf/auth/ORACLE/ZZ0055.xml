@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ZZ0055">	
+	<select id="ZZ0055GetDeviceId" statementType="PREPARED"  parameterType="java.util.HashMap"  resultType="com.mcnc.portal.auth.model.DeviceInfo">
+		SELECT 
+			DEVICE_ID AS deviceId
+		FROM 
+			USE_DEVICE 
+		WHERE DEVICE_ID = #{oldDeviceId, jdbcType=VARCHAR}	/* 32bit device */
+			OR DEVICE_ID LIKE 'ios%' || #{partOfDeviceId, jdbcType=VARCHAR} || '%'	/* 64bit device */
+	</select>	
+	
+	<update id="ZZ0055UpdateDeviceId" statementType="PREPARED"  parameterType="java.util.HashMap" >
+		UPDATE 
+			USE_DEVICE 
+		SET 
+			DEVICE_ID = #{newDeviceId, jdbcType=VARCHAR}	        
+		WHERE 
+			DEVICE_ID = #{oldDeviceId, jdbcType=VARCHAR}	        
+	</update>
+</mapper>

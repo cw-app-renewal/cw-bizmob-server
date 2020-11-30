@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="doctor.work">
+
+	<!-- 테이블 목록 조회 -->
+	<select id="selectTableList" statementType="STATEMENT" resultType="java.lang.String">
+	<![CDATA[
+	SELECT tbl_name
+	FROM SQLITE_MASTER
+	WHERE TYPE = 'table'
+	]]>
+	</select>
+
+	<!-- 테이블 삭제 -->
+	<delete id="dropTable" statementType="PREPARED" parameterType="java.lang.String">
+	<![CDATA[
+	DROP TABLE IF EXISTS ${table_name} 
+	]]>
+	</delete>
+	
+	<!-- 실적현황 저장 테이블 (홈화면 위젯 사용) -->
+	<update id="createRD005_EXPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD005_EXPORT (
+		O_PROC_DT			TEXT		/* 처리일자 */
+		,O_RESULT_DATA1		TEXT		/* 전일처리건수(설치) */
+		,O_RESULT_DATA2		TEXT		/* 당월처리건수(설치) */
+		,O_RESULT_DATA3		TEXT		/* 당월처리율(설치) */
+		,O_RESULT_DATA4		TEXT		/* 전일처리건수(AS) */
+		,O_RESULT_DATA5		TEXT		/* 당월처리건수(AS) */
+		,O_RESULT_DATA6		TEXT		/* 당월처리율(AS) */
+		,O_RESULT_DATA7		TEXT		/* 전일처리건수(반환) */
+		,O_RESULT_DATA8		TEXT		/* 당월처리건수(반환) */
+		,O_RESULT_DATA9		TEXT		/* 당월처리율(반환) */
+		,O_RESULT_DATA10	TEXT		/* 전일처리건수(매변) */
+		,O_RESULT_DATA11	TEXT		/* 당월처리건수(매변) */
+		,O_RESULT_DATA12	TEXT		/* 당월처리율(매변) */
+		,O_RESULT_DATA13	TEXT		/* 전일처리건수(제품교환) */
+		,O_RESULT_DATA14	TEXT		/* 당월처리건수(제품교환) */
+		,O_RESULT_DATA15	TEXT		/* 당월처리율(제품교환) */
+		,O_RESULT_DATA16	TEXT		/* 종합만족도(전일-개인) */
+		,O_RESULT_DATA17	TEXT		/* 종합만족도(당월-개인) */
+		,O_RESULT_DATA18	TEXT		/* 종합만족도(당월-팀) */
+		,O_RESULT_DATA19	TEXT		/* 종합만족도(당월-권역) */
+		,O_RESULT_DATA20	TEXT		/* 서비스표준화(전일-개인) */
+		,O_RESULT_DATA21	TEXT		/* 서비스표준화(당월-개인) */
+		,O_RESULT_DATA22	TEXT		/* 서비스표준화(당월-팀) */
+		,O_RESULT_DATA23	TEXT		/* 서비스표준화(당월-권역) */
+		,O_RESULT_DATA24	TEXT		/* 재발생율(전일-개인) */
+		,O_RESULT_DATA25	TEXT		/* 재발생율(당월-개인) */
+		,O_RESULT_DATA26	TEXT		/* 재발생율(당월-팀) */
+		,O_RESULT_DATA27	TEXT		/* 재발생율(당월-권역) */
+		,O_RESULT_DATA28	TEXT		/* 약속이행율(전일-개인) */
+		,O_RESULT_DATA29	TEXT		/* 약속이행율(당월-개인) */
+		,O_RESULT_DATA30	TEXT		/* 약속이행율(당월-팀) */
+		,O_RESULT_DATA31	TEXT		/* 약속이행율(당월-권역) */
+		,O_RESULT_DATA32	TEXT		/* 최초약속이행율-전일(개인) */
+		,O_RESULT_DATA33	TEXT		/* 최초약속이행율-당일(개인) */
+		,O_RESULT_DATA34	TEXT		/* 최초약속이행율-당월(팀) */
+		,O_RESULT_DATA35	TEXT		/* 최초약속이행율-당월(권역) */
+		,O_RESULT_DATA36	TEXT		/* 비데분리스팀처리율(전일-개인) */
+		,O_RESULT_DATA37	TEXT		/* 비데분리스팀처리율(당월-개인) */
+		,O_RESULT_DATA38	TEXT		/* 비데분리스팀처리율(당월-팀) */
+		,O_RESULT_DATA39	TEXT		/* 비데분리스팀처리율(당월-권역) */
+		,O_RESULT_DATA40	TEXT		/* 재입고율-전일(개인) */
+		,O_RESULT_DATA41	TEXT		/* 재입고율-당월(개인) */
+		,O_RESULT_DATA42	TEXT		/* 재입고율-당월(팀) */
+		,O_RESULT_DATA43	TEXT		/* 재입고율-당월(권역) */	
+	);
+	]]>		
+	</update>	
+
+	<!-- 작업 목록 리스트 저장용 테이블 -->
+	<update id="createRD006_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD006_O_ITAB (
+		JOB_DT					TEXT		/* 작업일자 */
+		,JOB_TP					TEXT		/* 작업구분 */
+		,ORDER_NO				TEXT		/* 고객주문번호 */
+		,JOB_SEQ				TEXT		/* 작업일련번호 */
+		,EQUNR					TEXT		/* 설비번호 */
+		,KUNNR					TEXT		/* 고객번호1 */
+		,CUST_NM				TEXT		/* 고객명 */
+		,AUFNR1					TEXT		/* 오더번호 */
+		,QMNUM					TEXT		/* 통지번호 */
+		,CUST_TP				TEXT		/* 고객구분 */
+		,MS_LVL					TEXT		/* 멤버쉽등급 */
+		,CONTR_TP				TEXT		/* 계약구분 */
+		,SALE_ID				TEXT		/* 계약-판매구분 text */
+		,GOODS_CD				TEXT		/* 상품코드 */
+		,GOODS_NM				TEXT		/* 상품명 */
+		,ZIP_SEQ				TEXT		/* 우편일련번호 */
+		,ZIP1					TEXT		/* 우편번호1 */
+		,ZIP2					TEXT		/* 우편번호2 */
+		,ADDR1					TEXT		/* 우편주소 */
+		,ADDR2					TEXT		/* 상세주소 */
+		,TEL_NUMBER1			TEXT		/* 집전화번호1 */
+		,TEL_NUMBER2			TEXT		/* 집전화번호2 */
+		,TEL_NUMBER3			TEXT		/* 집전화번호3 */
+		,MOB_NUMBER1			TEXT		/* 핸드폰번호1 */
+		,MOB_NUMBER2			TEXT		/* 핸드폰번호2 */
+		,MOB_NUMBER3			TEXT		/* 핸드폰번호3 */
+		,CODY_NUMBER1			TEXT		/* 담당코디PDA번호1 */
+		,CODY_NUMBER2			TEXT		/* 담당코디PDA번호2 */
+		,CODY_NUMBER3			TEXT		/* 담당코디PDA번호3 */
+		,CODY_HP_NUMBER1		TEXT		/* 담당코디HP번호1 */
+		,CODY_HP_NUMBER2		TEXT		/* 담당코디HP번호2 */
+		,CODY_HP_NUMBER3		TEXT		/* 담당코디HP번호3 */
+		,SALE_ID_NM				TEXT		/* 판매인명 */
+		,SAIL_TEL_NO1_1			TEXT		/* 판매인전화번호1 */
+		,SAIL_TEL_NO1_2			TEXT		/* 판매인전화번호2 */
+		,SAIL_TEL_NO1_3			TEXT		/* 판매인전화번호3 */
+		,SAIL_TEL_NO2_1			TEXT		/* 판매처전화번호1 */
+		,SAIL_TEL_NO2_2			TEXT		/* 판매처전화번호2 */
+		,SAIL_TEL_NO2_3			TEXT		/* 판매처전화번호3 */
+		,MAP_REMARK				TEXT		/* 약도 */
+		,CUST_REQ_DESC			TEXT		/* 특이사항 */
+		,PLACE_DESC				TEXT		/* 설치위치상세 */
+		,PASS_USER_NM			TEXT		/* 이관자 이름(이관자+사번) */
+		,PASS_USER_MOB1			TEXT		/* 이관자 연락처1 */
+		,PASS_USER_MOB2			TEXT		/* 이관자 연락처2 */
+		,PASS_USER_MOB3			TEXT		/* 이관자 연락처3 */
+		,PLAN_DT				TEXT		/* 작업예정일 */
+		,PLAN_TM				TEXT		/* 방문약속시간 */
+		,ING_TM					TEXT		/* 작업소요시간 */
+		,ARRIVE_TM				TEXT		/* 도착시간 */
+		,PROC_TM				TEXT		/* 완료시간 */
+		,STATUS					TEXT		/* 작업상태 */
+		,JOB_RECV_TP			TEXT		/* 접수유형 */
+		,SYNC_YN				TEXT		/* PDA 작업전송여부 */
+		,PLAN_DEPT_CD			TEXT		/* 작업예정부서 */
+		,PASS_UEMPL_NO			TEXT		/* 이관희망대상자 */
+		,DELAY_DT				TEXT		/* 작업연기일 */
+		,PASS_RSN				TEXT		/* 이관사유코드 */
+		,NPROC_RSN				TEXT		/* 미처리사유 */
+		,NPROC_RSN_DESC			TEXT		/* 미처리사유상세 */
+		,COM_CD					TEXT		/* 회사구분 */
+		,PRE_YN					TEXT		/* 선설치여부 */
+		,BARCODE_YN				TEXT		/* 바코드필수여부 */
+		,JOB_TP_NM				TEXT		/* 작업구분명 */
+		,TPLNR					TEXT		/* 기능위치 */
+		,VIP_LVL				TEXT		/* VIP등급명 */
+		,DATE_PASS_YN			TEXT		/* 일자이관가능여부 */
+		,MAX_PASS_DT			TEXT		/* 최대이관가능일자 */
+		,CANCEL_YN				TEXT		/* 취소가능여부 */
+		,CHG_TERM				TEXT		/* 점검회차 */
+		,FROM_DAY				TEXT		/* 선택가능일(시작일) */
+		,TO_DAY					TEXT		/* 선택가능일(종료일) */
+		,INST_UEMPL_NM			TEXT		/* 설치닥터명 */
+		,INST_UEMPL_NUMBER1		TEXT		/* 설치닥터PDA번호1 */
+		,INST_UEMPL_NUMBER2		TEXT		/* 설치닥터PDA번호2 */
+		,INST_UEMPL_NUMBER3		TEXT		/* 설치닥터PDA번호3 */
+		,TOT_RECV_NM			TEXT		/* 접수유형명(전체) */
+		,WL_DECI_OPT1			TEXT		/* 변경주소유지활성여부 */
+		,AS_CNT					TEXT		/* AS처리건수 */
+	);
+	]]>		
+	</update>
+
+	<!-- 작업 목록 리스트 - 고객 감성 유형 저장 테이블 -->
+	<update id="createRD006_O_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD006_O_ITAB2 (
+		EQUNR				TEXT		/* 설비번호 */
+		,RECV_DT			TEXT		/* 접수일자 */
+		,CUST_SENSE_TP		TEXT		/* 고객감성유형코드 */
+		,CUST_SENSE_TP_NM	TEXT		/* 고객감성유형코드명 */
+		,CUST_SENSE_TEXT	TEXT		/* 직접입력 텍스트 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 작업 목록 리스트 - 고객 패턴 저장 테이블 -->
+	<update id="createRD006_O_ITAB3" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD006_O_ITAB3 (
+		ORDER_NO		TEXT		/* 고객주문번호 */
+		,JOB_DT			TEXT		/* 등록일자 */
+		,PATTERN_TEXT	TEXT		/* 고객패턴내용 */
+		,GBN_NM			TEXT		/* 구분명 */
+		,CSI_NM			TEXT		/* 고객구분명 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 작업 목록 리스트 - 관련 연락처 정보 저장 테이블 -->
+	<update id="createRD006_O_ITAB4" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD006_O_ITAB4 (
+		JOB_DT					TEXT		/* 작업일자 */
+		,JOB_TP					TEXT		/* 작업구분 */
+		,ORDER_NO				TEXT		/* 고객주문번호 */
+		,JOB_SEQ				TEXT		/* 작업일련번호 */
+		,WL_DECI_OPT1			TEXT		/* 패키지묶음여부 */
+		,WL_DECI_OPT2			TEXT		/* 이전설치여부 */
+		,WL_DECI_OPT3			TEXT		/* 출고전입고 취소여부 */
+		,WL_DECI_OPT4			TEXT		/* 가접수-메트리스여부 */
+		,WL_DECI_OPT5			TEXT		/* BS대상여부(얼음정수기) */
+		,WL_DECI_OPT6			TEXT		/* 얼음정수기 하나더 서비스 알림 */
+		,WL_DECI_OPT7			TEXT		/* 당일콜건여부 */
+		,WL_DECI_OPT8			TEXT		/* WM07스티커오부착건여부 */
+		,WL_DECI_OPT9			TEXT		/* 리퍼브대상여부 */
+		,PRDHA					TEXT		/* 제품계층구조 */
+		,RTN_CONTACT_TEL1		TEXT		/* 반환컨텍번호1 */
+		,RTN_CONTACT_TEL2		TEXT		/* 반환컨텍번호2 */
+		,RTN_CONTACT_TEL3		TEXT		/* 반환컨텍번호3 */
+		,AS_CONTACT_TEL1		TEXT		/* AS컨텍번호1 */
+		,AS_CONTACT_TEL2		TEXT		/* AS컨텍번호2 */
+		,AS_CONTACT_TEL3		TEXT		/* AS컨텍번호3 */
+		,INST_EMP_NM			TEXT		/* 설치자명 */
+		,INST_EMP_TEL1			TEXT		/* 설치자연락처1 */
+		,INST_EMP_TEL2			TEXT		/* 설치자연락처2 */
+		,INST_EMP_TEL3			TEXT		/* 설치자연락처3 */
+		,UNINST_EMP_NM			TEXT		/* 해체자명 */
+		,UNINST_EMP_TEL1		TEXT		/* 해체자연락처1 */
+		,UNINST_EMP_TEL2		TEXT		/* 해체자연락처2 */
+		,UNINST_EMP_TEL3		TEXT		/* 해체자연락처3 */
+	);
+	]]>		
+	</update>	
+
+	<!-- 작업 목록 리스트 - 고객 상품 리스트 -->
+	<update id="createRD007_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD007_O_ITAB (
+		JOB_DT				TEXT			/* 작업일자 */
+		,JOB_TP				TEXT			/* 작업구분 */
+		,ORDER_NO			TEXT			/* 고객주문번호 */
+		,JOB_SEQ			TEXT			/* 작업일련번호 */
+		,PROD_SEQ			TEXT			/* 작업순번(SD작업순번) */
+		,GOODS_ID			TEXT			/* 주/별매상품구분 */
+		,MOD_ID				TEXT			/* 변경전후구분 */
+		,GOODS_CD			TEXT			/* 상품코드 */
+		,GOODS_NM			TEXT			/* 상품명 */
+		,GOODS_SN			TEXT			/* 상품고유번호 */
+		,GOODS_QTY			TEXT			/* 상품수량 */
+		,SCAN_YN			TEXT			/* 바코드 SCAN 여부 */
+		,PRDHA				TEXT			/* 제품계층구조 */
+		,GOODS_MODSN		TEXT			/* 변경바코드 */
+		,SCAN_MODYN			TEXT			/* 변경상품 바코드 SCAN 여부 */
+		,DUO_GOODS_SN		TEXT			/* 자재코드변환 매칭바코드 */
+		,OLD_DUO_GOODS_SN	TEXT			/* 이전자재코드변환 매칭바코드 */
+		,PLAN_DT			TEXT			/* 작업예정일 */
+		,SEND_YN			TEXT			/* 전송 플래그(N:전송대상, Y:전송완료, null:미처리) */		
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 목록 리스트 - 차용부품 (바코드 사용) 정보 저장 테이블 -->
+	<update id="createRD008_O_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD008_O_ITAB1 (
+		PART_SN			TEXT		/* 바코드 정보 */
+		,PART_CD		TEXT		/* 자재(부품)코드 */
+		,PROC_YN		TEXT		/* 사용여부 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 목록 리스트 - 차용부품(바코드 미사용) 저장 테이블 -->
+	<update id="createRD008_O_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD008_O_ITAB2 (
+		PART_CD			TEXT		/* 자재(부품)코드 */
+		,RENT_QTY		TEXT		/* 차용수량 */
+		,PROC_QTY		TEXT		/* 수룡수량 */
+		,LIMIT_QTY		TEXT		/* 제한수량 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 작업 상세 - 설치 -->
+	<update id="createRD017_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD017_O_ITAB (
+		JOB_DT				TEXT			/* 작업일자 */
+		,JOB_TP				TEXT			/* 작업구분 */
+		,ORDER_NO			TEXT			/* 고객주문번호 */
+		,JOB_SEQ			TEXT			/* 작업일련번호 */
+		,PLACE_ID			TEXT			/* 설치장소 */
+		,PLACE_ID2			TEXT			/* 설치장소 구분 세부 */
+		,INS_DECI_OPT1		TEXT			/* 난공사등급제한여부 */
+		,INS_DECI_OPT2		TEXT			/* 설치장소(학교면제)제한여부 */
+		,INS_DECI_OPT3		TEXT			/* 변칙등록제한여부 */
+		,INS_DECI_OPT4		TEXT			/* 전기공사활성제한여부 */
+		,INS_DECI_OPT5		TEXT			/* 동반닥터등록필수여부(Y: 필수, N
+		,INS_DECI_OPT6		TEXT			/* 도착등록가능여부 */
+		,INS_DECI_OPT7		TEXT			/* 처리등록가능여부 */
+		,INS_DECI_OPT8		TEXT			/* 직원산매여부 */
+		,INS_DECI_OPT9		TEXT			/* 비데제품 설문조사 여부 */
+		,INS_DECI_OPT10		TEXT			/* 도착등록-바코드체크여부 */
+		,INS_DECI_OPT11		TEXT			/* 별매반환여부 */
+		,INS_DECI_OPT12		TEXT			/* WJ바코드입력가능여부 */
+		,START_DT			TEXT			/* 작업일자 */
+		,END_DT				TEXT			/* 작업일자 */
+		,COM_CD				TEXT			/* 회사구분1 */
+		,RSCH_TP			TEXT			/* 설문구분(A: 전체, S: 선택)  */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 상세 - AS -->
+	<update id="createRD018_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD018_O_ITAB (
+		JOB_DT				TEXT			/* 작업일자 */
+		,JOB_TP				TEXT			/* 작업구분 */
+		,ORDER_NO			TEXT			/* 고객주문번호 */
+		,JOB_SEQ			TEXT			/* 일련번호 */
+		,RECV_TP			TEXT			/* AS접수유형코드 */
+		,RECV_NM			TEXT			/* AS접수유형명 */
+		,RECV_DTL_NM		TEXT			/* AS접수유형상세명 */
+		,INSTALL_DT			TEXT			/* 설치일 */
+		,SALEMOD_DT			TEXT			/* 매변일자 */
+		,DELAY_AMT			TEXT			/* 연체금액(당월제외) */
+		,DELAY_AMT_PLUS		TEXT			/* 연체가산금액 */
+		,DELAY_AMT_AS		TEXT			/* AS 미수금 */
+		,LAST_HEART_DT		TEXT			/* 최근 하트서비스 일자 */
+		,LAST_AS_DT			TEXT			/* 최근 AS 일자 */
+		,MS_DT				TEXT			/* 멤버쉽가입일자 */
+		,PROC_CNT1			TEXT			/* 이전설치횟수 */
+		,PROC_CNT2			TEXT			/* 해체횟수 */
+		,PROC_CNT3			TEXT			/* 재설치횟수 */
+		,AS_DECI_OPT1		TEXT			/* 판가계산여부 */
+		,AS_DECI_OPT2		TEXT			/* 품질코드입력 제한여부 */
+		,AS_DECI_OPT3		TEXT			/* 설치대수입력 제한여부 */
+		,AS_DECI_OPT4		TEXT			/* 난공사등급 제한여부 */
+		,AS_DECI_OPT5		TEXT			/* 자재투입 필수여부 */
+		,AS_DECI_OPT6		TEXT			/* 이전설치동의ENABLE여부 */
+		,AS_DECI_OPT7		TEXT			/* 처리형태상세제한구분 */
+		,AS_DECI_OPT8		TEXT			/* 아답터재사용제한여부 */
+		,AS_DECI_OPT9		TEXT			/* 필터체크제한여부 */
+		,AS_DECI_OPT10		TEXT			/* 청결상태체크제한여부 */
+		,AS_DECI_OPT11		TEXT			/* 분리스팀서비스 여부 */
+		,AS_DECI_OPT12		TEXT			/* 도착등록가능여부 */
+		,AS_DECI_OPT13		TEXT			/* 처리등록가능여부 */
+		,AS_DECI_OPT14		TEXT			/* 지정부품제한여부 */
+		,AS_DECI_OPT15		TEXT			/* 변칙등록제한여부 */
+		,AS_DECI_OPT16		TEXT			/* B/S대상건여부(ZMOT4004_DFLC) */
+		,AS_DECI_OPT17		TEXT			/* 밸브류 선택입력 여부 */
+		,AS_DECI_OPT18		TEXT			/* B/S대상건여부(얼음정수기) */
+		,AS_DECI_OPT19		TEXT			/* B/S대상건여부(피팅, 튜빙) */
+		,AS_DECI_OPT20		TEXT			/* 이전설치대상여부 */
+		,AS_DECI_OPT21		TEXT			/* 연수기-연수안됨여부 */
+		,AS_DECI_OPT22		TEXT			/* 쿠폰사용대상여부 */
+		,AS_DECI_OPT23		TEXT			/* 도착등록-바코드체크여부 */
+		,AS_DECI_OPT24		TEXT			/* 도기세정서비스여부 */
+		,AS_DECI_OPT25		TEXT			/* 얼음정수기 하나더 서비스 알림 */
+		,AS_DECI_OPT26		TEXT			/* WM07 고객만족 스티커 오부착건 여부 */
+		,RECV_DT			TEXT			/* AS접수일자 */ 
+		,RECV_TM			TEXT			/* AS접수시간 */
+		,RECV_ID_NM			TEXT			/* AS접수자(접수부서+접수자) */
+		,FIRST_DT			TEXT			/* 최초약속일자 */
+		,OVER_DUE_DAYS		TEXT			/* 최초약속일 대비 약속초과일수 */
+		,AS_CNT				TEXT			/* 설치일 이후 총AS건수 */
+		,PRODUCT_DT			TEXT			/* 제품생산일자 */
+		,NEXT_HEART_DT		TEXT			/* 다음하트날자 */
+		,HEART_DEPT_NM		TEXT			/* 담당지국 */
+		,HEART_DEPT_TEL1	TEXT			/* 담당지국 전화1VV */
+		,HEART_DEPT_TEL2	TEXT			/* 담당지국 전화2 */
+		,HEART_DEPT_TEL3	TEXT			/* 담당지국 전화3 */
+		,PLACE_ID			TEXT			/* 설치장소 */
+		,PLACE_ID2			TEXT			/* 설치장소 구분 세부 */
+		,AR_LIST			TEXT			/* 미수금내역 */ 
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 상세 - AS 작업 별매 상품 리스트 -->
+	<update id="createRD018_O_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD018_O_ITAB2 (
+		ORDER_NO		TEXT			/* 고객 주문 번호 */
+		,GOODS_CD		TEXT			/* 제품 코드 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 작업 상세 - 매변 -->
+	<update id="createRD026_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD026_O_ITAB (
+		JOB_DT					TEXT			/*작업일자 */
+		,JOB_TP					TEXT			/*작업구분 */
+		,ORDER_NO				TEXT			/*고객주문번호 */
+		,JOB_SEQ				TEXT			/*작업일련번호 */
+		,SALEMOD_TP				TEXT			/*매변유형 */
+		,SALEMOD_RSN			TEXT			/*매변상세사유 */
+		,SALEMOD_TP_NM			TEXT			/*매변유형명 */
+		,SALEMOD_RSN_NM			TEXT			/*매변사유명 */
+		,INSTALL_DT				TEXT			/*설치일 */
+		,CUST_REQ_DT			TEXT			/*고객요청일 */
+		,PLACE_ID				TEXT			/*설치장소 */
+		,PLACE_ID2				TEXT			/*설치장소 구분 세부 */
+		,TRBL_PART				TEXT			/*고장부위 */
+		,TRBL_PART_DTL			TEXT			/*고장부위상세 */
+		,TRBL_TP				TEXT			/*고장현상 */
+		,TRBL_DTL_TP			TEXT			/*고장현상상세 */
+		,REFURB_YN				TEXT			/*리퍼브대상여부 */
+		,REAL_USE_DAY			TEXT			/*실사용일수 */
+		,INST_PART_CD			TEXT			/*설치아답터코드 */
+		,SALEMOD_DECI_OPT1		TEXT			/*난공사등급제한여부 */
+		,SALEMOD_DECI_OPT2		TEXT			/*아답터반환제한여부 */
+		,SALEMOD_DECI_OPT3		TEXT			/*설치장소(학교면제)제한여부 */
+		,SALEMOD_DECI_OPT4		TEXT			/*동반닥터등록필수여부(Y: 필수, N: 선택, D: 비활성) */
+		,SALEMOD_DECI_OPT5		TEXT			/*도착등록가능여부 */
+		,SALEMOD_DECI_OPT6		TEXT			/*처리등록가능여부 */
+		,SALEMOD_DECI_OPT7		TEXT			/*도착등록-바코드체크여부 */
+		,SALEMOD_DECI_OPT8		TEXT			/*WJ바코드등록가능여부 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 상세 - 반환 -->
+	<update id="createRD027_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD027_O_ITAB (
+		JOB_DT				TEXT			/*작업일자 */
+		,JOB_TP				TEXT			/*작업구분 */
+		,ORDER_NO			TEXT			/*고객주문번호 */
+		,JOB_SEQ			TEXT			/*작업일련번호 */
+		,RTN_TP				TEXT			/*반환유형 */
+		,RTN_RSN			TEXT			/*반환코드 */
+		,RTN_TP_NM			TEXT			/*반환유형명 */
+		,RTN_RSN_NM			TEXT			/*반환사유명 */
+		,INSTALL_DT			TEXT			/*설치일자 */
+		,CUST_REQ_DT		TEXT			/*고객요청일자 */
+		,PRE_ORDER_YN		TEXT			/*기존주문번호 여부 */
+		,REFURB_YN			TEXT			/*리퍼브대상여부 */
+		,REAL_USE_DAY		TEXT			/*실사용일수 */
+		,INST_PART_CD		TEXT			/*설치아답터코드 */
+		,RTN_DECI_OPT1		TEXT			/*아답터반환제한여부 */
+		,RTN_DECI_OPT2		TEXT			/*변칙등록제한여부 */
+		,RTN_DECI_OPT3		TEXT			/*즉시이체필수여부 */
+		,RTN_DECI_OPT4		TEXT			/*동반닥터등록필수여부(Y: 필수, N: 선택, D: 비활성) */
+		,RTN_DECI_OPT5		TEXT			/*도착등록가능여부 */
+		,RTN_DECI_OPT6		TEXT			/*처리등록가능여부 */
+		,RTN_DECI_OPT7		TEXT			/*변칙확인대상여부 */
+		,RTN_DECI_OPT8		TEXT			/*도착등록-바코드체크여부 */
+		,RECEIVE_AMT		TEXT			/*받을금액(미수금액) */
+		,N_ORDER_NO			TEXT			/*고객주문번호 */
+		,N_GOODS_NM			TEXT			/*제품명 */
+		,N_CON_CUST_NM		TEXT			/*고객명 */
+		,RECV_DT			TEXT			/*접수일 */
+		,RECV_UEMP_NM		TEXT			/*접수자명 */
+		,RECV_TEL_NUMBER	TEXT			/*접수자연락처 */
+		,USE_DAY			TEXT			/*사용일수 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 상세 - 하트 서비스 -->
+	<update id="createRD036_O_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD036_O_ITAB1 (
+		JOB_DT				TEXT			/* 작업일자 */
+		,JOB_TP				TEXT			/* 작업구분 */
+		,ORDER_NO			TEXT			/* 고객주문번호 */
+		,JOB_SEQ			TEXT			/* 일련번호 */
+		,PICK_DT			TEXT			/* 채수일자 */
+		,CHECK_STATUS		TEXT			/* 수질검사진행상태 */
+		,DELAY_AMT			TEXT			/* 연체금액(당월제외) */
+		,DELAY_AMT_PLUS		TEXT			/* 연체이자 */
+		,RTN_LVL			TEXT			/* 반환지수 */
+		,OW_CHG_YMD			TEXT			/* 소유권도래일 */
+		,SHESWELL_YN		TEXT			/* 쉬즈웰가입여부 */
+		,CUST_TEXT			TEXT			/* 고객공지사항 */
+		,HEART_PLUS_YN		TEXT			/* 하트플러스대상여부 */
+		,HEART_DECI_OPT1	TEXT			/* 판가계산여부 */
+		,HEART_DECI_OPT2	TEXT			/* 자재투입필수여부 */
+		,HEART_DECI_OPT3	TEXT			/* 하트대상부품등록가능여부 */
+		,HEART_DECI_OPT4	TEXT			/* 도착등록가능여부 */
+		,HEART_DECI_OPT5	TEXT			/* 처리등록가능여부 */
+		,HEART_DECI_OPT6	TEXT			/* 도착등록-바코드체크여부 */
+		,INSTALL_DT			TEXT			/* 설치일자 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 상세 - 하트서비스 필터 정보 -->
+	<update id="createRD036_O_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD036_O_ITAB2 (
+		ORDER_NO			TEXT			/* 고객주문번호 */
+		,FILTER_CD			TEXT			/* 필터코드 */
+		,FILTER_NM			TEXT			/* 필터명 */
+		,SUB_FILTER_CD1		TEXT			/* 대체필터코드1-자재코드 */
+		,SUB_FILTER_CD2		TEXT			/* 대체필터코드2-자재코드 */
+		,SUB_FILTER_CD3		TEXT			/* 대체필터코드3-자재코드 */
+		,SUB_FILTER_CD4		TEXT			/* 대체필터코드4-자재코드 */
+		,SUB_FILTER_CD5		TEXT			/* 대체필터코드5-자재코드 */
+		,SUB_FILTER_CD6		TEXT			/* 대체필터코드6-자재코드 */
+		,SUB_FILTER_CD7		TEXT			/* 대체필터코드7-자재코드 */
+		,SUB_FILTER_CD8		TEXT			/* 대체필터코드8-자재코드 */
+		,SUB_FILTER_CD9		TEXT			/* 대체필터코드9-자재코드 */
+		,CHG_YN				TEXT			/* 당월교환대상여부 */
+		,DUE_CHG_DT			TEXT			/* 교환예정일자 */
+		,QTY				TEXT			/* 교환수량 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 고객 상세 - 점검이력(기본) -->
+	<update id="createRD042_O_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD042_O_ITAB1 (
+		ORDER_NO			TEXT			/* 고객주문번호 */
+		,INSTALL_DT			TEXT			/* 설치일자 */
+		,SALE_MOD_DT		TEXT			/* 매변일자 */
+		,GOODS_NM			TEXT			/* 상품명 */
+		,INSTALL_UEMPL_NM	TEXT			/* 설치자 이름 */
+		,WORK_LVL			TEXT			/* 난공사등급 */
+		,ADT_NM				TEXT			/* 아답터 이름 */
+		,ADT_CHG_DT			TEXT			/* 아답터 교환일 */
+		,NEXT_HEART_DT		TEXT			/* 다음하트날자 */
+		,HEART_DEPT_NM		TEXT			/* 담당지국 */
+		,HEART_DEPT_TEL1	TEXT			/* 담당지국 전화1 */
+		,HEART_DEPT_TEL2	TEXT			/* 담당지국 전화2 */
+		,HEART_DEPT_TEL3	TEXT			/* 담당지국 전화3 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 고객 상세 - 점검이력(필터) -->
+	<update id="createRD042_O_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD042_O_ITAB2 (
+		ORDER_NO			TEXT			/* 고객주문번호 */
+		,FILTER_CD			TEXT			/* 필터코드 */
+		,FILTER_NM			TEXT			/* 필터명 */
+		,LAST_CHG_DT		TEXT			/* 최종교환일 */
+		,DUE_CHG_DT			TEXT			/* 교환예정일 */
+		,SALE_AMT			TEXT			/* 판매금액 */
+		,PRE_CHG_DT			TEXT			/* 이전교환일 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 고객 상세 - AS이력 -->
+	<update id="createRD042_O_ITAB3" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD042_O_ITAB3 (
+		ORDER_NO			TEXT			/* 고객주문번호 */
+		,AUFNR				TEXT			/* 오더번호 */
+		,PROC_DT			TEXT			/* 처리일자 */
+		,PROC_TP_NM			TEXT			/* 처리구분명 */
+		,PROC_DEPT_NM		TEXT			/* 처리자명 */
+		,PROC_ID_NM			TEXT			/* 처리부서명 */
+		,TRBL_PART_NM		TEXT			/* 고장부위명 */
+		,TRBL_PART_DTL_NM	TEXT			/* 고장부위상세명 */
+		,TRBL_TP_NM			TEXT			/* 고장증상명 */
+		,TRBL_DTL_TP_NM		TEXT			/* 고장증상상세명 */
+		,PROC2_TP_NM		TEXT			/* 처리형태명 */
+		,PROC2_DTL_TP_NM	TEXT			/* 처리형태상세명 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 고객 상세 - AS이력(부품) -->
+	<update id="createRD042_O_ITAB4" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD042_O_ITAB4 (
+		ORDER_NO			TEXT			/* 고객주문번호 */
+		,AUFNR				TEXT			/* 오더번호 */
+		,PART_CD_NM			TEXT			/* 부품명 */
+		,QTY				TEXT			/* 수량 */
+		,PRICE_TP_NM		TEXT			/* 유무상(명) */
+		,PROC_AMT			TEXT			/* 부품처리금액 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 서비스팀 (조직 정보) -->
+	<update id="createRD055_O_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS RD055_O_ITAB (
+		GUBUN1				TEXT			/* 구분1(소속) */
+		,GUBUN2				TEXT			/* 구분2(직급) */
+		,UEMPL_NM			TEXT			/* 이름 */
+		,MOB_NUMBER			TEXT			/* 연락처 */
+		,TEL_NUMBER			TEXT			/* 사무실연락처 */
+		,FAVER				TEXT			/* 즐겨찾기여부(Y/N) */
+		,SYNC_DATE			TEXT			/* 서버 동기화 일자 */
+	);
+	]]>		
+	</update>	
+	
+
+	
+	
+	<!-- ====================================================================================================== -->
+	
+	<!-- 설치 처리 결과 -->
+	<update id="createWR013_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR013_IMPORT (
+		I_JOB_DT				TEXT			/* 작업일자 */
+		,I_JOB_TP				TEXT			/* 작업구분 */
+		,I_ORDER_NO				TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ				TEXT			/* 작업일련번호 */
+		,I_PROC_ID				TEXT			/* 처리기사 */
+		,I_AUFNR				TEXT			/* 오더번호 */
+		,I_PLACE_ID				TEXT			/* 설치장소 */
+		,I_PLACE_ID2			TEXT			/* 설치장소 구분 세부 */
+		,I_PLACE_DESC			TEXT			/* 설치장소상세 */
+		,I_WORK_LVL				TEXT			/* 난공사등급 */
+		,I_WK_PRE_YN			TEXT			/* 난공사_선작업여부 */
+		,I_WK_FLAG_YN			TEXT			/* 난공사_벽타공/후레쉬타입양변기 여부 */
+		,I_WK_DIS_CD			TEXT			/* 난공사_천정공사_거리 */
+		,I_WK_TM_CD				TEXT			/* 난공사_작업시간_코드 */
+		,I_PDA_TM				TEXT			/* PDA시간 */
+		,I_ELEC_YN				TEXT			/* 전기공사유무 */
+		,I_PROC_TM				TEXT			/* 작업 처리 완료시간 */
+		,I_IRREGULAR_TP			TEXT			/* 변칙내용 */
+		,I_IRREGULAR_CD			TEXT			/* 변칙근거 */
+		,I_IRREGULAR_CD_DESC	TEXT			/* 변칙근거상세 */
+		,I_IRREGULAR_ORD_NO		TEXT			/* 고객주문번호 */
+		,I_PROC_ID2				TEXT			/* 동반닥터등록번호 */
+		,I_VOC_DESC				TEXT			/* 현장소리상세입력 */
+		,I_ONLINE_YN			TEXT			/* 온라인전송여부 */
+	);
+	]]>		
+	</update>	
+
+	<!-- 설치 처리 결과 - 아답터 등록 결과 -->
+	<update id="createWR013_I_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR013_I_ITAB1 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,PROC_SEQ		TEXT			/* 처리순번 */
+		,PART_CD		TEXT			/* 부품코드 */
+		,QTY			TEXT			/* 수량 */
+	);
+	]]>		
+	</update>	
+
+	<!-- 설치 처리 결과 - 바코드 등록 결과 -->
+	<update id="createWR013_I_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR013_I_ITAB2 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,PROD_SEQ		TEXT			/* 작업순번(상세순번_ZMOT0001) */
+		,GOODS_ID		TEXT			/* 주_별매상품구분 */
+		,MOD_ID			TEXT			/* 매변시 변경전/후 상품구분 */
+		,GOODS_SN		TEXT			/* 제품바코드 */
+		,GOODS_MODSN	TEXT			/* 변경상품 바코드 일련번호 */
+		,SCAN_MODYN		TEXT			/* 변경상품 바코드 SCAN 여부 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 설치 처리 결과 - 미철치 내역 결과 -->
+	<update id="createWR013_I_ITAB5" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR013_I_ITAB5 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,PROC_SEQ		TEXT			/* 처리순번 */
+		,PART_CD		TEXT			/* 부품코드 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- AS 처리 결과 -->
+	<update id="createWR014_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR014_IMPORT (
+		I_JOB_DT				TEXT			/* 작업일자 */
+		,I_JOB_TP				TEXT			/* 작업구분 */
+		,I_ORDER_NO				TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ				TEXT			/* 작업일련번호 */
+		,I_AUFNR				TEXT			/* 오더번호 */
+		,I_QMNUM				TEXT			/* 통지 번호 */
+		,I_PROC_ID				TEXT			/* 조직원 코드 */
+		,I_PROC_PCNT			TEXT			/* 이전설치총대수 */
+		,I_WORK_LVL				TEXT			/* 난공사등급 */
+		,I_WK_PRE_YN			TEXT			/* 난공사_선작업여부 */
+		,I_WK_FLAG_YN			TEXT			/* 난공사_벽타공/후레쉬타입양변기 여부 */
+		,I_WK_DIS_CD			TEXT			/* 난공사_천정공사_거리 */
+		,I_WK_TM_CD				TEXT			/* 난공사_작업시간_코드 */
+		,I_PDA_TM				TEXT			/* PDA시간 */
+		,I_TOT_AMT				TEXT			/* A/S합계금액 */
+		,I_TRBL_PART			TEXT			/* 고장부위 */
+		,I_TRBL_DTL_PART		TEXT			/* 고장부위상세 */
+		,I_TRBL_TP				TEXT			/* 고장현상 */
+		,I_TRBL_DTL_TP			TEXT			/* 고장현상상세 */
+		,I_TRBL_CAUSE_TP		TEXT			/* 고장영향요인 */
+		,I_PROC_TP				TEXT			/* 처리형태(조치내역) */
+		,I_PROC_DTL_TP			TEXT			/* 처리형태상세(조치내역) */
+		,I_GOODS_MODSN			TEXT			/* 변경상품 바코드 일련번호 */
+		,I_SCAN_MODYN			TEXT			/* 변경상품 바코드 SCAN 여부 */
+		,I_PROC_TM				TEXT			/* 작업 처리 완료시간 */
+		,I_AS_IN_YN				TEXT			/* 수리입고여부(일시불) */
+		,I_AGR_INST_YN			TEXT			/* 이전설치유로동의 */
+		,I_RECV_YN				TEXT			/* 미수여부 */
+		,I_RECV_PLAN_DT			TEXT			/* 입금예정일 */
+		,I_REASON_CD			TEXT			/* 미수금사유코드 */
+		,I_DC_REQ_YN			TEXT			/* 무상승할인요청 */
+		,I_DC_CD1				TEXT			/* 할인사유 */
+		,I_DC_CD2				TEXT			/* 할인사유상세 */
+		,I_DC_CD3				TEXT			/* 할인사유세부 */
+		,I_PL_TYPE				TEXT			/* PL처리유형 */
+		,I_PL_DM_TYPE			TEXT			/* 피해유형 */
+		,I_RECYCLE_YN			TEXT			/* 아답터재사용여부 */
+		,I_NON_RECYCLE_RSN		TEXT			/* 아답터재사용불가사유 */
+		,I_RECYCLE_PART_CD		TEXT			/* 재사용아답터코드 */
+		,I_RECORD_TP			TEXT			/* 점검카드기록여부 */
+		,I_CLEAN_TP				TEXT			/* 내부청결상태 */
+		,I_NSTEAM_CD			TEXT			/* 분리스팀 미실시 사유 코드 */
+		,I_AS_IN_TP				TEXT			/* 수리입고구분 */
+		,I_AS_IN_DTL			TEXT			/* 수리입고상세 */
+		,I_PROC_ID2				TEXT			/* 동반닥터등록번호 */
+		,I_IRREGULAR_TP			TEXT			/* 변칙내용 */
+		,I_IRREGULAR_CD			TEXT			/* 변칙근거 */
+		,I_IRREGULAR_CD_DESC	TEXT			/* 변칙근거상세 */
+		,I_IRREGULAR_ORD_NO		TEXT			/* 고객주문번호 */
+		,I_PROC_PRICE_TP		TEXT			/* 고객과실 유무상 여부 */
+		,I_PLACE_ID				TEXT			/* 설치장소 */
+		,I_ONLINE_YN			TEXT			/* 온라인전송여부 */
+	);
+	]]>		
+	</update>		
+
+	<!-- AS 처리 결과 - AS 처리 등록 (MST) -->
+	<update id="createWR014_I_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR014_I_ITAB1 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,SEQ			TEXT			/* 순번 */
+		,PART_CD		TEXT			/* 부품코드 */
+		,PART_SN		TEXT			/* 부품바코드 */
+		,QTY			TEXT			/* 수량 */
+		,PRICE_TP		TEXT			/* 유무상구분 */
+		,SALE_AMT		TEXT			/* 판매금액 */
+		,PROC_AMT		TEXT			/* 처리금액 */
+		,DC_AMT			TEXT			/* 할인금액 */
+		,DC_CD			TEXT			/* 할인유형코드 */
+		,DC_RATE		TEXT			/* 할인율 */
+		,RTN_PART_CD	TEXT			/* 반환부품코드 */
+		,RTN_PART_SN	TEXT			/* 반환부품바코드 */
+	);
+	]]>		
+	</update>
+	
+	<!-- AS 처리 결과 - 필터 체크 바크도 테이블 -->
+	<update id="createWR014_I_ITAB3" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR014_I_ITAB3 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,CHK_BARCODE	TEXT			/* 필터체크바코드 */
+	);
+	]]>		
+	</update>
+	
+	<!-- AS 처리 결과 - 불량입고서 부품 구분 테이블 -->
+	<update id="createWR014_I_ITAB5" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR014_I_ITAB5 (
+		I_JOB_DT			TEXT			/* 작업일자 */
+		,I_JOB_TP			TEXT			/* 작업구분 */
+		,I_ORDER_NO			TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ			TEXT			/* 작업일련번호 */
+		,SEQ				TEXT			/* 순번 */
+		,PART_CD			TEXT			/* 부품코드 */
+		,PART_SN			TEXT			/* 부품바코드 */
+		,BAD_PART_OPT1		TEXT			/* 불량자재구분(1: 지정부품) */
+		,PLANT_NM			TEXT			/* 공장명 */
+	);
+	]]>		
+	</update>	
+		
+	<!-- 매변 처리 결과 -->
+	<update id="createWR015_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR015_IMPORT (
+		I_JOB_DT			TEXT			/* 작업일자 */
+		,I_JOB_TP			TEXT			/* 작업구분 */
+		,I_ORDER_NO			TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ			TEXT			/* 작업일련번호 */
+		,I_PROC_ID			TEXT			/* 처리자사번 */
+		,I_AUFNR			TEXT			/* 오더번호 */
+		,I_PLACE_ID			TEXT			/* 설치장소 */
+		,I_PLACE_ID2		TEXT			/* 설치장소 구분 세부 */
+		,I_PLACE_DESC		TEXT			/* 설치장소상세 */
+		,I_WORK_LVL			TEXT			/* 난공사등급 */
+		,I_WK_PRE_YN		TEXT			/* 난공사_선작업여부 */
+		,I_WK_FLAG_YN		TEXT			/* 난공사_벽타공/후레쉬타입양변기여부 */
+		,I_WK_DIS_CD		TEXT			/* 난공사_천정거리코드 */
+		,I_WK_TM_CD			TEXT			/* 난공사_작업시간코드 */
+		,I_PDA_TM			TEXT			/* 난공사_PDA시간 */
+		,I_ELEC_YN			TEXT			/* 전기공사여부 */
+		,I_CONF_CUST_NM		TEXT			/* 고객확인 */
+		,I_PROC_TM			TEXT			/* 처리시간 */
+		,I_SALEMOD_TP		TEXT			/* 매변유형코드 */
+		,I_SALEMOD_RSN		TEXT			/* 매변사유코드 */
+		,I_RTN_PART_CD		TEXT			/* 반환아답터코드 */
+		,I_RTN_PART_RSN		TEXT			/* 아답터반환사유 */
+		,I_PROC_ID2			TEXT			/* 동반닥터등록번호 */
+		,I_VOC_DESC			TEXT			/* 현장소리상세입력 */
+		,I_ONLINE_YN		TEXT			/* 온라인전송여부 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 매변 처리 결과 - 매변 터리 등록(MST) 테이블 -->
+	<update id="createWR015_I_ITAB1" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR015_I_ITAB1 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		I_JOB_TP		TEXT			/* 작업구분 */
+		I_ORDER_NO		TEXT			/* 고객주문번호 */
+		I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		PROC_SEQ		TEXT			/* 처리순번 */
+		PART_CD			TEXT			/* 부품코드 */
+		QTY				TEXT			/* 수량 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 매변 처리 결과 - 매변 처리 등록 상세 내역 테이블 -->
+	<update id="createWR015_I_ITAB2" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR015_I_ITAB2 (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,PROD_SEQ		TEXT			/* 작업순번(상세순번_ZMOT0001) */
+		,GOODS_ID		TEXT			/* 주_별매상품구분 */
+		,MOD_ID			TEXT			/* 매변시 변경전/후 상품구분 */
+		,GOODS_SN		TEXT			/* 제품바코드 */
+		,GOODS_MODSN	TEXT			/* 변경상품 바코드 일련번호 */
+		,SCAN_MODYN		TEXT			/* 변경상품 바코드 SCAN 여부 */
+	);
+	]]>		
+	</update>	
+		
+	<!-- 반환 처리 결과  -->
+	<update id="createWR016_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR016_IMPORT (
+		I_JOB_DT				TEXT			/* 작업일자 */
+		,I_JOB_TP				TEXT			/* 작업구분 */
+		,I_ORDER_NO				TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ				TEXT			/* 작업일련번호 */
+		,I_PROC_ID				TEXT			/* 처리자사번 */
+		,I_AUFNR				TEXT			/* 오더번호 */
+		,I_CONF_CUST_NM			TEXT			/* 고객확인 */
+		,I_PROC_TM				TEXT			/* 처리시간 */
+		,I_AUTO_SALE_YN			TEXT			/* 자동매출여부 */
+		,I_RTN_TP				TEXT			/* 반환유형 */
+		,I_RTN_RSN				TEXT			/* 반환사유 */
+		,I_IRREGULAR_TP			TEXT			/* 변칙내용 */
+		,I_IRREGULAR_CD			TEXT			/* 변칙근거 */
+		,I_IRREGULAR_CD_DESC	TEXT			/* 변칙근거상세 */
+		,I_IRREGULAR_ORD_NO		TEXT			/* 고객주문번호 */
+		,I_RTN_PART_CD			TEXT			/* 반환아답터코드 */
+		,I_RTN_PART_RSN			TEXT			/* 아답터반환사유 */
+		,I_PROC_ID2				TEXT			/* 동반닥터등록번호 */
+		,I_VOC_DESC				TEXT			/* 현장소리상세입력 */
+		,I_ONLINE_YN			TEXT			/* 온라인전송여부 */
+	);
+	]]>		
+	</update>		
+	
+	<!-- 반환 처리 결과 - 반환 처리 등록 -->
+	<update id="createWR016_I_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR016_I_ITAB (
+		I_JOB_DT			TEXT			/* 작업일자 */
+		,I_JOB_TP			TEXT			/* 작업구분 */
+		,I_ORDER_NO			TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ			TEXT			/* 작업일련번호 */
+		,PROD_SEQ			TEXT			/* 작업순번(상세순번_ZMOT0001) */
+		,GOODS_ID			TEXT			/* 주_별매상품구분 */
+		,MOD_ID				TEXT			/* 매변시 변경전/후 상품구분 */
+		,GOODS_SN			TEXT			/* 제품바코드 */
+		,GOODS_MODSN		TEXT			/* 변경상품 바코드 일련번호 */
+		,SCAN_MODYN			TEXT			/* 변경상품 바코드 SCAN 여부 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 하트서비스 처리 결과 -->
+	<update id="createWR021_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR021_IMPORT (
+		I_JOB_DT			TEXT			/* 작업일자 */
+		,I_JOB_TP			TEXT			/* 작업구분 */
+		,I_ORDER_NO			TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ			TEXT			/* 작업일련번호 */
+		,I_AUFNR			TEXT			/* 오더번호 */
+		,I_QMNUM			TEXT			/* 통지번호 */
+		,I_PROC_ID			TEXT			/* 처리자 */
+		,I_PROC_DT			TEXT			/* 처리일자 */
+		,I_PROC_TM			TEXT			/* 작업 처리 완료시간 */
+		,I_GOODS_CD			TEXT			/* 제품코드 */
+		,I_GOODS_SN			TEXT			/* 제품바코드 */
+		,I_GOODS_MODSN		TEXT			/* 변경상품 바코드 일련번호 */
+		,I_SCAN_MODYN		TEXT			/* 변경상품 바코드 SCAN 여부 */
+		,I_TOT_AMT			TEXT			/* A/S합계금액 */
+		,I_NPROC_YN			TEXT			/* 미전송건여부 */
+		,I_NPROC_RSN		TEXT			/* 미처리 사유코드(하트플러스) */
+		,I_NPROC_RSN_DESC	TEXT			/* 미처리 사유상세(하트플러스) */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 하트서비스 처리 결과 - 하트 서비스 처리 등록 -->
+	<update id="createWR021_I_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR021_I_ITAB (
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,SEQ			TEXT			/* 순번 */
+		,PART_CD		TEXT			/* 부품코드 */
+		,PART_SN		TEXT			/* 부품바코드 */
+		,QTY			TEXT			/* 수량 */
+		,PRICE_TP		TEXT			/* 유무상구분 */
+		,SALE_AMT		TEXT			/* 판매금액 */
+		,PROC_AMT		TEXT			/* 처리금액 */
+		,DC_AMT			TEXT			/* 할인금액 */
+		,DC_RATE		TEXT			/* 할인율 */
+		,DC_CD			TEXT			/* 할인유형코드 */
+		,RTN_PART_CD	TEXT			/* 반환부품코드 */
+		,RTN_PART_SN	TEXT			/* 반환부품바코드 */		
+	);
+	]]>		
+	</update>	
+		
+	<!-- 수납 결과 -->
+	<update id="createWR060_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR060_IMPORT (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_CANCEL_YN	TEXT			/* 취소여부 */
+		,I_RECEIVE_AMT	TEXT			/* 받을금액(합계) */
+		,I_CASH_AMT		TEXT			/* 받은금액(현금) */
+		,I_CARD_AMT		TEXT			/* 받은금액(신용카드) */
+		,I_PAYFREE_AMT	TEXT			/* 받은금액(payFree) */
+		,I_LOTTE_AMT	TEXT			/* 받은금액(롯데) */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 수납 결과 - 수납 대상 등록(상세) -->
+	<update id="createWR060_I_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR060_I_ITAB (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,RECP_TP		TEXT			/* 입금구분 */
+		,PAY_MTHD		TEXT			/* 결제구분 */
+		,RECP_AMT		TEXT			/* 받은금액 */
+		,PRE_MONTHS		TEXT			/* 선납개월수 */
+		,CARDCOM_CD		TEXT			/* 카드사코드 */
+		,CARD_NO		TEXT			/* 카드/인증번호 */
+		,APPRV_NO		TEXT			/* 승인번호 */
+		,COM_CD			TEXT			/* 회사구분 */
+		,AR_GJAHR		TEXT			/* 회계년도 */
+		,AR_BELNR		TEXT			/* 회계전표번호 */
+		,AR_BUZEI		TEXT			/* 개별항목번호 */
+	);
+	]]>		
+	</update>
+	
+	<!-- 현금영수증 승인 결과 -->
+	<update id="createWR063_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR063_IMPORT (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_ASIN_TP		TEXT			/* 인증번호기준 */
+		,I_CARD_NO		TEXT			/* 인증번호 */
+		,I_EXPIRE_YM	TEXT			/* 인증카드유효기간 */
+		,I_PROC_AMT		TEXT			/* 승인금액 */
+		,I_COM_CD		TEXT			/* 회사구분 */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 웹주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,O_APPRV_NO		TEXT			/* 승인번호 */
+		,O_PROC_TM		TEXT			/* 인증시간 */	
+	);
+	]]>		
+	</update>
+	
+	<!-- 카드 승인 결과 -->
+	<update id="createWR061_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR061_IMPORT (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_CARD_NO		TEXT			/* 카드번호 */
+		,I_EXPIRE_YM	TEXT			/* 유효기간 */
+		,I_QUOTA_MONTH	TEXT			/* 할부개월수 */
+		,I_NO_TP		TEXT			/* 무이자구분 */
+		,I_PROC_AMT		TEXT			/* 승인금액 */
+		,I_COM_CD		TEXT			/* 회사구분 */
+		,I_POINT_YN		TEXT			/* 포인트사용여부 */
+		,I_POINT_GUBN	TEXT			/* 포인트 종류 */
+		,I_CERTI_ID		TEXT			/* 카드 인증 구분자 */
+		,I_CERTI_NO		TEXT			/* 카드 인증 번호 */
+		,I_KEY_IN_TP	TEXT			/* 카드번호 수기입력 여부 */
+		,I_READKEY_SEQ	TEXT			/* 카드정보 READ DATA */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,O_APPRV_NO		TEXT			/* 승인번호 */
+		,O_CARDCOM_NM	TEXT			/* 카드사명 */
+		,O_PROC_TM		TEXT			/* 인증시간 */	
+	);
+	]]>		
+	</update>
+	
+	<!-- payFree 포인트 승인 결과 -->
+	<update id="createWR065_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR065_IMPORT (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_CARD_NO		TEXT			/* 카드번호 */
+		,I_CARD_PW		TEXT			/* 카드비밀번호 */
+		,I_SSN_NO		TEXT			/* 주민번호 */
+		,I_RECP_TP		TEXT			/* 입금구분 */
+		,I_PROC_AMT		TEXT			/* 승인금액(사용포인트) */
+		,I_COM_CD		TEXT			/* 회사구분 */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,O_APPRV_NO		TEXT			/* 승인번호 */
+		,O_REST_POINT	TEXT			/* 잔여포인트 */
+		,O_PROC_TM		TEXT			/* 인증시간 */	
+	);
+	]]>		
+	</update>
+	
+	<!-- 롯데포인트 승인 결과 -->
+	<update id="createWR067_IMPORT" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WR067_IMPORT (
+		I_RECP_ID		TEXT			/* 수납자 */
+		,I_RECP_DT		TEXT			/* 수납일자 */
+		,I_CARD_NO		TEXT			/* 카드번호 */
+		,I_SSN_NO		TEXT			/* 주민번호 */
+		,I_RECP_TP		TEXT			/* 입금구분 */
+		,I_PROC_AMT		TEXT			/* 승인금액(사용포인트) */
+		,I_COM_CD		TEXT			/* 회사구분 */
+		,I_TPLNR		TEXT			/* 기능위치 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,O_APPRV_NO		TEXT			/* 승인번호 */
+		,O_REST_POINT	TEXT			/* 잔여포인트 */
+		,O_PROC_TM		TEXT			/* 인증시간 */
+	);
+	]]>		
+	</update>	
+	
+	<!-- 작업 처리 현장 소리 결과 테이블 (업무 공통) -->
+	<update id="createWRVOC_I_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WRVOC_I_ITAB(
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,VOC_CD			TEXT			/* 현장소리코드 */
+	);
+	]]>		
+	</update>	
+		
+	<!-- 작업 처리 난공사 종류 결과 테이블 (업무 공통) -->
+	<update id="createWRNAN_I_ITAB" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS WRNAN_I_ITAB(
+		I_JOB_DT		TEXT			/* 작업일자 */
+		,I_JOB_TP		TEXT			/* 작업구분 */
+		,I_ORDER_NO		TEXT			/* 고객주문번호 */
+		,I_JOB_SEQ		TEXT			/* 작업일련번호 */
+		,WORK_TP		TEXT			/* 난공자 종류 */
+	);
+	]]>		
+	</update>
+		
+			
+</mapper>

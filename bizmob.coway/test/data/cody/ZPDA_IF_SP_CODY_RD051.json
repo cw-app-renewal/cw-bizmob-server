@@ -1,0 +1,17 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "COMMON",
+    "rfc_name" : "ZSMT_IF_SP_CODY_RD051"
+  },
+  "body" : {
+         "I_UEMPL_NO" : "20120518",
+		 "I_INVNR" : "",
+		 "I_SYNC_YN" : "Y"
+  }
+}

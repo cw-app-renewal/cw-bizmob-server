@@ -1,0 +1,26 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "COMMON",
+    "rfc_name" : ""
+  },
+  "body" : {
+    "I_PROC_ID" : "20181189",
+    "I_ITAB" : [
+    	{
+    		"IMG_UID" : "IMG_UID1234567890",
+    		"JOB_TP" : "1",
+    		"IMG_TYPE" : "MBJ",
+    		"IMG_SEQ" : "1",
+    		"JOB_DT" : "20140508",
+    		"JOB_SEQ" : "0001",
+    		"ORDER_NO" : "151330400089"
+    	}    	
+    ]
+  }
+}

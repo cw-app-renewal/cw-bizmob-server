@@ -1,0 +1,22 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "CDR042",
+    "rfc_name" : "ZSMT_IF_SP_CSDR_RD042",
+    "common_adapter" : true
+  },
+  "body" : {
+    "I_INVNR" : "01031109265",
+    "I_UEMPL_NO" : "20209570",
+    "I_ON_YN" : "N",
+    "I_JOB_DT" : "20120530",
+    "I_JOB_TP" : "",
+    "I_ORDER_NO" : "",
+    "I_JOB_SEQ" : ""
+  }
+}

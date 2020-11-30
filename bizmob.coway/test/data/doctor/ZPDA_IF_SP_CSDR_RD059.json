@@ -1,0 +1,17 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "CDR059",
+    "rfc_name" : "ZSMT_IF_SP_CSDR_RD059",
+    "common_adapter" : true
+  },
+  "body" : {
+    "I_UEMPL_NO" : "20209505",
+  	"I_BASE_DT" : "20120830"
+  }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:wls="http://xmlns.oracle.com/weblogic/weblogic-web-app" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd
+http://xmlns.oracle.com/weblogic/weblogic-web-app  http://xmlns.oracle.com/weblogic/weblogic-web-app/1.2/weblogic-web-app.xsd">
+	
+	<session-descriptor>
+      <timeout-secs>1800</timeout-secs>
+      <!-- 
+      <invalidation-interval-secs>60</invalidation-interval-secs>
+      <cookie-name>>XXXXXSESSIONID</cookie-name>
+      <cookie-max-age-secs>-1</cookie-max-age-secs>
+      -->
+    </session-descriptor>
+
+<jsp-descriptor>
+     <page-check-seconds>60</page-check-seconds>
+     <backward-compatible>true</backward-compatible>
+     <encoding>uft-8</encoding>
+</jsp-descriptor>
+
+	<container-descriptor>
+		<servlet-reload-check-secs>-1</servlet-reload-check-secs>
+	</container-descriptor>
+	<charset-params>
+		<input-charset>
+		      <resource-path>./*</resource-path>
+		      <java-charset-name>UTF-8</java-charset-name>
+	    </input-charset>
+	</charset-params>
+	<context-root>bizmob</context-root>
+</weblogic-web-app>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HDP004">
+	
+	
+	<!-- = SELECT =============================================================================== -->
+	<select id="SELECT_APPROVAL_COUNT" parameterType="adapter.model.HDP004.HDP004Request_Body"  resultType="adapter.model.HDP004.HDP004Response_Body">
+	<![CDATA[	
+	
+		SELECT 
+			COUNT(sid) as appr_cnt
+        FROM 
+        	TB_VISITOR_INFO
+        WHERE 
+        	DEPT_NAME = #{dept_name}
+        	AND isapprove ='N'
+        	 
+	]]>	
+	</select>
+	
+</mapper> 

@@ -1,0 +1,35 @@
+{
+  "header" : {
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : true,
+    "trcode" : "COMMON",
+    "rfc_name" : "ZPDA_IF_SP_CODY_WR005"
+  },
+  "body" : {
+    "I_INVNR" : "01035689214",
+    "I_UEMPL_NO" : "20147856",
+    "I_STATUS" : "08",
+    "I_NPROC_RSN" : "07",
+    "I_NPROC_RSN_DESC" : "",
+    "I_DELAY_DT" : "20120523",
+    "I_PLAN_TM" : "2000",
+    "I_ING_TM" : "030",
+    "I_TIME_GB" : "1000",
+    "I_PASS_RSN" : "",
+    "I_PASS_UEMPL_NO" : "",
+    "I_PDA_SYS_DT" : "20120523",
+    "I_PDA_SYS_TM" : "190438",
+    "I_ITAB" : [
+    	{
+    		"JOB_DT" : "20120515",
+    		"JOB_TP" : "5",
+    		"ORDER_NO" : "151330400089",
+    		"JOB_SEQ" : "0001"    		
+    	}    	
+    ]
+  }
+}
