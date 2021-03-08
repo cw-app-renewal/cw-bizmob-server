@@ -1,0 +1,73 @@
+.gradle
+/build/
+*.class
+!gradle/wrapper/gradle-wrapper.jar
+
+#Gradle temporary files
+target/
+
+.MF
+.class
+.classpath
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+#Eclipse files
+**/.project
+**/.classpath
+**/.settings/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+**/*.iml
+**/.idea
+**/.gradle
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+
+.gitignore 제거할 예정
+bin/com/ 제거할 예정
+bin/static/font-awesome/ 제거할 예정
+bin/static/js/ 제거할 예정
+bin/templates/com/ 제거할 예정
+bin/templates/member/ 제거할 예정
+out/production/classes/generated/ 제거할 예정
+out/test/ 제거할 예정
+src/main/bin/com/ 제거할 예정
+src/main/bin/static/font-awesome/ 제거할 예정
+src/main/bin/static/js/ 제거할 예정
+src/main/bin/templates/com/ 제거할 예정
+src/main/bin/templates/member/ 제거할 예정
+src/main/java/com/coway/common/exception/ 제거할 예정
+src/main/resources/i18n/ 제거할 예정
+src/main/resources/static/image/ 제거할 예정
+src/main/resources/templates/member/admin/ 제거할 예정
+src/test/java/ 제거할 예정
+src/test/resources/ 제거할 예정
+
+
+.metadata/*
+Servers/localhost*
+Servers/Pivotal*
+Servers/Tomcat*
+.recommenders/*
+
+

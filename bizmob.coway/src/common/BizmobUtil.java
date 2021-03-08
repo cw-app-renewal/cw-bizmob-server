@@ -14,8 +14,11 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
 import com.mcnc.common.util.JsonUtil;
+import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
+import com.mcnc.smart.hybrid.common.code.Codes;
+import com.mcnc.smart.hybrid.common.json.SimpleJsonResponse;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject.TYPE;
 
@@ -140,5 +143,64 @@ public class BizmobUtil {
 		return conn;
     }
     
+    public static JsonAdaptorObject makeResponse(JsonAdaptorObject obj, JsonNode resNode, String trCode, long legacyTime) {
+		
+    	ObjectNode resultNode = JsonUtil.objectNode();
+		resultNode.put("result", true);
+		resultNode.put("error_code", "");
+		resultNode.put("error_text", "");
+		resultNode.put("info_text", "");
+		
+		obj.put(TYPE.RESULT, resultNode);
+		obj.put(TYPE.RESPONSE, resNode);
+		
+		String 			reqJson 		= JsonUtil.toJson(obj.get(TYPE.REQUEST), false);
+		String			trName			= SmartConfig.getString(trCode + ".tr.name", "");
+		StringBuffer	logBuffer		= new StringBuffer();
+		try {
+			logBuffer.append("\n###################################################################\n")
+			.append("LegacyTime: " + legacyTime +  " ms\n")
+			.append(trCode + " - " + trName +  "\n")
+			.append("RESULT	: " + JsonUtil.toJson(obj.get(TYPE.RESULT), false )+ "\n")
+			.append("REQ	: " + reqJson + "\n")
+			.append("###################################################################\n");
+			
+			//안정화 기간동안 responseBody 출력
+			//boolean isStableStep = SmartConfig.getBoolean("is.stable.step", false);
+			if(true){
+				logBuffer.append("RESP	: ").append(resNode.path(Codes._JSON_MESSAGE_BODY)).append("\n")
+				.append("###################################################################\n");
+			}
+						
+			logger.info(logBuffer.toString());
+			
+			return obj;
+		} finally {
+			if(logBuffer != null) {
+				logBuffer = null;
+			}
+		}
+	}
     
+    public static JsonAdaptorObject makeFailResponse(JsonAdaptorObject resObj, String errorCode, String errorMessage, String trCode, Object reqBody){
+    	
+    	String error = trCode + errorCode;
+    	
+    	resObj.put(TYPE.RESULT, new SimpleJsonResponse(false, error, errorMessage, null).toJson());
+    	
+    	String			reqJson 		= JsonUtil.toJson(reqBody, false);
+		String			trName			= SmartConfig.getString(trCode + ".tr.name");	
+		
+		StringBuffer	logBuffer		= new StringBuffer();
+		logBuffer.append("\n###################################################################\n")
+		.append(trCode + " - " + trName +  "\n")
+		.append("RESULT	: " + JsonUtil.toJson(resObj.get(TYPE.RESULT), false )+ "\n")
+		.append("REQ	: " + reqJson + "\n")
+		.append("ERROR	: "  + error + " - " + errorMessage + "\n") 
+		.append("###################################################################\n");
+		
+		logger.info(logBuffer.toString());
+		
+        return resObj;
+	}
 }

@@ -1,0 +1,18 @@
+{
+  "header" : {
+    "accessToken" : "2",
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "refreshToken" : "1",
+    "result" : true,
+    "trcode" : "CISM0002"
+  },
+  "body" : {
+    "accessToken" : "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzb3VyY2VfNCJdLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiZXhwIjoxNjE1MTg1MTI4LCJhdXRob3JpdGllcyI6WyJST0xFX0lPQ0FSRV9EUl9BUFAiXSwianRpIjoiOTcyMWRhYmUtNTc2NC00Nzc5LWI2YTQtZTU5ZTA3ZmIzY2IwIiwiY2xpZW50X2lkIjoiUzFYME1oem1ZWndITmk3YlE4S2JkRFFqVGI1emxwSTcifQ.K1Xj170Hmuga82A21exZrKNNsjVcpk0qvc6jTmF_37iFQWWKXifAJnJ_r9G33b3rZe4H1wCtapn2sBW7Wm0IXuyKJ7YIgCkoR7agxhkeQCtVCzr6yPlt_dyGp6WCttEEoYf3kVtvF1rI-G2_0UUAJt_pLJI_XQ8VQPi7umd-cuKr8kqIuF0zH9gsShD0nKy5dSfhz5-MObrUZhgX2dEJxovvAJYtXWRsA9d8H1CUS5sBtC5hUZgpLl-Rf-TD4r8gjGhvJ2hrV1-5U3dLIXekD8wRUZw0PIherQP7v7aQfs6h9kLdF9nbLPvECvkgS8CJ1Q-HHwUfHdnlMG52tvtNbQ",
+    "creationDt" : "0",
+    "serial" : "TST02FA00000000001"
+  }
+}
