@@ -2,25 +2,24 @@ package adapter.sample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import adapter.model.sample.RD044.RD044Request;
-import adapter.model.sample.RD044.RD044Request_Body;
-import adapter.model.sample.RD044.RD044Response;
-import adapter.model.sample.RD044.RD044Response_Body;
-import adapter.model.sample.RD044.RD044Response_Body_O_ITAB;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
+
+import adapter.model.sample.RD044.RD044Request;
+import adapter.model.sample.RD044.RD044Request_Body;
+import adapter.model.sample.RD044.RD044Response;
+import adapter.model.sample.RD044.RD044Response_Body;
+import adapter.model.sample.RD044.RD044Response_Body_O_ITAB;
 
 //@Adapter(trcode = { "RD044" })
 @Deprecated

@@ -1,32 +1,17 @@
 package adapter.cert;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import kr.co.kcp.CT_CLI;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import adapter.common.NfcCommonResponse;
-import adapter.login.CGR000_ADT_Login;
-
 import com.kcp.J_PP_CLI_N;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
@@ -34,6 +19,10 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.common.NfcCommonResponse;
+import common.ResponseUtil;
+import kr.co.kcp.CT_CLI;
 
 
 /**
@@ -51,21 +40,20 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 	@SuppressWarnings("static-access")
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
-		// TODO Auto-generated method stub
+		
+		JsonNode 	reqRootNode 		= obj.get(JsonAdaptorObject.TYPE.REQUEST);
+		JsonNode 	reqHeaderNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
+		JsonNode 	reqBodyNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
+		String 		trCode 				= reqHeaderNode.findPath("trcode").getValueAsText();
 		    
-//		String g_conf_log_dir   = "E:/eclipse_project/workpace/KcpWebProject/WebContent/V3_kcp_cert_linux_jsp/log";
-//		String g_conf_log_dir   = "D:/00_WORKSPACE_SERVER/00_Coway_test/bizmob.coway.SMART_HOME/logs";
 		String g_conf_log_dir   = SmartConfig.getString("kcp.cert.logdir");
-
-	    String g_conf_gw_url = SmartConfig.getString("kcp.cert.url");
-
+	    String g_conf_gw_url 	= SmartConfig.getString("kcp.cert.url");
 	    String g_conf_gw_port   = SmartConfig.getString("kcp.cert.port");
-	    int    g_conf_tx_mode   = 0;
-			
+
 		String g_conf_site_cd   = SmartConfig.getString("kcp.cert.sitecd");
 	    String g_conf_site_key  = SmartConfig.getString("kcp.cert.sitekey");
-	    
 	    String cust_ip			= "";
+	    int    g_conf_tx_mode   = 0;
 	    
 	    ObjectNode	responseNode	= JsonNodeFactory.instance.objectNode();
 	    
@@ -73,50 +61,41 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 			InetAddress local = InetAddress.getLocalHost();
 			cust_ip			= local.getHostAddress(); 
 		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(e1.getMessage(), e1);
 		}
 	    
-	    
-	    /* ============================================================================== */
-		
 		try {
-
-			JsonNode reqRootNode = obj.get(JsonAdaptorObject.TYPE.REQUEST);
-			JsonNode sessionNode = obj.get(JsonAdaptorObject.TYPE.META);
-			JsonNode reqHeaderNode = reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
-			JsonNode reqBodyNode = reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
-
-			String trCode 		= reqHeaderNode.findPath("trcode").getValueAsText();
-			String req_ordr_idxx= reqHeaderNode.findPath("ordr_idxx").getValueAsText();
-			String ordr_idxx 	= makeOrderNo();
+			long	start			= System.currentTimeMillis();
+			String 	req_ordr_idxx	= reqHeaderNode.findPath("ordr_idxx").getValueAsText();
+			String 	ordr_idxx 		= makeOrderNo();
+			
 			if(req_ordr_idxx != null) {//otp 재시도를 위함
 				ordr_idxx		= req_ordr_idxx; 
 			}
-			String user_name	= reqBodyNode.findPath("user_name").getValueAsText();
-			String phone_no		= reqBodyNode.findPath("phone_no").getValueAsText();
-			String comm_id		= reqBodyNode.findPath("comm_id").getValueAsText();
-			String birth_day	= reqBodyNode.findPath("birth_day").getValueAsText();
-			String sex_code		= reqBodyNode.findPath("sex_code").getValueAsText();
-			String local_code	= reqBodyNode.findPath("local_code").getValueAsText();
-			String kcp_web_yn	= "N";
-			String cp_sms_msg	= SmartConfig.getString("kcp.cert.msg");
-			String cp_callback	= SmartConfig.getString("kcp.cert.cpcallback");
-			String per_cert_no	= "";
+			
+			String user_name		= reqBodyNode.findPath("user_name").getValueAsText();
+			String phone_no			= reqBodyNode.findPath("phone_no").getValueAsText();
+			String comm_id			= reqBodyNode.findPath("comm_id").getValueAsText();
+			String birth_day		= reqBodyNode.findPath("birth_day").getValueAsText();
+			String sex_code			= reqBodyNode.findPath("sex_code").getValueAsText();
+			String local_code		= reqBodyNode.findPath("local_code").getValueAsText();
+			String kcp_web_yn		= "N";
+			String cp_sms_msg		= SmartConfig.getString("kcp.cert.msg");
+			String cp_callback		= SmartConfig.getString("kcp.cert.cpcallback");
+			String per_cert_no		= "";
 			String per_cert_no_mvno = "";
 
-
 			CT_CLI cc = new CT_CLI();
-			String ENC_KEY         = "E66DCEB95BFBD45DF9DFAEEBCB092B5DC2EB3BF0";
-			String phone_no_hash   = cc.makeHashData(ENC_KEY, phone_no );
-			String birth_day_hash  = cc.makeHashData(ENC_KEY, birth_day );
-			String user_name_hash  = cc.makeHashData(ENC_KEY, user_name );
-			String local_code_hash = cc.makeHashData(ENC_KEY, local_code );
-			String sex_code_hash   = cc.makeHashData(ENC_KEY, sex_code );
+			String ENC_KEY         	= "E66DCEB95BFBD45DF9DFAEEBCB092B5DC2EB3BF0";
+			String phone_no_hash   	= cc.makeHashData(ENC_KEY, phone_no );
+			String birth_day_hash  	= cc.makeHashData(ENC_KEY, birth_day );
+			String user_name_hash  	= cc.makeHashData(ENC_KEY, user_name );
+			String local_code_hash 	= cc.makeHashData(ENC_KEY, local_code );
+			String sex_code_hash   	= cc.makeHashData(ENC_KEY, sex_code );
 
 			//otp 
 			/* = -------------------------------------------------------------------------- = */
-			String tran_cd       = "" ;                                                 // 거래구분코드
+			String tran_cd       = "00402200";                                                // 거래구분코드
 			/* = -------------------------------------------------------------------------- = */
 			String res_cd        = "" ;                                                 // 결과코드
 			String res_msg       = "" ;                                                 // 결과메시지
@@ -133,36 +112,25 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 			String res_comm_id   = "" ;                                                 // 조회 결과 통신사코드
 			String res_phone_no  = "" ;                                                 // 조회 결과 휴대폰번호
 
-			tran_cd = "00402200";
-			//		    System.out.println("per_cert_no1:" + per_cert_no);
-			if(comm_id.equals( "KTM" ) || comm_id.equals( "LGM" )){
-				J_PP_CLI_N c_PayPlus3 = new J_PP_CLI_N();
-
+			if("KTM".equals(comm_id) || "LGM".equals(comm_id)){
+				J_PP_CLI_N 	c_PayPlus3 			= new J_PP_CLI_N();
 				c_PayPlus3.mf_init( "", g_conf_gw_url, g_conf_gw_port, g_conf_tx_mode, g_conf_log_dir );
 				c_PayPlus3.mf_init_set();				
 
-				int payx_data_set3;
-				int common_data_set3;
+				int 		payx_data_set3 		= c_PayPlus3.mf_add_set("payx_data");
+				int 		common_data_set3 	= c_PayPlus3.mf_add_set("common");
 
-				payx_data_set3  = c_PayPlus3.mf_add_set( "payx_data" );
-				common_data_set3 = c_PayPlus3.mf_add_set( "common"    );
-
-				c_PayPlus3.mf_set_us( common_data_set3, "amount" , "0"          ); //고정
-				c_PayPlus3.mf_set_us( common_data_set3, "cust_ip",  cust_ip     );
-
+				c_PayPlus3.mf_set_us( common_data_set3, "amount" , "0"); //고정
+				c_PayPlus3.mf_set_us( common_data_set3, "cust_ip",  cust_ip);
 				c_PayPlus3.mf_add_rs( payx_data_set3, common_data_set3 );
 
 				// 주문 정보
-				int ordr_data_set3;
-
-				ordr_data_set3 = c_PayPlus3.mf_add_set( "ordr_data" );
-				String order_idxx_mvno = makeOrderNo_MVNO();
+				int 		ordr_data_set3 		= c_PayPlus3.mf_add_set( "ordr_data" );
+				String 		order_idxx_mvno 	= makeOrderNo_MVNO();
 				c_PayPlus3.mf_set_us( ordr_data_set3, "ordr_idxx", order_idxx_mvno );
 
 				// 인증 정보
-				int cert_data_set;
-
-				cert_data_set   = c_PayPlus3.mf_add_set( "cert"      );
+				int 		cert_data_set 		= c_PayPlus3.mf_add_set("cert");
 
 				c_PayPlus3.mf_set_us( cert_data_set, "cert_type"       ,  "01"               ); //고정
 				c_PayPlus3.mf_set_us( cert_data_set, "tx_type"         ,  "2400"             ); //고정
@@ -226,30 +194,20 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 			/* =   03-1.                                                        = */
 			/* = -------------------------------------------------------------------------- = */
 
-
-			int payx_data_set;
-			int common_data_set;
-
-			//
-			payx_data_set   = c_PayPlus.mf_add_set( "payx_data" );
-			common_data_set = c_PayPlus.mf_add_set( "common"    );
+			int payx_data_set   = c_PayPlus.mf_add_set( "payx_data" );
+			int common_data_set = c_PayPlus.mf_add_set( "common"    );
 
 			c_PayPlus.mf_set_us( common_data_set, "amount" , "0"       ); //고정
 			c_PayPlus.mf_set_us( common_data_set, "cust_ip",  cust_ip  );
 
 			c_PayPlus.mf_add_rs( payx_data_set, common_data_set );
 
-			// 
-			int ordr_data_set;
-
-			ordr_data_set = c_PayPlus.mf_add_set( "ordr_data" );
+			int ordr_data_set = c_PayPlus.mf_add_set( "ordr_data" );
 
 			c_PayPlus.mf_set_us( ordr_data_set, "ordr_idxx", ordr_idxx );
 
 			// 
-			int cert_data_set;
-
-			cert_data_set   = c_PayPlus.mf_add_set( "cert"      );
+			int cert_data_set   = c_PayPlus.mf_add_set( "cert"      );
 
 			c_PayPlus.mf_set_us( cert_data_set, "tx_type"         ,  "2100"             ); //고정
 			c_PayPlus.mf_set_us( cert_data_set, "cert_type"       ,  "01"               ); //고정   
@@ -284,11 +242,11 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 				c_PayPlus.m_res_cd  = "9562";
 				c_PayPlus.m_res_msg = "연동 오류";
 			}
+			
 			res_cd  = c_PayPlus.m_res_cd;                      // 결과코드
 			res_msg = c_PayPlus.m_res_msg;                     // 결과 메세지
-
 			
-			
+			long end = System.currentTimeMillis();	
 			
 			if ( res_cd.equals( "0000" ) )
 			{
@@ -359,8 +317,9 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 				}
 				res_cd    = c_PayPlus2.m_res_cd; //결과코드
 				res_msg   = c_PayPlus2.m_res_msg;//결과메세지
-				//		         System.out.println("결과:" + res_msg);
-
+				
+				end = System.currentTimeMillis();
+				
 				if ( res_cd.equals( "0000" ) )
 				{
 					safe_guard_yn = c_PayPlus2.mf_get_res( "safe_guard_yn" );
@@ -381,13 +340,10 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 					responseNode.put("sms_snd_yn", sms_snd_yn);
 					
 					
-					NfcCommonResponse response = new NfcCommonResponse( reqHeaderNode, responseNode );
+					NfcCommonResponse 	response 	= new NfcCommonResponse( reqHeaderNode, responseNode );
 					
-					JsonAdaptorObject resObj = new JsonAdaptorObject();
-
-					return makeResponse(resObj, response.getNfcCommonResponse());		        
+					return ResponseUtil.makeResponse(obj, response.getNfcCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());		        
 				}    // End of [res_cd = "0000"]
-				
 				else //OTP 요청 실패시
 				{		    	
 					responseNode.put("res_cd", res_cd);
@@ -397,14 +353,10 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 					responseNode.put("per_cert_no", per_cert_no);
 					
 		            NfcCommonResponse response = new NfcCommonResponse( reqHeaderNode, responseNode );
-					
-					JsonAdaptorObject resObj = new JsonAdaptorObject();
-
-					return makeResponse(resObj, response.getNfcCommonResponse());	
+		            return ResponseUtil.makeResponse(obj, response.getNfcCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 				}
-			} 
-
-			else //본인인증 실패시
+				
+			} else //본인인증 실패시
 			{	
 				responseNode.put("res_cd", res_cd);
 				responseNode.put("res_msg", res_msg);
@@ -416,15 +368,12 @@ public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements 
 				}
 				
 				NfcCommonResponse response = new NfcCommonResponse( reqHeaderNode, responseNode );
-					
-				JsonAdaptorObject resObj = new JsonAdaptorObject();
-
-				return makeResponse(resObj, response.getNfcCommonResponse());	
+				return ResponseUtil.makeResponse(obj, response.getNfcCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 			}
 
 		} catch( Exception e ) {
-			logger.error("CGW300 Adapter Exception : ", e);
-			return makeFailReesponse("CGW300_IMPL0001", "인증번호 요청중 오류가 발생하였습니다");
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.makeFailResponse(obj, "IMPL1", "인증번호 요청중 오류가 발생하였습니다.", trCode, reqBodyNode, e, this.getClass().getName());
 		}
 		
 	}

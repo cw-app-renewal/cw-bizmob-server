@@ -2,23 +2,22 @@ package adapter.sample;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import adapter.model.sample.RD001.RD001Request;
-import adapter.model.sample.RD001.RD001Request_Body;
-import adapter.model.sample.RD001.RD001Response;
-import adapter.model.sample.RD001.RD001Response_Body;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
+
+import adapter.model.sample.RD001.RD001Request;
+import adapter.model.sample.RD001.RD001Request_Body;
+import adapter.model.sample.RD001.RD001Response;
+import adapter.model.sample.RD001.RD001Response_Body;
 
 //@Adapter(trcode = { "RD001" })
 @Deprecated

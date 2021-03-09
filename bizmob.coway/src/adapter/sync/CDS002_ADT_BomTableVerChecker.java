@@ -1,16 +1,16 @@
 package adapter.sync;
 
-import adapter.model.CDS002.CDS002Request;
-import adapter.model.CDS002.CDS002Request_Body;
-import adapter.model.CDS002.CDS002Response;
-import adapter.model.CDS002.CDS002Response_Body;
-import adapter.model.header.CowayCommonHeader;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.model.CDS002.CDS002Request;
+import adapter.model.CDS002.CDS002Request_Body;
+import adapter.model.CDS002.CDS002Response;
+import adapter.model.CDS002.CDS002Response_Body;
+import adapter.model.header.CowayCommonHeader;
 
 //@Adapter(trcode = { "CDS002" })
 @Deprecated

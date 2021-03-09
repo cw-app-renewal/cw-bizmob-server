@@ -4,26 +4,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import adapter.model.sample.WR002.WR002Request;
-import adapter.model.sample.WR002.WR002Request_Body;
-import adapter.model.sample.WR002.WR002Request_Body_I_ITAB;
-import adapter.model.sample.WR002.WR002Response;
-import adapter.model.sample.WR002.WR002Response_Body;
-import adapter.model.sample.header.HWHeader;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
+
+import adapter.model.sample.WR002.WR002Request;
+import adapter.model.sample.WR002.WR002Request_Body;
+import adapter.model.sample.WR002.WR002Request_Body_I_ITAB;
+import adapter.model.sample.WR002.WR002Response;
+import adapter.model.sample.WR002.WR002Response_Body;
+import adapter.model.sample.header.HWHeader;
 
 //@Adapter(trcode = { "WR002" })
 @Deprecated

@@ -1,7 +1,6 @@
 package adapter.ftp;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -12,16 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
-import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import connect.ftp.FtpClientService;
-import connect.ftp.mms.CowayMmsFtpUtils;
 
 @Component
 public class CGR126_ADT_CowayMMSImageDownloader extends AbstractDownloader implements Downloader {

@@ -19,7 +19,6 @@ import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
-
 import connect.exception.ConnectClientException;
 import connect.ftp.FtpClientService;
 

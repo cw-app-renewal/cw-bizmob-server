@@ -1,18 +1,16 @@
 package adapter.login;
 
+import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
+import com.mcnc.smart.common.logging.ILogger;
+import com.mcnc.smart.common.logging.LoggerService;
+import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
 import adapter.model.CDR000.CDR000Request;
 import adapter.model.CDR000.CDR000Request_Body;
 import adapter.model.CDR000.CDR000Response;
 import adapter.model.CDR000.CDR000Response_Body;
 import adapter.model.header.CowayCommonHeader;
-
-import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.bizmob.adapter.DBAdapter;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
-import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
 @Deprecated
 public class CDR000_ADT_DoctorLogin extends AbstractTemplateAdapter implements IAdapterJob {

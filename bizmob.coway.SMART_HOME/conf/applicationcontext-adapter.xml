@@ -25,6 +25,7 @@
 	
 	<context:component-scan base-package="com.mcnc.smart.hybrid.adapter.impl" use-default-filters="false">
 		<context:include-filter type="annotation" expression="com.mcnc.smart.hybrid.adapter.api.Adapter"/>
+		<context:exclude-filter type="regex" expression="com.mcnc.smart.hybrid.adapter.impl.ZZ0006_ADT_Update"/> 
 	</context:component-scan>
 	
 	<bean id="annotationBeanAdapterLoader" class="com.mcnc.smart.hybrid.adapter.loaders.AnnotationBeanAdapterLoader"/>

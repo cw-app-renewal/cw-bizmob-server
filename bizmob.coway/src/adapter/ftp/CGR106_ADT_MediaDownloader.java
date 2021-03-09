@@ -1,10 +1,8 @@
 package adapter.ftp;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -14,22 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.io.CopyStreamException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ch.qos.logback.core.encoder.Encoder;
-
-import com.mcnc.common.util.FileUtil;
 import com.mcnc.common.util.IOUtil;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
-import common.ftp.CowayFtpFilePath;
 
+import common.ftp.CowayFtpFilePath;
 import connect.ftp.FtpClientService;
 
 @Component

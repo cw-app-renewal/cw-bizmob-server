@@ -23,7 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import common.AdapterUtil;
+import common.BizmobUtil;
 
 public class RestTest {
 
@@ -35,7 +35,7 @@ public class RestTest {
 			String serverUrl = "https://devapis.coway.co.kr/acupi/v1/1024735774/";
 			String originKey = "c3179fb0-6763-11ea-ab12-0800200c9a66";
 			
-			HttpsURLConnection httpsURLConnection =  AdapterUtil.getHttpsURLConnection(serverUrl);
+			HttpsURLConnection httpsURLConnection =  BizmobUtil.getHttpsURLConnection(serverUrl);
 			httpsURLConnection.setRequestProperty("origin_key", originKey);
 			httpsURLConnection.connect();
 			
@@ -123,7 +123,7 @@ public class RestTest {
 			serverUrl += "/acupi/" + version;
 			String originKey = "08a8f639-7c68-40d9-8c24-53d2a7f250da";
 			
-			HttpsURLConnection httpsURLConnection =  AdapterUtil.getHttpsURLConnection(serverUrl);
+			HttpsURLConnection httpsURLConnection =  BizmobUtil.getHttpsURLConnection(serverUrl);
 			httpsURLConnection.setRequestMethod("POST");
 			httpsURLConnection.setRequestProperty("origin_key", originKey);
 			httpsURLConnection.setDoOutput(true);

@@ -3,24 +3,13 @@ package adapter.cert;
 import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-
-
-
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import adapter.common.NfcCommonResponse;
-
 import com.kcp.J_PP_CLI_N;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
@@ -28,6 +17,9 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.common.NfcCommonResponse;
+import common.ResponseUtil;
 
 
 /**
@@ -44,40 +36,31 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 	
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
-
+		
+		JsonNode 	reqRootNode 		= obj.get(JsonAdaptorObject.TYPE.REQUEST);
+		JsonNode 	reqHeaderNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
+		JsonNode 	reqBodyNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
+		String 		trCode 				= reqHeaderNode.findPath("trcode").getValueAsText();
 		    
-//		String g_conf_log_dir   = "E:/eclipse_project/workpace/KcpWebProject/WebContent/V3_kcp_cert_linux_jsp/log";
-//		String g_conf_log_dir   = "D:/00_WORKSPACE_SERVER/00_Coway_test/bizmob.coway.SMART_HOME/log";
-		String g_conf_log_dir   = SmartConfig.getString("kcp.cert.logdir");
-
-	    String g_conf_gw_url = SmartConfig.getString("kcp.cert.url");
-
-	    String g_conf_gw_port   = SmartConfig.getString("kcp.cert.port");
-	    int    g_conf_tx_mode   = 0;
+		String 		g_conf_log_dir   	= SmartConfig.getString("kcp.cert.logdir");
+	    String 		g_conf_gw_url 		= SmartConfig.getString("kcp.cert.url");
+	    String 		g_conf_gw_port   	= SmartConfig.getString("kcp.cert.port");
+	    int    		g_conf_tx_mode   	= 0;
 			
-		String g_conf_site_cd   = SmartConfig.getString("kcp.cert.sitecd");
-	    String g_conf_site_key  = SmartConfig.getString("kcp.cert.sitekey");
-	    
-	    String cust_ip			= "";
+		String 		g_conf_site_cd   	= SmartConfig.getString("kcp.cert.sitecd");
+	    String 		g_conf_site_key  	= SmartConfig.getString("kcp.cert.sitekey");
+	    String 		cust_ip				= "";
 	    
 		try {
 			InetAddress local = InetAddress.getLocalHost();
 			cust_ip			= local.getHostAddress(); 
 		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(e1.getMessage(), e1);
 		}
 	    
-	    
 	    /* ============================================================================== */
-		
 		try {
-			
-			JsonNode reqRootNode = obj.get(JsonAdaptorObject.TYPE.REQUEST);
-			JsonNode sessionNode = obj.get(JsonAdaptorObject.TYPE.META);
-			JsonNode reqHeaderNode = reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
-			JsonNode reqBodyNode = reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
-			
+			long	start			= System.currentTimeMillis();			
 			//요청 정보 확인
 			/* = -------------------------------------------------------------------------- = */
 		    String ordr_idxx        = reqBodyNode.findPath( "ordr_idxx"       ).getValueAsText() ;  // 주문번호
@@ -89,21 +72,20 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 		    String otp_no          = reqBodyNode.findPath( "otp_no"         ).getValueAsText() ;  // 본인확인 인증번호
 		    String ad1_agree_yn    = reqBodyNode.findPath( "ad1_agree_yn"   ).getValueAsText() ;  // 광고#1 선택 동의여부
 		    /* = -------------------------------------------------------------------------- = */
-		    String tran_cd     = "" ;                                                  // 거래구분코드
+		    String tran_cd			= "" ;                                                  // 거래구분코드
 		    /* = -------------------------------------------------------------------------- = */
-		    String res_cd      = "" ;                                                  // 결과코드
-		    String res_msg     = "" ;                                                  // 결과메시지
+		    String res_cd      		= "" ;                                                  // 결과코드
+		    String res_msg     		= "" ;                                                  // 결과메시지
 		    /* = -------------------------------------------------------------------------- = */
-		    String CI          = "" ;                                                  // CI
-		    String DI          = "" ;                                                  // DI
-		    String CI_URL      = "" ;                                                  // CI_URL
-		    String DI_URL      = "" ;                                                  // DI_URL
+		    String CI          		= "" ;                                                  // CI
+		    String DI          		= "" ;                                                  // DI
+		    String CI_URL      		= "" ;                                                  // CI_URL
+		    String DI_URL      		= "" ;                                                  // DI_URL
 			
 		    /* ============================================================================== */
 		    /* =   02. 인스턴스 생성 및 초기화                                              = */
 		    /* = -------------------------------------------------------------------------- = */
 		    J_PP_CLI_N c_PayPlus = new J_PP_CLI_N();
-
 		    c_PayPlus.mf_init( "", g_conf_gw_url, g_conf_gw_port, g_conf_tx_mode, g_conf_log_dir );
 		    c_PayPlus.mf_init_set();
 		    /* ============================================================================== */
@@ -118,21 +100,15 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 		    /* = -------------------------------------------------------------------------- = */
 		    tran_cd = "00402200";
 
-		    int payx_data_set;
-		    int common_data_set;
-
-		    payx_data_set   = c_PayPlus.mf_add_set( "payx_data" );
-		    common_data_set = c_PayPlus.mf_add_set( "common"    );
+		    int payx_data_set   = c_PayPlus.mf_add_set( "payx_data" );
+		    int common_data_set = c_PayPlus.mf_add_set( "common"    );
 
 		    c_PayPlus.mf_set_us( common_data_set, "amount" , "0"          ); //고정
 		    c_PayPlus.mf_set_us( common_data_set, "cust_ip",  cust_ip     ); //옵션
-
 		    c_PayPlus.mf_add_rs( payx_data_set, common_data_set );
 
 		    // 인증 정보
-		    int cert_data_set;
-
-		    cert_data_set   = c_PayPlus.mf_add_set( "cert"      );
+		    int cert_data_set   = c_PayPlus.mf_add_set( "cert"      );
 
 		    c_PayPlus.mf_set_us( cert_data_set, "tx_type"      ,  "2300"       ); //고정
 		    c_PayPlus.mf_set_us( cert_data_set, "kcp_web_yn"   ,  kcp_web_yn   );
@@ -159,6 +135,7 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 		    res_msg = c_PayPlus.m_res_msg;                     // 결과 메시지
 		    
 		    ObjectNode	responseNode	= JsonNodeFactory.instance.objectNode();
+		    long 		end 			= System.currentTimeMillis();	
 		    /* ============================================================================== */
 
 
@@ -182,10 +159,7 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 		        responseNode.put("DI", DI);
 	            
 		        NfcCommonResponse response = new NfcCommonResponse( reqHeaderNode, responseNode );
-				
-				JsonAdaptorObject resObj = new JsonAdaptorObject();
-
-				return makeResponse(resObj, response.getNfcCommonResponse());
+		        return ResponseUtil.makeResponse(obj, response.getNfcCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 		        
 		        
 		    }    // End of [res_cd = "0000"]
@@ -198,16 +172,12 @@ public class CGW310_ADT_OTP_request extends AbstractTemplateAdapter implements I
 		    	responseNode.put("res_msg", res_msg);
 	            
 		    	NfcCommonResponse response = new NfcCommonResponse( reqHeaderNode, responseNode );
-				
-				JsonAdaptorObject resObj = new JsonAdaptorObject();
-
-				return makeResponse(resObj, response.getNfcCommonResponse());
+				return ResponseUtil.makeResponse(obj, response.getNfcCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 		    }
 			
 		} catch( Exception e ) {
-			
-			logger.error("CGW310 Adapter Exception : ", e);
-			return makeFailReesponse("CGW310_IMPL0001", "인증번호 요청중 오류가 발생하였습니다");
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.makeFailResponse(obj, "IMPL1", "인증번호 요청중 오류가 발생하였습니다.", trCode, reqBodyNode, e, this.getClass().getName());
 		}
 		
 	}

@@ -4,10 +4,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import adapter.common.EncryptionUtil;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
@@ -15,7 +12,9 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject.TYPE;
+
+import adapter.common.EncryptionUtil;
+import common.ResponseUtil;
 
 @Adapter(trcode = { "ZZ0009" })
 public class ZZ0009_ADT_VerificationCode extends AbstractTemplateAdapter implements	IAdapterJob {
@@ -24,41 +23,44 @@ public class ZZ0009_ADT_VerificationCode extends AbstractTemplateAdapter impleme
 
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		
-		JsonNode request = obj.get(TYPE.REQUEST);
-		JsonNode requestBody = request.path(Codes._JSON_MESSAGE_BODY);
-		JsonNode requestHeader = request.path(Codes._JSON_MESSAGE_HEADER);
-		String trCode = requestHeader.path(Codes._JSON_MESSAGE_TRCODE).getTextValue();
-		
-		String key = requestBody.path("appKey").getTextValue();
-		
-		String savedCode = SmartConfig.getString(key, "");
-		String encSavedCode = "";
+		JsonNode 	reqRootNode 		= obj.get(JsonAdaptorObject.TYPE.REQUEST);
+		JsonNode 	reqBodyNode 		= reqRootNode.findPath(Codes._JSON_MESSAGE_BODY);
+		JsonNode 	reqHeaderNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
+		String 		trCode 				= reqHeaderNode.findPath("trcode").getValueAsText();
+		String 		encSavedCode 		= "";
+		long 		start 				= 0;
+		long 		end 				= 0;
 		
 		try {
+		
+			String key 				= reqBodyNode.path("appKey").getTextValue();
+			String savedCode 		= SmartConfig.getString(key, "");
+		
 			if(savedCode.isEmpty()){
 				logger.error("There is no value mapped to key[" + key + "]");
-				return makeFailReesponse(trCode + "EMPTY", "There is no value mapped to key.");
+				return ResponseUtil.makeFailResponse(obj, "EMPTY", "매핑된 키값이 없습니다.", trCode, reqBodyNode, null, this.getClass().getName());
 			} else {
-				encSavedCode = EncryptionUtil.getEncryptAES256(savedCode);
+				start			= System.currentTimeMillis();
+				encSavedCode 	= EncryptionUtil.getEncryptAES256(savedCode);
+				end				= System.currentTimeMillis();
 			}
+			
+			String verificationCode = reqBodyNode.path("verificationCode").getTextValue();
+			if(!verificationCode.equals(encSavedCode)){
+				logger.error("The verification code does not match.");
+				return ResponseUtil.makeFailResponse(obj, "MISMATCH", "검증코드가 일치하지 않습니다.", trCode, reqBodyNode, null, this.getClass().getName());
+			}
+			
+			ObjectNode resRootNode = JsonNodeFactory.instance.objectNode();
+			resRootNode.put(Codes._JSON_MESSAGE_HEADER, reqHeaderNode);
+			resRootNode.put(Codes._JSON_MESSAGE_BODY, JsonNodeFactory.instance.objectNode());
+			
+			JsonAdaptorObject resObj = new JsonAdaptorObject();
+			return ResponseUtil.makeResponse(resObj, resRootNode, trCode, (end - start), reqBodyNode,this.getClass().getName());
 		} catch (Exception e) {
-			logger.error("", e);
-			return makeFailReesponse(trCode + "SYSTEM", "System error.");
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.makeFailResponse(obj, "IMPL0001", "요청처리에 실패하였습니다.", trCode, reqBodyNode, e, this.getClass().getName());
 		} 
-		
-		String verificationCode = requestBody.path("verificationCode").getTextValue();
-		if(!verificationCode.equals(encSavedCode)){
-			logger.error("The verification code does not match.");
-			return makeFailReesponse(trCode + "MISMATCH", "The verification code does not match.");
-		}
-		
-		JsonAdaptorObject resObj = new JsonAdaptorObject();
-		
-		ObjectNode response = JsonNodeFactory.instance.objectNode();
-		response.put(Codes._JSON_MESSAGE_HEADER, requestHeader);
-		response.put(Codes._JSON_MESSAGE_BODY, JsonNodeFactory.instance.objectNode());
-		
-		return makeResponse(resObj, response);
 	}
 
 }

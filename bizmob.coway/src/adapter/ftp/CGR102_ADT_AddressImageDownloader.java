@@ -1,7 +1,6 @@
 package adapter.ftp;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -16,9 +15,9 @@ import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
+
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
-
 import connect.ftp.FtpClientService;
 
 @Component

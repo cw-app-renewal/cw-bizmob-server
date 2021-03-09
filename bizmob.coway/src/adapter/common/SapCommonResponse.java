@@ -8,11 +8,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import adapter.model.header.CowayCommonHeader;
-
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.hybrid.common.code.Codes;
+
+import adapter.model.header.CowayCommonHeader;
 
 public class SapCommonResponse {
 

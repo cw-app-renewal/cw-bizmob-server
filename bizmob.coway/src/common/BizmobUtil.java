@@ -1,19 +1,6 @@
 package common;
 
-import org.codehaus.jackson.JsonNode;
-
-import com.mcnc.common.util.JsonUtil;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject.TYPE;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -23,9 +10,35 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 
-public class AdapterUtil {
+import com.mcnc.common.util.JsonUtil;
+import com.mcnc.smart.common.logging.ILogger;
+import com.mcnc.smart.common.logging.LoggerService;
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject.TYPE;
 
+
+public class BizmobUtil {
+
+	private static ILogger logger = LoggerService.getLogger(BizmobUtil.class);
+	
+    public static boolean putSessionData(JsonAdaptorObject obj, String key, Object value) {
+    	try {
+    		if(obj.containsKey(TYPE.META)) {
+    			ObjectNode node = (ObjectNode) obj.get(TYPE.META);
+    			JsonUtil.putValue(node, key, value);
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} catch (Exception e) {
+    		logger.error(e.getMessage(), e);
+    		return false;
+    	}
+	}
+	
 	/**
      * 세션에 저장되어 있는 TRANSACTION_ID를 얻는다.
      * @param obj Biz Logic에서 Adapter로 전달한 객체
@@ -126,4 +139,6 @@ public class AdapterUtil {
 		
 		return conn;
     }
+    
+    
 }

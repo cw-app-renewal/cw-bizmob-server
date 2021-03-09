@@ -6,8 +6,6 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import adapter.common.SapCommonMapperException;
-
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
@@ -16,6 +14,7 @@ import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
 
+import adapter.common.SapCommonMapperException;
 import connect.exception.ConnectClientException;
 import connect.http.coway.CowayCommonHttpClient;
 import connect.http.coway.data.InitDeviceAuthRequestDO;

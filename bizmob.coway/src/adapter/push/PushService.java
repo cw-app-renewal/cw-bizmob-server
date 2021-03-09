@@ -8,8 +8,6 @@ import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.qos.logback.classic.db.DBAppender;
-
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;

@@ -1,12 +1,9 @@
 package common.ftp;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.mcnc.smart.common.config.SmartConfig;
-
-import common.util.DateUtil;
 
 public class CowayFtpFilePath extends CowayFtpFileType {
 

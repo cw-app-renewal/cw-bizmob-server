@@ -1,7 +1,5 @@
 package common.ftp;
 
-import java.io.File;
-
 public class CowayFtpFileType {
 
 	protected static final String _IMG_TYPE_INSTALL = "1";		//설치 이미지

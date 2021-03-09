@@ -6,13 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import adapter.model.ERR002.ERR002Request;
-import adapter.model.ERR002.ERR002Request_Body;
-import adapter.model.ERR002.ERR002Request_Body_crushList;
-import adapter.model.ERR002.ERR002Response;
-import adapter.model.ERR002.ERR002Response_Body;
-import adapter.model.header.CowayCommonHeader;
-
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.smart.common.logging.ILogger;
@@ -20,6 +13,13 @@ import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.model.ERR002.ERR002Request;
+import adapter.model.ERR002.ERR002Request_Body;
+import adapter.model.ERR002.ERR002Request_Body_crushList;
+import adapter.model.ERR002.ERR002Response;
+import adapter.model.ERR002.ERR002Response_Body;
+import adapter.model.header.CowayCommonHeader;
 
 @Adapter(trcode = { "ERR002" })
 public class ERR002_Adapter extends AbstractTemplateAdapter implements
