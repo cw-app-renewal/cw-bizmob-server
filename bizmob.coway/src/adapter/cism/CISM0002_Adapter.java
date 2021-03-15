@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
@@ -71,8 +71,8 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 			ObjectNode	responseBody		= 	resEntity.getBody();
 			JsonNode	getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
 			
-			String resultCode 		= getHeaderNode.findPath("result").asText();
-			String resultMessage 	= getHeaderNode.findPath("message").asText();
+			String resultCode 		= getHeaderNode.findPath("result").getTextValue();
+			String resultMessage 	= getHeaderNode.findPath("message").getTextValue();
 			
 			logger.debug("### resultCode : " + resultCode);
 			logger.debug("### resultMessage : " + resultMessage);
@@ -86,8 +86,8 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 				JsonNode 	content				=	payload.findValue("content");
 				JsonNode	lastEvaluatedKey	=	payload.findValue("lastEvaluatedKey");
 				
-				int numberOfElements		=	payload.findValue("numberOfElements").asInt();
-				int size					=	payload.findValue("size").asInt();
+				int numberOfElements		=	payload.findValue("numberOfElements").getIntValue();
+				int size					=	payload.findValue("size").getIntValue();
 				
 				List<CISM0002Response_Body_content> contents = new ArrayList<CISM0002Response_Body_content>();
 				
@@ -97,13 +97,13 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 					
 					JsonNode data = content.get(i);
 					
-					String apiNo = data.findPath("apiNo").asText();
-					String serial = data.findPath("serial").asText();
-					String requestId = data.findPath("requestId").asText();
-					String appTypeCode = data.findPath("appTypeCode").asText();
-					String occDt = data.findPath("occDt").asText();
-					String creationDt = data.findPath("creationDt").asText();
-					boolean normalOprYn = data.findPath("normalOprYn").asBoolean();
+					String apiNo = data.findPath("apiNo").getTextValue();
+					String serial = data.findPath("serial").getTextValue();
+					String requestId = data.findPath("requestId").getTextValue();
+					String appTypeCode = data.findPath("appTypeCode").getTextValue();
+					String occDt = data.findPath("occDt").getTextValue();
+					String creationDt = data.findPath("creationDt").getTextValue();
+					boolean normalOprYn = data.findPath("normalOprYn").getBooleanValue();
 					
 					contentData.setApiNo(apiNo);
 					contentData.setAppTypeCode(appTypeCode);
@@ -121,8 +121,8 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 					List<CISM0002Response_Body_lastEvaluatedKey> list = new ArrayList<CISM0002Response_Body_lastEvaluatedKey>();
 					CISM0002Response_Body_lastEvaluatedKey data = new CISM0002Response_Body_lastEvaluatedKey();
 					
-					data.setCreationDt(lastEvaluatedKey.findPath("creationDt").asText());
-					data.setSerial(lastEvaluatedKey.findPath("serial").asText());
+					data.setCreationDt(lastEvaluatedKey.findPath("creationDt").getTextValue());
+					data.setSerial(lastEvaluatedKey.findPath("serial").getTextValue());
 					
 					list.add(data);
 					

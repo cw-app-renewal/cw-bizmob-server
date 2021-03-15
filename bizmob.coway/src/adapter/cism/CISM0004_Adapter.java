@@ -1,6 +1,8 @@
 package adapter.cism;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -8,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
@@ -64,8 +64,8 @@ CISM0004Request				request		=	new CISM0004Request(obj);
 			JsonNode 	responseBody 	= resEntity.getBody();
 			JsonNode	getHeaderNode	= responseBody.findPath(CodesEx.TR_HEADER);
 			
-			String resultCode 		= getHeaderNode.findPath("result").asText();
-			String resultMessage 	= getHeaderNode.findPath("message").asText();
+			String resultCode 		= getHeaderNode.findPath("result").getTextValue();
+			String resultMessage 	= getHeaderNode.findPath("message").getTextValue();
 			
 			logger.debug("### resultCode : " + resultCode);
 			logger.debug("### resultMessage : " + resultMessage);
@@ -75,14 +75,14 @@ CISM0004Request				request		=	new CISM0004Request(obj);
 			// 정상성공.
 			if( StringUtils.equalsIgnoreCase(resultCode, CodesEx._API_SUCCESS) ){
 				
-				String		productLine 		= 	responseBody.findPath("productLine").asText();
-				String		productLineCode 	= 	responseBody.findPath("productLineCode").asText();
-				String 		productCode			= 	responseBody.findPath("productCode").asText();
-				String		materialCode 		= 	responseBody.findPath("materialCode").asText();
-				boolean  	ioCareYn 			= 	responseBody.findPath("ioCareYn").asBoolean();
-				boolean		wifiYn 				= 	responseBody.findPath("wifiYn").asBoolean();
-				boolean		bleYn 				= 	responseBody.findPath("bleYn").asBoolean();
-				boolean		smartDetectionYn 	= 	responseBody.findPath("smartDetectionYn").asBoolean();
+				String		productLine 		= 	responseBody.findPath("productLine").getTextValue();
+				String		productLineCode 	= 	responseBody.findPath("productLineCode").getTextValue();
+				String 		productCode			= 	responseBody.findPath("productCode").getTextValue();
+				String		materialCode 		= 	responseBody.findPath("materialCode").getTextValue();
+				boolean  	ioCareYn 			= 	responseBody.findPath("ioCareYn").getBooleanValue();
+				boolean		wifiYn 				= 	responseBody.findPath("wifiYn").getBooleanValue();
+				boolean		bleYn 				= 	responseBody.findPath("bleYn").getBooleanValue();
+				boolean		smartDetectionYn 	= 	responseBody.findPath("smartDetectionYn").getBooleanValue();
 				
 				resBody.setBleYn(bleYn);
 				resBody.setIoCareYn(ioCareYn);

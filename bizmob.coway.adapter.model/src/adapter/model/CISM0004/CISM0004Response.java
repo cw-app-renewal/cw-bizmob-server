@@ -2,12 +2,10 @@ package adapter.model.CISM0004;
 
 
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.ObjectMapper;
-
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
 import adapter.model.header.CowayCommonHeader;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * IoCare 제품 여부 조회

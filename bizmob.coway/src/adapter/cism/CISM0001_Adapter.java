@@ -1,14 +1,14 @@
 package adapter.cism;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
@@ -44,7 +44,6 @@ public class CISM0001_Adapter extends AbstractTemplateAdapter implements IAdapte
 			headers.add("Authorization", "Basic " + SmartConfig.getString("coway.oauth.basic"));
 			headers.add("Content-Type", "application/x-www-form-urlencoded");
 			
-			
 			ObjectNode reqData = JsonNodeFactory.instance.objectNode();
 			reqData.put("grant_type", 	reqBody.getGrantType());
 			
@@ -67,11 +66,11 @@ public class CISM0001_Adapter extends AbstractTemplateAdapter implements IAdapte
 			JsonNode responseBody 	= 	resEntity.getBody();
 			logger.debug("### access_token API resEntity.getBody => " + responseBody.toString());
 			
-			String accessToken = responseBody.findValue("access_token").asText();
-			String jti = responseBody.findValue("jti").asText();
-			String scope = responseBody.findValue("scope").asText();
-			String tokenType = responseBody.findValue("token_type").asText();
-			int expiresIn = responseBody.findValue("expires_in").asInt();
+			String accessToken = responseBody.findValue("access_token").getTextValue();
+			String jti = responseBody.findValue("jti").getTextValue();
+			String scope = responseBody.findValue("scope").getTextValue();
+			String tokenType = responseBody.findValue("token_type").getTextValue();
+			int expiresIn = responseBody.findValue("expires_in").getIntValue();
 			
 			resBody.setAccessToken(accessToken);
 			resBody.setJti(jti);

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
@@ -70,8 +70,8 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 			ObjectNode	responseBody		= 	resEntity.getBody();
 			JsonNode	getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
 			
-			String resultCode 		= getHeaderNode.findPath("result").asText();
-			String resultMessage 	= getHeaderNode.findPath("message").asText();
+			String resultCode 		= getHeaderNode.findPath("result").getTextValue();
+			String resultMessage 	= getHeaderNode.findPath("message").getTextValue();
 			
 			logger.debug("### resultCode : " + resultCode);
 			logger.debug("### resultMessage : " + resultMessage);
@@ -82,13 +82,13 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 				JsonNode	payload			=	responseBody.findValue("payload");
 				JsonNode 	itemTypes 		= 	payload.findValue("itemTypes");
 				
-				String 		creationDt 		= 	payload.findValue("creationDt").asText();
-				String 		occDt 			= 	payload.findValue("occDt").asText();
-				String 		appTypeCode 	= 	payload.findValue("appTypeCode").asText();
-				String 		requestId 		= 	payload.findValue("requestId").asText();
-				String 		apiNo 			=	payload.findValue("apiNo").asText();
-				String 		serial 			= 	payload.findValue("serial").asText();
-				boolean 	normalOprYn 	= 	payload.findValue("normalOprYn").asBoolean();
+				String 		creationDt 		= 	payload.findValue("creationDt").getTextValue();
+				String 		occDt 			= 	payload.findValue("occDt").getTextValue();
+				String 		appTypeCode 	= 	payload.findValue("appTypeCode").getTextValue();
+				String 		requestId 		= 	payload.findValue("requestId").getTextValue();
+				String 		apiNo 			=	payload.findValue("apiNo").getTextValue();
+				String 		serial 			= 	payload.findValue("serial").getTextValue();
+				boolean 	normalOprYn 	= 	payload.findValue("normalOprYn").getBooleanValue();
 				
 				List<CISM0003Response_Body_itemTypes> its = new ArrayList<CISM0003Response_Body_itemTypes>();
 				
@@ -99,10 +99,10 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 					JsonNode data = itemTypes.get(i);
 					JsonNode items = data.findValue("items");
 					
-					String 	itemTypeCode 		= 	data.findPath("itemTypeCode").asText();
-					String 	itemTypeName 		= 	data.findPath("itemTypeName").asText();
-					int 	sortNo				= 	data.findPath("sortNo").asInt();
-					boolean itemTypesNormalOprYn 	= 	data.findPath("normalOprYn").asBoolean();
+					String 	itemTypeCode 		= 	data.findPath("itemTypeCode").getTextValue();
+					String 	itemTypeName 		= 	data.findPath("itemTypeName").getTextValue();
+					int 	sortNo				= 	data.findPath("sortNo").getIntValue();
+					boolean itemTypesNormalOprYn 	= 	data.findPath("normalOprYn").getBooleanValue();
 					
 					List<CISM0003Response_Body_itemTypes_items> itsi = new ArrayList<CISM0003Response_Body_itemTypes_items>();
 					
@@ -110,13 +110,13 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 						
 						CISM0003Response_Body_itemTypes_items itemsData = new CISM0003Response_Body_itemTypes_items();
 						
-						String 	itemId 				= 	items.findValue("itemId").asText();
-						String 	itemName 			= 	items.findValue("itemName").asText();
-						String 	symptoms 			= 	items.findValue("symptoms").asText();
-						String 	relateComponent 	= 	items.findValue("relateComponent").asText();
-						String  checkList			=	items.findValue("checkList").asText();
-						String  actItem				=	items.findValue("actItem").asText();
-						boolean itemNormalOprYn		=	items.findValue("normalOprYn").asBoolean();
+						String 	itemId 				= 	items.findValue("itemId").getTextValue();
+						String 	itemName 			= 	items.findValue("itemName").getTextValue();
+						String 	symptoms 			= 	items.findValue("symptoms").getTextValue();
+						String 	relateComponent 	= 	items.findValue("relateComponent").getTextValue();
+						String  checkList			=	items.findValue("checkList").getTextValue();
+						String  actItem				=	items.findValue("actItem").getTextValue();
+						boolean itemNormalOprYn		=	items.findValue("normalOprYn").getBooleanValue();
 						
 						itemsData.setActItem(actItem);
 						itemsData.setCheckList(checkList);
