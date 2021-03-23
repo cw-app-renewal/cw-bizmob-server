@@ -27,9 +27,11 @@ public class ItrustAPIUtil {
 	public static ResponseEntity<ObjectNode> getSendMessage(String url, HttpHeaders headers) {
 		try{
 			
+			restTemplate = new RestTemplate();
+			
 			HttpEntity<?> requestEntity = new HttpEntity<Object>(headers);
 			
-			logger.debug("### URL : " + url);
+//			logger.debug("### URL : " + url);
 			
 			return restTemplate.exchange(url, HttpMethod.GET, requestEntity, ObjectNode.class);
 		} catch(RestClientException e){

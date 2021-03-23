@@ -234,5 +234,9 @@
 	<bean id="cowayMmsDao" class="connect.db.mms.CowayMmsDao">
 		<property name="cowayMmsSessionTemplate" ref="cowayMmsSessionTemplate"/>
 	</bean>
+	
+	<!-- MQTT Service -->
+	<bean id="getAccessTokenService" class="adapter.cism.service.GetAccessTokenService"/>
+	<bean id="getAuthTokenService" class="adapter.cism.service.GetAccessTokenService"/>
 		
 </beans>

@@ -5,6 +5,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
+import adapter.cism.service.GetAccessTokenService;
 import adapter.model.CISM0004.CISM0004Request;
 import adapter.model.CISM0004.CISM0004Request_Body;
 import adapter.model.CISM0004.CISM0004Response;
@@ -28,10 +30,11 @@ import common.util.CodesEx;
 public class CISM0004_Adapter extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CISM0004_Adapter.class);
-
+	@Autowired
+	private GetAccessTokenService getAccessTokenService;
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
-CISM0004Request				request		=	new CISM0004Request(obj);
+		CISM0004Request				request		=	new CISM0004Request(obj);
 		
 		CowayCommonHeader			reqHeader	=	request.getHeader();
 		CISM0004Request_Body		reqBody		=	request.getBody();
@@ -41,8 +44,10 @@ CISM0004Request				request		=	new CISM0004Request(obj);
 		
 		try {
 			
+			String accessToken = getAccessTokenService.getAccessToken();
+			
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Authorization", "Bearer " + reqBody.getAccessToken());
+			headers.add("Authorization", "Bearer " + accessToken);
 			headers.add("Content-Type", "application/json");
 			headers.add("X-IoCare-Request-Type", "10");
 			
@@ -78,7 +83,7 @@ CISM0004Request				request		=	new CISM0004Request(obj);
 				String		productLine 		= 	responseBody.findPath("productLine").getTextValue();
 				String		productLineCode 	= 	responseBody.findPath("productLineCode").getTextValue();
 				String 		productCode			= 	responseBody.findPath("productCode").getTextValue();
-				String		materialCode 		= 	responseBody.findPath("materialCode").getTextValue();
+				String		materialCode 		= 	Integer.toString(responseBody.findPath("materialCode").getIntValue());
 				boolean  	ioCareYn 			= 	responseBody.findPath("ioCareYn").getBooleanValue();
 				boolean		wifiYn 				= 	responseBody.findPath("wifiYn").getBooleanValue();
 				boolean		bleYn 				= 	responseBody.findPath("bleYn").getBooleanValue();

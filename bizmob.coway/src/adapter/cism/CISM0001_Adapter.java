@@ -20,7 +20,7 @@ import adapter.model.CISM0001.CISM0001Request_Body;
 import adapter.model.CISM0001.CISM0001Response;
 import adapter.model.CISM0001.CISM0001Response_Body;
 import adapter.model.header.CowayCommonHeader;
-import common.ItrustAPIUtil;
+import common.*;
 import common.util.CodesEx;
 
 @Adapter(trcode = { "CISM0001" })

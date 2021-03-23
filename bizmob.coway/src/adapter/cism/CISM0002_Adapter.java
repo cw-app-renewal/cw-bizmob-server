@@ -8,6 +8,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
+import adapter.cism.service.GetAccessTokenService;
 import adapter.model.CISM0002.CISM0002Request;
 import adapter.model.CISM0002.CISM0002Request_Body;
 import adapter.model.CISM0002.CISM0002Response;
@@ -33,7 +35,9 @@ import common.util.CodesEx;
 public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CISM0002_Adapter.class);
-
+	@Autowired
+	private GetAccessTokenService getAccessTokenService;
+	
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
 		CISM0002Request				request		=	new CISM0002Request(obj);
@@ -47,10 +51,12 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 		
 		try {
 			
+			String accessToken = getAccessTokenService.getAccessToken();
+			
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Authorization", "Bearer " + reqBody.getAccessToken());
+			headers.add("Authorization", "Bearer " + accessToken);
 			headers.add("Content-Type", "application/json");
-			headers.add("X-IoCare-Request-Type", "10");
+			headers.add("X-IoCare-Request-Type", "11");
 			
 			String url = SmartConfig.getString("coway.iocare.main"); 
 				  url += SmartConfig.getString("coway.iocare.smart.list").replace("{serial}", reqBody.getSerial().toString());
@@ -82,53 +88,62 @@ public class CISM0002_Adapter extends AbstractTemplateAdapter implements IAdapte
 				logger.debug("### Device Sterilize Time Success");
 				
 				JsonNode	payload				=	responseBody.findValue("payload");
-				
-				JsonNode 	content				=	payload.findValue("content");
-				JsonNode	lastEvaluatedKey	=	payload.findValue("lastEvaluatedKey");
-				
-				int numberOfElements		=	payload.findValue("numberOfElements").getIntValue();
-				int size					=	payload.findValue("size").getIntValue();
+				JsonNode	lastEvaluatedKey	=	null;
+				JsonNode 	content				=	null;
+				int 		numberOfElements	=	0;
+				int			size				=	0;
 				
 				List<CISM0002Response_Body_content> contents = new ArrayList<CISM0002Response_Body_content>();
+				List<CISM0002Response_Body_lastEvaluatedKey> list = new ArrayList<CISM0002Response_Body_lastEvaluatedKey>();
 				
-				for(int i = 0; i < content.size(); i++) {
+				if(payload != null && payload.size() > 0) {
 					
-					CISM0002Response_Body_content contentData = new CISM0002Response_Body_content();
+					lastEvaluatedKey	=	payload.findValue("lastEvaluatedKey");
+					content				=	payload.findValue("content");
 					
-					JsonNode data = content.get(i);
+					numberOfElements	=	payload.findValue("numberOfElements").getIntValue();
+					size				=	payload.findValue("size").getIntValue();
 					
-					String apiNo = data.findPath("apiNo").getTextValue();
-					String serial = data.findPath("serial").getTextValue();
-					String requestId = data.findPath("requestId").getTextValue();
-					String appTypeCode = data.findPath("appTypeCode").getTextValue();
-					String occDt = data.findPath("occDt").getTextValue();
-					String creationDt = data.findPath("creationDt").getTextValue();
-					boolean normalOprYn = data.findPath("normalOprYn").getBooleanValue();
+					if(content != null && content.size() > 0) {
+						
+						for(int i = 0; i < content.size(); i++) {
+							
+							CISM0002Response_Body_content contentData = new CISM0002Response_Body_content();
+							
+							JsonNode data = content.get(i);
+							
+							String apiNo = data.findPath("apiNo").getTextValue();
+							String serial = data.findPath("serial").getTextValue();
+							String requestId = data.findPath("requestId").getTextValue();
+							String appTypeCode = data.findPath("appTypeCode").getTextValue();
+							String occDt = data.findPath("occDt").getTextValue();
+							String creationDt = Long.toString(data.findPath("creationDt").getLongValue());
+							boolean normalOprYn = data.findPath("normalOprYn").getBooleanValue();
+							
+							contentData.setApiNo(apiNo);
+							contentData.setAppTypeCode(appTypeCode);
+							contentData.setCreationDt(creationDt);
+							contentData.setNormalOprYn(normalOprYn);
+							contentData.setOccDt(occDt);
+							contentData.setRequestId(requestId);
+							contentData.setSerial(serial);
+							
+							contents.add(contentData);
+						}
+					}
 					
-					contentData.setApiNo(apiNo);
-					contentData.setAppTypeCode(appTypeCode);
-					contentData.setCreationDt(creationDt);
-					contentData.setNormalOprYn(normalOprYn);
-					contentData.setOccDt(occDt);
-					contentData.setRequestId(requestId);
-					contentData.setSerial(serial);
-					
-					contents.add(contentData);
+					if(lastEvaluatedKey != null && lastEvaluatedKey.size() > 0) {
+						
+						CISM0002Response_Body_lastEvaluatedKey data = new CISM0002Response_Body_lastEvaluatedKey();
+						
+						data.setCreationDt(lastEvaluatedKey.findPath("creationDt").getTextValue());
+						data.setSerial(lastEvaluatedKey.findPath("serial").getTextValue());
+						
+						list.add(data);
+					}
 				}
 				
-				if(lastEvaluatedKey != null) {
-					
-					List<CISM0002Response_Body_lastEvaluatedKey> list = new ArrayList<CISM0002Response_Body_lastEvaluatedKey>();
-					CISM0002Response_Body_lastEvaluatedKey data = new CISM0002Response_Body_lastEvaluatedKey();
-					
-					data.setCreationDt(lastEvaluatedKey.findPath("creationDt").getTextValue());
-					data.setSerial(lastEvaluatedKey.findPath("serial").getTextValue());
-					
-					list.add(data);
-					
-					resBody.setLastEvaluatedKey(list);
-				}
-				
+				resBody.setLastEvaluatedKey(list);
 				resBody.setContent(contents);
 				resBody.setNumberOfElements(numberOfElements);
 				resBody.setSize(size);

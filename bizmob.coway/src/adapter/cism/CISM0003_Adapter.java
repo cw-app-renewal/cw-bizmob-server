@@ -8,6 +8,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
+import adapter.cism.service.GetAccessTokenService;
 import adapter.model.CISM0003.CISM0003Request;
 import adapter.model.CISM0003.CISM0003Request_Body;
 import adapter.model.CISM0003.CISM0003Response;
@@ -33,7 +35,8 @@ import common.util.CodesEx;
 public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CISM0003_Adapter.class);
-
+	@Autowired
+	private GetAccessTokenService getAccessTokenService;
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
 		CISM0003Request				request		=	new CISM0003Request(obj);
@@ -46,8 +49,10 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 
 		try {
 			
+			String accessToken = getAccessTokenService.getAccessToken();
+			
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Authorization", "Bearer " + reqBody.getAccessToken());
+			headers.add("Authorization", "Bearer " + accessToken);
 			headers.add("Content-Type", "application/json");
 			headers.add("X-IoCare-Request-Type", "10");
 			
@@ -80,62 +85,78 @@ public class CISM0003_Adapter extends AbstractTemplateAdapter implements IAdapte
 			if( StringUtils.equalsIgnoreCase(resultCode, CodesEx._API_SUCCESS) ){
 				
 				JsonNode	payload			=	responseBody.findValue("payload");
-				JsonNode 	itemTypes 		= 	payload.findValue("itemTypes");
+				JsonNode 	itemTypes 		= 	null;
 				
-				String 		creationDt 		= 	payload.findValue("creationDt").getTextValue();
-				String 		occDt 			= 	payload.findValue("occDt").getTextValue();
-				String 		appTypeCode 	= 	payload.findValue("appTypeCode").getTextValue();
-				String 		requestId 		= 	payload.findValue("requestId").getTextValue();
-				String 		apiNo 			=	payload.findValue("apiNo").getTextValue();
-				String 		serial 			= 	payload.findValue("serial").getTextValue();
-				boolean 	normalOprYn 	= 	payload.findValue("normalOprYn").getBooleanValue();
+				String 		creationDt 		= 	"";
+				String 		occDt 			= 	"";
+				String 		appTypeCode 	= 	"";
+				String 		requestId 		= 	"";
+				String 		apiNo 			=	"";
+				String 		serial 			= 	"";
+				boolean 	normalOprYn 	= 	false;
 				
 				List<CISM0003Response_Body_itemTypes> its = new ArrayList<CISM0003Response_Body_itemTypes>();
 				
-				for(int i = 0; i < itemTypes.size(); i++) {
+				if(payload != null && payload.size() > 0) {
 					
-					CISM0003Response_Body_itemTypes itemTypesData = new CISM0003Response_Body_itemTypes();
+					creationDt 		= 	Long.toString(payload.findValue("creationDt").getLongValue());
+					occDt 			= 	payload.findValue("occDt").getTextValue();
+					appTypeCode 	= 	payload.findValue("appTypeCode").getTextValue();
+					requestId 		= 	payload.findValue("requestId").getTextValue();
+					apiNo 			=	payload.findValue("apiNo").getTextValue();
+					serial 			= 	payload.findValue("serial").getTextValue();
+					normalOprYn 	= 	payload.findValue("normalOprYn").getBooleanValue();
 					
-					JsonNode data = itemTypes.get(i);
-					JsonNode items = data.findValue("items");
+					itemTypes = payload.findValue("itemTypes");
 					
-					String 	itemTypeCode 		= 	data.findPath("itemTypeCode").getTextValue();
-					String 	itemTypeName 		= 	data.findPath("itemTypeName").getTextValue();
-					int 	sortNo				= 	data.findPath("sortNo").getIntValue();
-					boolean itemTypesNormalOprYn 	= 	data.findPath("normalOprYn").getBooleanValue();
-					
-					List<CISM0003Response_Body_itemTypes_items> itsi = new ArrayList<CISM0003Response_Body_itemTypes_items>();
-					
-					for(int y = 0; y < items.size(); y++) {
+					if(itemTypes != null && itemTypes.size() > 0) {
 						
-						CISM0003Response_Body_itemTypes_items itemsData = new CISM0003Response_Body_itemTypes_items();
-						
-						String 	itemId 				= 	items.findValue("itemId").getTextValue();
-						String 	itemName 			= 	items.findValue("itemName").getTextValue();
-						String 	symptoms 			= 	items.findValue("symptoms").getTextValue();
-						String 	relateComponent 	= 	items.findValue("relateComponent").getTextValue();
-						String  checkList			=	items.findValue("checkList").getTextValue();
-						String  actItem				=	items.findValue("actItem").getTextValue();
-						boolean itemNormalOprYn		=	items.findValue("normalOprYn").getBooleanValue();
-						
-						itemsData.setActItem(actItem);
-						itemsData.setCheckList(checkList);
-						itemsData.setItemId(itemId);
-						itemsData.setItemName(itemName);;
-						itemsData.setNormalOprYn(itemNormalOprYn);
-						itemsData.setRelateComponent(relateComponent);
-						itemsData.setSymptoms(symptoms);
-						
-						itsi.add(itemsData);
+						for(int i = 0; i < itemTypes.size(); i++) {
+							
+							CISM0003Response_Body_itemTypes itemTypesData = new CISM0003Response_Body_itemTypes();
+							
+							JsonNode data = itemTypes.get(i);
+							JsonNode items = data.findValue("items");
+							
+							String 	itemTypeCode 		= 	data.findPath("itemTypeCode").getTextValue();
+							String 	itemTypeName 		= 	data.findPath("itemTypeName").getTextValue();
+							int 	sortNo				= 	data.findPath("sortNo").getIntValue();
+							boolean itemTypesNormalOprYn 	= 	data.findPath("normalOprYn").getBooleanValue();
+							
+							List<CISM0003Response_Body_itemTypes_items> itsi = new ArrayList<CISM0003Response_Body_itemTypes_items>();
+							
+							for(int y = 0; y < items.size(); y++) {
+								
+								CISM0003Response_Body_itemTypes_items itemsData = new CISM0003Response_Body_itemTypes_items();
+								
+								String 	itemId 				= 	items.findValue("itemId").getTextValue();
+								String 	itemName 			= 	items.findValue("itemName").getTextValue();
+								String 	symptoms 			= 	items.findValue("symptoms").getTextValue();
+								String 	relateComponent 	= 	items.findValue("relateComponent").getTextValue();
+								String  checkList			=	items.findValue("checkList").getTextValue();
+								String  actItem				=	items.findValue("actItem").getTextValue();
+								boolean itemNormalOprYn		=	items.findValue("normalOprYn").getBooleanValue();
+								
+								itemsData.setActItem(actItem);
+								itemsData.setCheckList(checkList);
+								itemsData.setItemId(itemId);
+								itemsData.setItemName(itemName);;
+								itemsData.setNormalOprYn(itemNormalOprYn);
+								itemsData.setRelateComponent(relateComponent);
+								itemsData.setSymptoms(symptoms);
+								
+								itsi.add(itemsData);
+							}
+							
+							itemTypesData.setItems(itsi);
+							itemTypesData.setItemTypeCode(itemTypeCode);
+							itemTypesData.setItemTypeName(itemTypeName);
+							itemTypesData.setNormalOprYn(itemTypesNormalOprYn);
+							itemTypesData.setSortNo(sortNo);
+							
+							its.add(itemTypesData);
+						}
 					}
-					
-					itemTypesData.setItems(itsi);
-					itemTypesData.setItemTypeCode(itemTypeCode);
-					itemTypesData.setItemTypeName(itemTypeName);
-					itemTypesData.setNormalOprYn(itemTypesNormalOprYn);
-					itemTypesData.setSortNo(sortNo);
-					
-					its.add(itemTypesData);
 				}
 				
 				resBody.setApiNo(apiNo);
