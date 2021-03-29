@@ -39,10 +39,7 @@
         <archive path="/bizmob.coway.SMART_HOME/lib/httpcore-nio-4.1.1.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/httpmime-4.1.2.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/icsp-1.0.0.jar"/>
-        <archive path="/bizmob.coway.SMART_HOME/lib/jackson-annotations-2.12.2.jar"/>
-        <archive path="/bizmob.coway.SMART_HOME/lib/jackson-core-2.12.2.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/jackson-core-lgpl-1.6.2.jar"/>
-        <archive path="/bizmob.coway.SMART_HOME/lib/jackson-databind-2.12.2.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/jackson-mapper-lgpl-1.6.2.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/jericho-html-3.1.jar"/>
         <archive path="/bizmob.coway.SMART_HOME/lib/jPpcliE.jar"/>
