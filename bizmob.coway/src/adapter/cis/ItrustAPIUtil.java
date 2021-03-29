@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.mcnc.common.util.JsonUtil;
 
 import common.exception.ItrustAPIException;
 
@@ -22,14 +23,14 @@ public class ItrustAPIUtil {
 	 * @param url API URL 정보
 	 * @return ResponseEntity<ObjectNode>
 	 */
-	public static ResponseEntity<ObjectNode> getSendMessage(String url, HttpHeaders headers) {
+	public static ObjectNode getSendMessage(String url, HttpHeaders headers) {
 		try{
-			RestTemplate restTemplate = new RestTemplate();
-			HttpEntity<?> requestEntity = new HttpEntity<Object>(headers);
+			RestTemplate 			restTemplate 		= new RestTemplate();
+			HttpEntity<?> 			requestEntity 		= new HttpEntity<Object>(headers);
+			ResponseEntity<String> 	resEntity 			=  restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+			String 					content 			= resEntity.getBody();
 			
-//			logger.debug("### URL : " + url);
-			
-			return restTemplate.exchange(url, HttpMethod.GET, requestEntity, ObjectNode.class);
+			return JsonUtil.toObjectNode(content);
 		} catch(RestClientException e){
 			throw new ItrustAPIException(e);
 		} catch (Exception e) {
@@ -43,15 +44,14 @@ public class ItrustAPIUtil {
 	 * @param reqData Request정보
 	 * @return ResponseEntity<ObjectNode>
 	 */
-	public static ResponseEntity<ObjectNode> postSendMessage(String url, HttpHeaders headers, ObjectNode reqData) {
+	public static ObjectNode postSendMessage(String url, HttpHeaders headers, ObjectNode reqData) {
 		
 		try{
-			RestTemplate restTemplate = new RestTemplate();
-			HttpEntity<ObjectNode> requestEntity = new HttpEntity<ObjectNode>(reqData, headers);
-			
-			logger.debug("### requestEntity : " + requestEntity);
-			
-			return restTemplate.exchange(url, HttpMethod.POST, requestEntity, ObjectNode.class);
+			RestTemplate 			restTemplate 		= new RestTemplate();
+			HttpEntity<ObjectNode> 	requestEntity 		= new HttpEntity<ObjectNode>(reqData, headers);
+			ResponseEntity<String> 	resEntity	 		=  restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+			String 					content 			= resEntity.getBody();
+			return JsonUtil.toObjectNode(content);
 		} catch(RestClientException e){
 			throw new ItrustAPIException(e);
 		} catch (Exception e) {

@@ -66,25 +66,11 @@ public class CIS003_Adapter extends AbstractTemplateAdapter implements IAdapterJ
 				  url = url.replace("{id}", reqBody.getRequestId().toString());
 			
 			long 					startTime			= System.currentTimeMillis();
-		
-			ResponseEntity<ObjectNode> resEntity = ItrustAPIUtil.getSendMessage(url, headers);
-
-			long					endTime						= System.currentTimeMillis();
+			ObjectNode				responseBody 		= ItrustAPIUtil.getSendMessage(url, headers);
+			long					endTime				= System.currentTimeMillis();
 			
-			logger.debug("### ResponseEntity : " + resEntity.toString());
-			
-			if(!resEntity.getStatusCode().equals( HttpStatus.OK )) {
-				return ResponseUtil.makeFailResponse(obj, CodesEx.API_DEV_ERROR_CODE, CodesEx.API_DEV_ERROR_MESSAGE, trCode, reqBodyNode, null, this.getClass().getName());
-			}
-			
-			ObjectNode	responseBody		= 	resEntity.getBody();
-			JsonNode	getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
-			
-			String resultCode 		= getHeaderNode.findPath("result").getTextValue();
-			String resultMessage 	= getHeaderNode.findPath("message").getTextValue();
-			
-			logger.debug("### resultCode : " + resultCode);
-			logger.debug("### resultMessage : " + resultMessage);
+			JsonNode				getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
+			String 					resultCode 			= getHeaderNode.findPath("result").getTextValue();
 			
 			// 정상성공.
 			if( StringUtils.equalsIgnoreCase(resultCode, CodesEx._API_SUCCESS) ){

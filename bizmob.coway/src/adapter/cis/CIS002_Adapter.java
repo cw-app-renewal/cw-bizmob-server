@@ -70,23 +70,13 @@ public class CIS002_Adapter extends AbstractTemplateAdapter implements IAdapterJ
 				  url += SmartConfig.getString("coway.iocare.smart.list").replace("{serial}", reqBody.getSerial().toString());
 				  url = url.replace("{id}", reqBody.getCreationDt().toString());
 			
-			long 					startTime			= System.currentTimeMillis();
-			
-			ResponseEntity<ObjectNode> resEntity = ItrustAPIUtil.getSendMessage(url, headers);
-			
-			long					endTime						= System.currentTimeMillis();
+			long 			startTime			= System.currentTimeMillis();
+			ObjectNode		responseBody 		= ItrustAPIUtil.getSendMessage(url, headers);
+			long			endTime				= System.currentTimeMillis();
 
-			logger.debug("### ResponseEntity : " + resEntity.toString());
-			
-			if(!resEntity.getStatusCode().equals( HttpStatus.OK )) {
-				return ResponseUtil.makeFailResponse(obj, CodesEx.API_DEV_ERROR_CODE, CodesEx.API_DEV_ERROR_MESSAGE, trCode, reqBodyNode, null, this.getClass().getName());
-			}
-			
-			ObjectNode	responseBody		= 	resEntity.getBody();
-			JsonNode	getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
-			
-			String resultCode 		= getHeaderNode.findPath("result").getTextValue();
-			String resultMessage 	= getHeaderNode.findPath("message").getTextValue();
+			JsonNode		getHeaderNode		= responseBody.findPath(CodesEx.TR_HEADER);
+			String 			resultCode 			= getHeaderNode.findPath("result").getTextValue();
+			String 			resultMessage 		= getHeaderNode.findPath("message").getTextValue();
 			
 			logger.debug("### resultCode : " + resultCode);
 			logger.debug("### resultMessage : " + resultMessage);
