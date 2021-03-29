@@ -1,5 +1,6 @@
 package adapter.cis;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +30,8 @@ public class ItrustAPIUtil {
 			HttpEntity<?> 			requestEntity 		= new HttpEntity<Object>(headers);
 			ResponseEntity<String> 	resEntity 			=  restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 			String 					content 			= resEntity.getBody();
-			
-			return JsonUtil.toObjectNode(content);
+			ObjectNode 				resNode 			= JsonUtil.toObject(content, ObjectNode.class);
+			return resNode; 
 		} catch(RestClientException e){
 			throw new ItrustAPIException(e);
 		} catch (Exception e) {
@@ -51,7 +52,8 @@ public class ItrustAPIUtil {
 			HttpEntity<ObjectNode> 	requestEntity 		= new HttpEntity<ObjectNode>(reqData, headers);
 			ResponseEntity<String> 	resEntity	 		=  restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 			String 					content 			= resEntity.getBody();
-			return JsonUtil.toObjectNode(content);
+			ObjectNode 				resNode 			= JsonUtil.toObject(content, ObjectNode.class);
+			return resNode;
 		} catch(RestClientException e){
 			throw new ItrustAPIException(e);
 		} catch (Exception e) {
