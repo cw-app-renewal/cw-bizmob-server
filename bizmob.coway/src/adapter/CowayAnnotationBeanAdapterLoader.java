@@ -14,7 +14,7 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.adapter.loaders.IAdapterLoader;
 
-@Deprecated
+
 public class CowayAnnotationBeanAdapterLoader implements IAdapterLoader, ApplicationContextAware  {
 
     private static ILogger logger = LoggerService.getLogger(CowayAnnotationBeanAdapterLoader.class);

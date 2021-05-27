@@ -36,10 +36,16 @@ public class GetAccessTokenService {
 		}
 	}
 	
+	
+	
+	
 	public void refreshAccessToken(){
+		
+		String authKey = SmartConfig.getString("coway.oauth.basic");
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.add("Authorization","Basic alNHdGlOZ1FoYnNBTHlPMUZQcmI0b01VUmppeUFOekE6a0o5SjE4T0hlOFkxM2dBMGRkN0prckw2UGxmRm40N0E");
+		headers.add("Authorization","Basic " + authKey);
 		
 		MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<String, String>();
 		

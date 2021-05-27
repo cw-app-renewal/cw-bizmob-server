@@ -11,6 +11,7 @@ import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
+import com.mcnc.bizmob.adapter.sap.SapConnector;
 import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.logging.ILogger;
 import com.mcnc.smart.common.logging.LoggerService;
@@ -32,10 +33,13 @@ public class SapCommonAdapter extends AbstractTemplateAdapter implements IAdapte
 	@Autowired
 	private DBAdapter dbAdapter;
 	
+	@Autowired
+	private SapConnector sapConnector;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
-			
+		
 		//request
 		JsonNode 			reqRootNode 		= obj.get(JsonAdaptorObject.TYPE.REQUEST);
 		JsonNode 			reqHeaderNode 		= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
