@@ -53,26 +53,28 @@
 	<!-- Controller -->
 	<mvc:view-controller path="/" view-name="index" />
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="mediaTypes">
-			<map>
-				<entry key="atom" value="application/atom+xml" />
-				<entry key="html" value="text/html" />
-				<entry key="jsp" value="text/html" />
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="text/xml" />
-			</map>
-		</property>
-		<property name="viewResolvers">
-			<list>
-				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
-				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2" />
-			</list>
-		</property>
-		<property name="defaultViews">
-			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-			</list>
-		</property>
+	    <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+	    <property name="viewResolvers">
+	        <list>
+	            <bean id="viewResolver"
+	                  class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+	                  p:viewClass="org.springframework.web.servlet.view.JstlView"
+	                  p:prefix="/WEB-INF/jsp/"
+	                  p:suffix=".jsp"
+	                  p:cacheUnresolved="false"
+	                  p:exposedContextBeanNames="webProperties"
+	                  p:order="2"
+	                  />
+	                  
+	           	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="2" />
+	           	
+	        </list>
+	    </property>
+	    <property name="defaultViews">
+	        <list>
+	            <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+	        </list>
+	    </property>
 	</bean>
 
 	<!-- Uploader -->
