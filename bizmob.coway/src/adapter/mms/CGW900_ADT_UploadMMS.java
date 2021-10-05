@@ -128,26 +128,34 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 	}
 	
 	private String uploadImage(String uid, String imgPath, CowayMmsFtpUtils ftpUtils) throws Exception{
-		String imgFileName = uploadStorageAccessor.getFileName(uid);
 		
-		if ( (uid == null) || ("".equals(uid)) ) {
-			
+		
+		
+		//upload file 처리
+		if ( (uid == null) || ("".equalsIgnoreCase(uid)) ) {
 			logger.debug(">>>> UID 없이 MMS 보내기");
 			return "";
 			
 		} else {
 			
-			if(imgFileName == null || "".equals(imgFileName) == true) {
+/*			imgFileName = uploadStorageAccessor.getFileName(uid);
+			if(imgFileName == null || imgFileName.equals("") == true) {
+				//오류 처리 - 업로드 파일 실패
+				logger.error("CGW900 :: uploadImage() :: multipart upload temp file not found!! :: multipart uid = " + uid);
+				throw new Exception("업로드 파일을 찾을 수 없습니다.");
+			}*/
+			String imgFileName = uid + ".jpg";
+			byte[] imgData = uploadStorageAccessor.load(uid);
+			logger.debug("CGW900 :: image file name = " + imgFileName);
+			
+			if(imgData == null || imgData.length == 0) {
 				//오류 처리 - 업로드 파일 실패
 				logger.error("CGW900 :: uploadImage() :: multipart upload temp file not found!! :: multipart uid = " + uid);
 				throw new Exception("업로드 파일을 찾을 수 없습니다.");
 			}
 			
+			//ftp upload
 			try {
-				byte[] imgData = uploadStorageAccessor.load(uid);
-				
-				logger.debug("CGW900 :: image file name = " + imgFileName);
-	
 				boolean result = ftpUtils.ftpUpload(imgPath, imgFileName, imgData);
 				if(result == false) {
 					//오류 처리 - 파일 업로드 실패
@@ -160,8 +168,9 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 			} finally {
 				uploadStorageAccessor.remove(uid);
 			}
+			
+			return imgPath + "/" + imgFileName;
 		}
-		return imgPath + "/" + imgFileName;
 	}
 	
 }
