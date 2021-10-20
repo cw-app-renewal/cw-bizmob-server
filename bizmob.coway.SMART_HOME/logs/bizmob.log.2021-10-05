@@ -1,0 +1,547 @@
+INFO  10-05 21:26:15[            Thread-2]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 21:26:15[            Thread-2]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 21:26:15[            Thread-2]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 21:26:15[            Thread-2]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 21:26:15[            Thread-2]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 21:26:15 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 21:26:15[            Thread-2]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 21:26:15[            Thread-2]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@a0eb342: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@a3ffc71
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 21:26:15[            Thread-2]control.MessageController      d                    New Seed : 722884013
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 21:26:15[            Thread-2]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 21:26:16[            Thread-2]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 727 ms
+INFO  10-05 21:26:29[http-bio-8081-exec-3]control.MessageController      handleMessage        ===== Start ZZ0006  >>>>> 
+INFO  10-05 21:26:29[http-bio-8081-exec-3]common.MyBatisConfig           <clinit>             Success to load C:\Users\regar\git\CodyDoctor-Server\bizmob.coway.SMART_HOME\conf\SqlMapConfig.xml
+INFO  10-05 21:26:29[http-bio-8081-exec-3]common.MyBatisConfig           getSqlSessionFactory Start::getSqlSessionFactory()
+INFO  10-05 21:26:29[http-bio-8081-exec-3]common.MyBatisConfig           getSqlSessionFactory Success to load C:\Users\regar\git\CodyDoctor-Server\bizmob.coway.SMART_HOME\conf\SqlMapConfig.xml
+INFO  10-05 21:26:29[http-bio-8081-exec-3]common.MyBatisConfig           getSqlSessionFactory End::getSqlSessionFactory()
+INFO  10-05 21:26:29[http-bio-8081-exec-3]common.MyBatisConfig           getSqlSessionFactory Start::getSqlSessionFactory()
+WARN  10-05 21:26:30[http-bio-8081-exec-3]control.MessageController      a                    Failed to read license!
+org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: org.apache.tomcat.dbcp.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (IO 예외 상황: The Network Adapter could not establish the connection)
+### The error may exist in file:///C:\Users\regar\git\CodyDoctor-Server\bizmob.coway.SMART_HOME/conf/auth/ORACLE/Env.xml
+### The error may involve Env.selectEnvByPk
+### The error occurred while executing a query
+### Cause: org.apache.tomcat.dbcp.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (IO 예외 상황: The Network Adapter could not establish the connection)
+	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:26)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:111)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:102)
+	at com.mcnc.smart.db.dao.MyBatisDao.a(SourceFile:187)
+	at com.mcnc.smart.db.dao.MyBatisDao.selectFromSQL(SourceFile:111)
+	at com.mcnc.smart.db.dao.MyBatisDao.select(SourceFile:98)
+	at com.mcnc.smart.db.dao.MyBatisDao.execute(SourceFile:58)
+	at com.mcnc.portal.auth.dao.EnvDao.selectEnvByPk(SourceFile:31)
+	at com.mcnc.portal.auth.reader.DBLicenseReader.getLicense(SourceFile:41)
+	at com.mcnc.smart.hybrid.server.web.control.MessageController.a(SourceFile:763)
+	at com.mcnc.smart.hybrid.server.web.control.MessageController.handleMessage(SourceFile:152)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:176)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:426)
+	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:414)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:790)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:719)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:644)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:549)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:304)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at com.mcnc.bizmob.filter.SimpleFilter.doFilter(SimpleFilter.java:22)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at common.filter.ServicePauseFilter.doFilter(ServicePauseFilter.java:77)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:224)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:169)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:472)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:929)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:405)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:964)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:515)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:302)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: org.apache.tomcat.dbcp.dbcp.SQLNestedException: Cannot create PoolableConnectionFactory (IO 예외 상황: The Network Adapter could not establish the connection)
+	at org.apache.tomcat.dbcp.dbcp.BasicDataSource.createPoolableConnectionFactory(BasicDataSource.java:1549)
+	at org.apache.tomcat.dbcp.dbcp.BasicDataSource.createDataSource(BasicDataSource.java:1388)
+	at org.apache.tomcat.dbcp.dbcp.BasicDataSource.getConnection(BasicDataSource.java:1044)
+	at org.apache.ibatis.transaction.managed.ManagedTransaction.openConnection(ManagedTransaction.java:87)
+	at org.apache.ibatis.transaction.managed.ManagedTransaction.getConnection(ManagedTransaction.java:61)
+	at org.apache.ibatis.executor.BaseExecutor.getConnection(BaseExecutor.java:279)
+	at org.apache.ibatis.executor.SimpleExecutor.prepareStatement(SimpleExecutor.java:72)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:59)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:267)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:137)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:96)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:77)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:108)
+	... 52 more
+Caused by: java.sql.SQLException: IO 예외 상황: The Network Adapter could not establish the connection
+	at oracle.jdbc.dbaccess.DBError.throwSqlException(DBError.java:134)
+	at oracle.jdbc.dbaccess.DBError.throwSqlException(DBError.java:179)
+	at oracle.jdbc.dbaccess.DBError.throwSqlException(DBError.java:334)
+	at oracle.jdbc.driver.OracleConnection.<init>(OracleConnection.java:418)
+	at oracle.jdbc.driver.OracleDriver.getConnectionInstance(OracleDriver.java:521)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:325)
+	at org.apache.tomcat.dbcp.dbcp.DriverConnectionFactory.createConnection(DriverConnectionFactory.java:38)
+	at org.apache.tomcat.dbcp.dbcp.PoolableConnectionFactory.makeObject(PoolableConnectionFactory.java:582)
+	at org.apache.tomcat.dbcp.dbcp.BasicDataSource.validateConnectionFactory(BasicDataSource.java:1556)
+	at org.apache.tomcat.dbcp.dbcp.BasicDataSource.createPoolableConnectionFactory(BasicDataSource.java:1545)
+	... 64 more
+FATAL 10-05 21:26:30[http-bio-8081-exec-3]control.MessageController      a                    FAILED TO READ LICENSE! THE SERVER STOPS!
+INFO  10-05 21:26:30[http-bio-8081-exec-3]control.MessageController      handleMessage        <<<<<  ZZ0006 End =====
+INFO  10-05 21:58:52[                main]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 21:58:52[                main]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 21:58:52[                main]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 21:58:52[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 21:58:52[                main]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 21:58:52 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 21:58:52[                main]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 21:58:52[                main]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@5c8d22de: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@3426d8e2
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 21:58:53[                main]control.MessageController      d                    New Seed : 722884520
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 21:58:53[                main]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 21:58:53[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 1042 ms
+INFO  10-05 22:03:04[                main]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 22:03:04[                main]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 22:03:04[                main]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 22:03:04[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 22:03:04[                main]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 22:03:04 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 22:03:04[                main]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:03:04[                main]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@14feab02: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@5e352e3a
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 22:03:05[                main]control.MessageController      d                    New Seed : 722884659
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 22:03:05[                main]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 22:03:05[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 766 ms
+INFO  10-05 22:41:12[                main]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 22:41:12[                main]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 22:41:12[                main]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 22:41:12[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 22:41:12[                main]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 22:41:12 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 22:41:12[                main]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 22:41:12[                main]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1d8f835c: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@5e352e3a
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 22:41:12[                main]control.MessageController      d                    New Seed : 722885275
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 22:41:12[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 22:41:13[                main]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 22:41:13[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 707 ms
+ERROR 10-05 22:48:00[http-nio-8090-exec-4]web.TimeCheckInterceptor       preHandle            요청 데이터 파싱 실패
+요청 데이터 : null
+java.lang.NullPointerException
+	at java.io.StringReader.<init>(StringReader.java:50)
+	at org.codehaus.jackson.JsonFactory.createJsonParser(JsonFactory.java:427)
+	at org.codehaus.jackson.map.ObjectMapper.readValue(ObjectMapper.java:1285)
+	at org.codehaus.jackson.map.ObjectMapper.readTree(ObjectMapper.java:1007)
+	at web.TimeCheckInterceptor.preHandle(TimeCheckInterceptor.java:50)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:781)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:719)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:644)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:549)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:77)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.mcnc.bizmob.filter.SimpleFilter.doFilter(SimpleFilter.java:22)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at common.filter.ServicePauseFilter.doFilter(ServicePauseFilter.java:77)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:687)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1707)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+INFO  10-05 23:00:52[  Catalina-utility-2]ort.AbstractApplicationContext doClose              Closing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 22:41:12 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 23:00:52[  Catalina-utility-2]t.DefaultSingletonBeanRegistry destroySingletons    Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1d8f835c: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@5e352e3a
+INFO  10-05 23:00:58[  Catalina-utility-2]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 23:00:58[  Catalina-utility-2]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 23:00:58[  Catalina-utility-2]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 23:00:58[  Catalina-utility-2]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 23:00:58[  Catalina-utility-2]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 23:00:58 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 23:00:58[  Catalina-utility-2]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:00:59[  Catalina-utility-2]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@687fd66c: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@33bd5841
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]control.MessageController      d                    New Seed : 722885638
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 23:00:59[  Catalina-utility-2]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 23:00:59[  Catalina-utility-2]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 660 ms
+INFO  10-05 23:29:24[                main]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 23:29:24[                main]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 23:29:24[                main]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 23:29:24[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 23:29:24[                main]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 23:29:24 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 23:29:24[                main]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:29:24[                main]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@35852b6: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cowayDownloadController,cowayUploadController,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@3c9cab4
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 23:29:25[                main]control.MessageController      d                    New Seed : 722886104
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 23:29:25[                main]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 23:29:25[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 754 ms
+WARN  10-05 23:29:43[http-nio-8090-exec-2]servlet.DispatcherServlet      noHandlerFound       No mapping found for HTTP request with URI [/bizmob/health/check] in DispatcherServlet with name 'dispatcher'
+INFO  10-05 23:32:32[                main]filter.ServicePauseFilter      init                 service pause enable = false
+INFO  10-05 23:32:32[                main]filter.ServicePauseFilter      init                 service pause message = 시스템 점검 중입니다. 사용에 불편을 드려 죄송합니다.
+INFO  10-05 23:32:32[                main]filter.ServicePauseFilter      init                 service pause time = Sun Jan 01 00:00:00 KST 2012 ~ Mon Jan 02 00:00:00 KST 2012
+INFO  10-05 23:32:32[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization started
+INFO  10-05 23:32:32[                main]ort.AbstractApplicationContext prepareRefresh       Refreshing WebApplicationContext for namespace 'dispatcher-servlet': startup date [Tue Oct 05 23:32:32 KST 2021]; parent: Root WebApplicationContext
+INFO  10-05 23:32:32[                main]xml.XmlBeanDefinitionReader    loadBeanDefinitions  Loading XML bean definitions from ServletContext resource [/WEB-INF/controller-servlet.xml]
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ningCandidateComponentProvider gisterDefaultFilters JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning
+INFO  10-05 23:32:32[                main]ort.DefaultListableBeanFactory nstantiateSingletons Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@35852b6: defining beans [org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,bizLogicDao,errorMessageDao,imageConversionDao,journalDao,jsonSchemaDao,localFileDao,sessionInfoDao,imageConversionService,jsonSvc,jsonSchemaValidator,localFileDownloadService,bizMOBDeviceServiceImpl,iosPlistController,documentDownloader,uploadController,downloadController,messageController,mockController,protocolController,cacheClearContoller,cowayDownloadController,cowayUploadController,healthCheckContoller,messageAwareProcessor,sessionAwareProcessor,org.springframework.web.servlet.config.viewControllerHandlerAdapter,org.springframework.web.servlet.config.viewControllerHandlerMapping,org.springframework.web.servlet.view.ContentNegotiatingViewResolver#0,multipartResolver,uploadDirResource,org.springframework.web.servlet.handler.MappedInterceptor#1,org.springframework.web.servlet.handler.MappedInterceptor#2]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@3c9cab4
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}] onto handler 'iosPlistController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}.*] onto handler 'iosPlistController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/ios/update/{file_name}/] onto handler 'iosPlistController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload] onto handler 'uploadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload.*] onto handler 'uploadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/] onto handler 'uploadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/upload/.*] onto handler 'uploadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}.*] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/update/{type}/] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**.*] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/{target}/**/] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/download/image/{uid:.*}] onto handler 'downloadController'
+INFO  10-05 23:32:32[                main]control.MessageController      d                    New Seed : 722886147
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout.*] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//logout/] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//validate/{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}.*] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//{TRCode}/] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT.*] onto handler 'messageController'
+INFO  10-05 23:32:32[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [//LOGOUT/] onto handler 'messageController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}] onto handler 'mockController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}.*] onto handler 'mockController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/mock/{TRCode}/] onto handler 'mockController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectServerInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectChartSeriesData.sm] onto handler 'protocolController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/selectDiskInfoData.sm] onto handler 'protocolController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/protocol/syncUploadFile.json] onto handler 'protocolController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/{rfcName}] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/{rfcName}.*] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/{rfcName}/] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/all] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/all.*] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/clear/all/] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/select/{rfcName}] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/select/{rfcName}.*] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cache/select/{rfcName}/] onto handler 'cacheClearContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**] onto handler 'cowayDownloadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**.*] onto handler 'cowayDownloadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowaydownload/{target}/**/] onto handler 'cowayDownloadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload] onto handler 'cowayUploadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload.*] onto handler 'cowayUploadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/] onto handler 'cowayUploadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/cowayupload/.*] onto handler 'cowayUploadController'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/health/check] onto handler 'healthCheckContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/health/check.*] onto handler 'healthCheckContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Mapped URL path [/health/check/] onto handler 'healthCheckContoller'
+INFO  10-05 23:32:33[                main]dler.AbstractUrlHandlerMapping registerHandler      Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]
+INFO  10-05 23:32:33[                main]servlet.FrameworkServlet       initServletBean      FrameworkServlet 'dispatcher': initialization completed in 865 ms
