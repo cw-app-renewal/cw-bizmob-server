@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -21,11 +21,10 @@ import adapter.common.SapCommonResponse;
 import common.ResponseUtil;
 import connect.db.mms.CowayMmsDao;
 import connect.ftp.mms.CowayMmsFtpUtils;
-
 @Adapter(trcode = {"CGW900"})
 public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CGW900_ADT_UploadMMS.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGW900_ADT_UploadMMS.class);
 
 	@Autowired private CowayMmsDao cowayMmsDao;
 	@Autowired private LocalFileStorageAccessor uploadStorageAccessor;

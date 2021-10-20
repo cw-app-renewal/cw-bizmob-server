@@ -3,11 +3,11 @@ package com.mcnc.smart.hybrid.adapter.impl;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -19,7 +19,7 @@ import common.ResponseUtil;
 @Adapter(trcode = { "ZZ0009" })
 public class ZZ0009_ADT_VerificationCode extends AbstractTemplateAdapter implements	IAdapterJob {
 
-	private static final ILogger logger = LoggerService.getLogger(ZZ0009_ADT_VerificationCode.class);
+	private static final Logger logger = LoggerFactory.getLogger(ZZ0009_ADT_VerificationCode.class);
 
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		

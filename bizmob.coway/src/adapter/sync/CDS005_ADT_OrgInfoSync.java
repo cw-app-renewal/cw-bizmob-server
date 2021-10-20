@@ -6,6 +6,8 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
@@ -13,8 +15,6 @@ import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -22,11 +22,10 @@ import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
 import adapter.common.SapCommonMapperException;
 import common.ResponseUtil;
-
 @Adapter(trcode = { "CDS005" })
 public class CDS005_ADT_OrgInfoSync extends AbstractTemplateAdapter implements IAdapterJob  {
 
-	private ILogger logger = LoggerService.getLogger(CDS005_ADT_OrgInfoSync.class);
+	private static final Logger logger = LoggerFactory.getLogger(CDS005_ADT_OrgInfoSync.class);
 	
 	@Autowired private SAPAdapter sapAdapter;
 	@Autowired private DBAdapter dbAdapter;

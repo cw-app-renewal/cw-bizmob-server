@@ -9,12 +9,12 @@ import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -22,7 +22,6 @@ import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
 import common.BizmobUtil;
 import common.ResponseUtil;
-
 
 /**
  * 
@@ -35,7 +34,7 @@ import common.ResponseUtil;
 @Adapter( trcode = {"ACUPI03"} )
 public class ACUPI03_ADT_HistoryACUPI2 extends AbstractTemplateAdapter implements IAdapterJob{
 
-	private ILogger logger = LoggerService.getLogger(ACUPI03_ADT_HistoryACUPI2.class);
+	private static final Logger logger = LoggerFactory.getLogger(ACUPI03_ADT_HistoryACUPI2.class);
 	
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {

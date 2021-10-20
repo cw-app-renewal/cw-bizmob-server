@@ -12,19 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.IOUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
-
 @Component
 public class CGR151_ADT_SpManualDownloader  extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGR151_ADT_SpManualDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR151_ADT_SpManualDownloader.class);
 
 	private static final String ISO_8859_1_ENCODING = "iso-8859-1";
 	private static final String UTF_8_ENCODING = "utf-8";

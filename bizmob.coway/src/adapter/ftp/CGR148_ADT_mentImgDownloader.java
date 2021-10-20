@@ -6,13 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.FileUtil;
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
@@ -21,11 +21,10 @@ import common.ftp.CowayFtpFilePath;
 import common.ftp.DownloadDO;
 import connect.exception.ConnectClientException;
 import connect.ftp.FtpClientService;
-
 @Component
 public class CGR148_ADT_mentImgDownloader extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CGR148_ADT_mentImgDownloader.class);
 
 	@Autowired private FtpClientService ftpClientService;
 	

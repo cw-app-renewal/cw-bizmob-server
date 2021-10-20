@@ -5,6 +5,8 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
@@ -13,8 +15,6 @@ import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.SapConnector;
 import com.mcnc.common.util.JsonUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -25,7 +25,7 @@ import common.ResponseUtil;
 @Adapter(trcode = { "COMMON" })
 public class SapCommonAdapter extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(SapCommonAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(SapCommonAdapter.class);
 
 	@Autowired
 	private SAPAdapter sapAdapter;

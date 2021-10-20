@@ -1,6 +1,6 @@
 package connector.sqlite.doctor.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import test.common.TestCommon;
-
-
-import connector.sqlite.doctor.dao.DoctorBomDao;
 
 
 

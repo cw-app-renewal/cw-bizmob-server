@@ -1,23 +1,21 @@
 package connect.ftp.coway;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.mcnc.common.util.IOUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
 import connect.exception.ConnectClientException;
 import connect.exception.ConnectClientExceptionCode;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Deprecated
 public class CowayFtpClient {
 
-	private ILogger logger = LoggerService.getLogger(CowayFtpClient.class);
+	private static final Logger logger = LoggerFactory.getLogger(CowayFtpClient.class);
 
 	
 	public byte[] downloadFile(String filePath, String fileName) throws ConnectClientException {

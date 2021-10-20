@@ -6,16 +6,15 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
 @Deprecated
 public class PushNotificator {
 
-	private ILogger logger = LoggerService.getLogger(PushNotificator.class);
+	private static final Logger logger = LoggerFactory.getLogger(PushNotificator.class);
 
 	@Autowired
 	PushService pushService;

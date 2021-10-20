@@ -12,22 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.IOUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import connect.ftp.FtpClientService;
-
 @Component
 public class CGR116_ADT_BbsSmtImageDownloader  extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGR116_ADT_BbsSmtImageDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR116_ADT_BbsSmtImageDownloader.class);
 
 	@Autowired
 	private FtpClientService ftpClientService;

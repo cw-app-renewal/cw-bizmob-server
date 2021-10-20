@@ -2,14 +2,14 @@ package adapter.sample;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.sap.conn.jco.JCoFunction;
@@ -23,12 +23,11 @@ import adapter.model.sample.WR002.WR002Request_Body_I_ITAB;
 import adapter.model.sample.WR002.WR002Response;
 import adapter.model.sample.WR002.WR002Response_Body;
 import adapter.model.sample.header.HWHeader;
-
 //@Adapter(trcode = { "WR002" })
 @Deprecated
 public class WR002_Adapter extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(WR002_Adapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(WR002_Adapter.class);
 	
 	@Autowired
 	private SAPAdapter sapAdapter;
@@ -59,11 +58,11 @@ public class WR002_Adapter extends AbstractTemplateAdapter implements IAdapterJo
 		
 		} catch (AdapterException e) {
 			logger.error("AdapterException :: ", e);
-			return makeFailReesponse(trCode + e.getErrorCode(), e.getErrorMessage());
+			return makeFailResponse(trCode + e.getErrorCode(), e.getErrorMessage());
 			
 		} catch (Exception e) {
 			logger.error("Exception :: ", e);
-			return makeFailReesponse(trCode + "IMPL0001", e.getMessage());
+			return makeFailResponse(trCode + "IMPL0001", e.getMessage());
 		}
 	}
 

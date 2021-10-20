@@ -1,9 +1,10 @@
 package adapter.sync;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
@@ -12,12 +13,11 @@ import adapter.model.CDS001.CDS001Request_Body;
 import adapter.model.CDS001.CDS001Response;
 import adapter.model.CDS001.CDS001Response_Body;
 import adapter.model.header.CowayCommonHeader;
-
 //@Adapter(trcode = { "CDS001" })
 @Deprecated
 public class CDS001_ADT_CodeTableVerChecker extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CDS001_ADT_CodeTableVerChecker.class);
+	private static final Logger logger = LoggerFactory.getLogger(CDS001_ADT_CodeTableVerChecker.class);
 	
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
@@ -48,7 +48,7 @@ public class CDS001_ADT_CodeTableVerChecker extends AbstractTemplateAdapter impl
 			
 		} catch (Exception e) {
 			logger.error("Exception :: ", e);
-			return makeFailReesponse(errCode, e.getLocalizedMessage());
+			return makeFailResponse(errCode, e.getLocalizedMessage());
 		}
 	}
 

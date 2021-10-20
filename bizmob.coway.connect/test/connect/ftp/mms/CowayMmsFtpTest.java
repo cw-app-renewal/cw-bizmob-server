@@ -7,7 +7,6 @@ import java.util.Date;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPSClient;
 import org.junit.Test;
 
 import com.mcnc.common.util.DateUtil;

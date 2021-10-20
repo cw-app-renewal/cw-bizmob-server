@@ -7,6 +7,8 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,18 +18,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.common.storage.StorageAccessor;
 import com.mcnc.smart.hybrid.server.web.dao.ErrorMessageDao;
 import com.mcnc.smart.hybrid.server.web.exception.HttpDownloadException;
-
 @Controller
 @RequestMapping("cowayupload")
 //@Deprecated
 public class CowayUploadController {
 
-	private ILogger logger = LoggerService.getLogger(CowayUploadController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CowayUploadController.class);
 
 	@Autowired
 	ErrorMessageDao errorMessageDao;

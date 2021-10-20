@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
-import adapter.cis.CIS003_Adapter;
 import adapter.common.TestAdapter;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -10,7 +10,9 @@
 	<property name="appName.war" value="./bizmob.war" />
 	<property name="java.webcontent" value="./WebContent" />
 	<property name="java.webinf" value="./WebContent/WEB-INF" />
-
+	
+	<property name="sap.lib" 			value="D:\mcnc\apache-tomcat-8.0.9" />
+	
 	<target name="preBuild">
 		<delete dir="${java.lib}" />
 	</target>
@@ -49,6 +51,10 @@
 	<path id="build.classpath">
 		<fileset dir="${java.lib}">
 			<include name="**/*.jar"/>
+		</fileset>
+		
+		<fileset dir="../bizmob.coway.SMART_HOME/ext_lib">
+			<include name="*.jar"/>
 		</fileset>
 	</path>
 

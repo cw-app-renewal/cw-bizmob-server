@@ -1,10 +1,10 @@
 
 package bizlogic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.common.json.SimpleJsonResponse;
 import com.mcnc.smart.hybrid.common.server.AbstractJsonAdaptor;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
@@ -15,7 +15,7 @@ import com.mcnc.smart.hybrid.server.core.AbstractMessageProcessor;
 
 public class DefaultByPassBiz extends AbstractMessageProcessor implements MessageProcessor {
 	
-    private ILogger   logger = LoggerService.getLogger(DefaultByPassBiz.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultByPassBiz.class);
     
     @Autowired
     AbstractJsonAdaptor adapterDispatcher;

@@ -1,10 +1,11 @@
 package adapter.model.CIS002;
 
 
-import java.util.List;
-import java.util.Iterator;
-import org.codehaus.jackson.JsonNode;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**

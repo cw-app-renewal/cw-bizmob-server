@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 import com.sap.conn.jco.AbapException;
-import com.sap.conn.jco.JCo;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoDestinationManager;
 import com.sap.conn.jco.JCoException;

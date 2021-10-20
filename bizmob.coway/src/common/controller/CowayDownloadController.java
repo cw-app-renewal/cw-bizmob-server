@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import adapter.ftp.CGR101_ADT_InstallImageDownloader;
@@ -76,7 +76,6 @@ import adapter.ftp.CGR160_ADT_QabmMovDownloader;
 import adapter.ftp.CGR161_ADT_HplbImageDownloader;
 import adapter.sync.CGS000_ADT_SyncZipDownloader;
 
-
 /*
  * http://127.0.0.1:8080/bizmob/cowaydownload/syncDatabase/1?mode=1&file_name=WD_COM.zip&file_path=SYNC/CSDR/CSDR
  */
@@ -86,7 +85,7 @@ import adapter.sync.CGS000_ADT_SyncZipDownloader;
 //@Deprecated
 public class CowayDownloadController {
 	
-	private ILogger logger = LoggerService.getLogger(CowayDownloadController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CowayDownloadController.class);
 		
 	@Autowired
 	private CGS000_ADT_SyncZipDownloader syncZipDownloader;

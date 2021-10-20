@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
@@ -78,13 +76,8 @@ public class CIS002_Adapter extends AbstractTemplateAdapter implements IAdapterJ
 			String 			resultCode 			= getHeaderNode.findPath("result").getTextValue();
 			String 			resultMessage 		= getHeaderNode.findPath("message").getTextValue();
 			
-			logger.debug("### resultCode : " + resultCode);
-			logger.debug("### resultMessage : " + resultMessage);
-			
 			// 정상성공.
 			if( StringUtils.equalsIgnoreCase(resultCode, CodesEx._API_SUCCESS) ){
-				logger.debug("### Device Sterilize Time Success");
-				
 				JsonNode	payload				=	responseBody.findValue("payload");
 				JsonNode	lastEvaluatedKey	=	null;
 				JsonNode 	content				=	null;

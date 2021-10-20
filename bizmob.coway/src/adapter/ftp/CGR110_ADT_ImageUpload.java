@@ -8,6 +8,8 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
@@ -16,8 +18,6 @@ import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -34,11 +34,10 @@ import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import common.ftp.CowayFtpFileType;
 import connect.ftp.FtpClientService;
-
 @Adapter(trcode = { "CGR110" })
 public class CGR110_ADT_ImageUpload extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CGR110_ADT_ImageUpload.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR110_ADT_ImageUpload.class);
 	
 	@Autowired private FtpClientService ftpClientService;
 	@Autowired private LocalFileStorageAccessor uploadStorageAccessor;

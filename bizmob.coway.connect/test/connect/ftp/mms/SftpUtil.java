@@ -1,8 +1,5 @@
 package connect.ftp.mms;
 
-import java.io.File;
-import java.io.FileInputStream;
-
 /*import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;

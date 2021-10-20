@@ -9,21 +9,20 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
-
 /*
  * http://10.131.16.124:8080/bizmob/download/SyncZip/1?mode=1&file_name=CSDR.zip&filePath=SYNC/CSDR
  */
 @Component
 public class CGS000_ADT_SyncZipDownloader extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGS000_ADT_SyncZipDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGS000_ADT_SyncZipDownloader.class);
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {

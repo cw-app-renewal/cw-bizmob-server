@@ -21,6 +21,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
@@ -35,9 +37,6 @@ import com.mcnc.common.util.IOUtil;
 import com.mcnc.portal.auth.dao.EnvDao;
 import com.mcnc.portal.auth.model.Env;
 import com.mcnc.smart.common.Smart;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LogType;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.helper.IOHelper;
 import com.mcnc.smart.hybrid.server.web.dao.ErrorMessageDao;
 import com.mcnc.smart.hybrid.server.web.exception.HttpDownloadException;
@@ -49,11 +48,10 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-
 @Controller
 @RequestMapping("ios")
 public class IosPlistController {
-    private static ILogger logger       = LoggerService.getLogger(IosPlistController.class);
+	private static final Logger logger = LoggerFactory.getLogger(IosPlistController.class);
 
     /**
      * 처음부터 받기
@@ -120,11 +118,6 @@ public class IosPlistController {
         startEventTime = System.currentTimeMillis();
         logger.info("===== Start::update() : " + fileName);
         
-        if (isTraceable()) {
-            logger.trace("  > target name : " + fileName);
-            logger.trace("  > Local Path:" + localPath.toString());
-        }
-
         requestFile = new AbstractFile(fileName + ".plist", localPath.toString());
         response.setHeader("file_name", fileName);
         response.setContentType("application/octet-stream; charset=utf-8");
@@ -328,13 +321,5 @@ public class IosPlistController {
         } catch (UnsupportedEncodingException e) {
             return str;
         }
-    }
-    
-    /**
-     * 현재 TRACE 로그를 남길 수 있는 지 결정한다.
-     * @return TRACE 로그를 남길 수 있으면 true
-     */
-    protected static boolean isTraceable() {
-        return logger.getLoggingLevel().getLevel() >= LogType.TRACE.getLevel();
     }
 }

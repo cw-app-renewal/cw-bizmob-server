@@ -5,18 +5,17 @@ import java.util.Calendar;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.common.util.JsonUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.json.SimpleJsonResponse;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject.TYPE;
-
 public class ResponseUtil {
 
-	private static ILogger logger = LoggerService.getLogger(BizmobUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(BizmobUtil.class);
 	
 	public static JsonAdaptorObject makeResponse(JsonAdaptorObject obj, JsonNode resNode, String trCode, long legacyTime, String rfcName, JsonNode reqBodyNode, String adtName) {
 

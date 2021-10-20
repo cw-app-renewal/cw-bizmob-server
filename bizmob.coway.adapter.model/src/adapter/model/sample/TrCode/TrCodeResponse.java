@@ -3,7 +3,9 @@ package adapter.model.sample.TrCode;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
 import adapter.model.header.DefaultHeader;
 
 /**

@@ -5,13 +5,13 @@ import java.util.HashMap;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.portal.auth.model.DeviceInfo;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -22,7 +22,7 @@ import common.ResponseUtil;
 @Adapter(trcode = { "ZZ0055" })
 public class ZZ0055_ADT_UpdateDeviceID extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private static final ILogger logger = LoggerService.getLogger(ZZ0055_ADT_UpdateDeviceID.class);
+	private static final Logger logger = LoggerFactory.getLogger(ZZ0055_ADT_UpdateDeviceID.class);
 	@Autowired private DBAdapter dbAdapter;
 
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {

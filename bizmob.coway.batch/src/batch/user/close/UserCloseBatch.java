@@ -7,23 +7,21 @@ import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import batch.user.close.data.UserCloseInfoDO;
 
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
 import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
 
-import adapter.common.SapCommonMapper;
+import batch.user.close.data.UserCloseInfoDO;
 import connect.exception.ConnectClientException;
 import connect.http.coway.CowayCommonHttpClient;
 import connect.http.coway.data.DeleteDeviceListRequestDO;
@@ -31,10 +29,9 @@ import connect.http.coway.data.DeleteDeviceListResponseDO;
 import connect.http.coway.data.DeleteUserListRequestDO;
 import connect.http.coway.data.DeleteUserListResponseDO;
 import connect.http.coway.data.MdmUserResignRequestDO;
-
 public class UserCloseBatch {
 
-	private ILogger logger = LoggerService.getLogger(UserCloseBatch.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserCloseBatch.class);
 	
 	@Autowired
 	SAPAdapter sapAdapter;
@@ -202,7 +199,7 @@ public class UserCloseBatch {
 		ObjectNode reqBodyNode = JsonUtil.objectNode();
 		//execute 
 		@SuppressWarnings("unchecked")
-		Map<String, Object> resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CR301", reqBodyNode, new SapCommonMapper("", null));
+		Map<String, Object> resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CR301", reqBodyNode, new SapMapper());
 		JsonNode resultJson = JsonUtil.toObjectNode(resMap);
 		
 		

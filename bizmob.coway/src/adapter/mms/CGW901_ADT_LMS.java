@@ -3,12 +3,12 @@ package adapter.mms;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -17,7 +17,6 @@ import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import adapter.common.SapCommonResponse;
 import common.ResponseUtil;
 import connect.db.mms.CowayMmsDao;
-
 /**
  * @class CGW901_ADT_LMS
  * @since 2013-07-16
@@ -26,7 +25,7 @@ import connect.db.mms.CowayMmsDao;
 @Adapter(trcode = { "CGW901" })
 public class CGW901_ADT_LMS extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CGW901_ADT_LMS.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGW901_ADT_LMS.class);
 	@Autowired private CowayMmsDao cowayMmsDao;
 	
 	private static final String ERROR_CODE = "ADAP0000";

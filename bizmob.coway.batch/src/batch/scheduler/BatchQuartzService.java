@@ -3,19 +3,16 @@ package batch.scheduler;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import batch.cody.CodyBatchZip;
 import batch.doctor.DoctorBatchZip;
 import batch.user.close.UserCloseBatch;
-
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
 public class BatchQuartzService extends QuartzJobBean {
 
-	private ILogger logger = LoggerService.getLogger(BatchQuartzService.class);
+	private static final Logger logger = LoggerFactory.getLogger(BatchQuartzService.class);
 
 	//코디 디비 파일 생성
 	CodyBatchZip codyBatchZip;

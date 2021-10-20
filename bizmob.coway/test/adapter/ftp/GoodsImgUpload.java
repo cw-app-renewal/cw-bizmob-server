@@ -11,12 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mcnc.common.util.IOUtil;
-import common.ftp.CowayFtpFileName;
-import common.ftp.CowayFtpFilePath;
-
-import connect.ftp.FtpClientService;
 
 import adapter.common.TestAdapter;
+import common.ftp.CowayFtpFileName;
+import common.ftp.CowayFtpFilePath;
+import connect.ftp.FtpClientService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-applicationContext.xml")

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
@@ -20,13 +22,10 @@ import adapter.model.ERR002.ERR002Request_Body_crushList;
 import adapter.model.ERR002.ERR002Response;
 import adapter.model.ERR002.ERR002Response_Body;
 import adapter.model.header.CowayCommonHeader;
-
 @Adapter(trcode = { "ERR002" })
 public class ERR002_Adapter extends AbstractTemplateAdapter implements
 		IAdapterJob {
 
-	private static final ILogger logger = LoggerService
-			.getLogger(ERR002_Adapter.class);
 	@Autowired
 	private DBAdapter dbAdapter;
 

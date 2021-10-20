@@ -4,6 +4,7 @@ package adapter.model.sample.RD044;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.codehaus.jackson.JsonNode;
 
 /**

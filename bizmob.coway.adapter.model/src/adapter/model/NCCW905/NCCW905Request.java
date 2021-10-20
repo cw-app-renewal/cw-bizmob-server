@@ -2,10 +2,12 @@ package adapter.model.NCCW905;
 
 
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-import adapter.model.header.CowayCommonHeader;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.model.header.CowayCommonHeader;
 
 /**
  * NFC 호출 로그 등록

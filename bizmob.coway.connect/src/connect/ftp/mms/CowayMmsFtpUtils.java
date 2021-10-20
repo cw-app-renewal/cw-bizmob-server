@@ -2,7 +2,6 @@ package connect.ftp.mms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
@@ -11,12 +10,8 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
-import connect.exception.ConnectClientException;
-import connect.ftp.FtpClientService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class CowayMmsFtpUtils {
 
 	private FTPClient client;
@@ -25,7 +20,7 @@ public class CowayMmsFtpUtils {
 	private String ftpPassword;
 	private String ftpCharset = null;
 	
-	private ILogger logger = LoggerService.getLogger(CowayMmsFtpUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(CowayMmsFtpUtils.class);
 	
 	public CowayMmsFtpUtils() {}
 	

@@ -3,6 +3,7 @@ package adapter.model.sample.CR011;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
 import adapter.model.sample.header.HWHeader;

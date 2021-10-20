@@ -1,7 +1,5 @@
 package connect.ftp.mms;
 
-import org.junit.Test;
-
 public class SftpUtilTest {
 
 	

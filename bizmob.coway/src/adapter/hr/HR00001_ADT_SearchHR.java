@@ -11,19 +11,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
 import common.ResponseUtil;
-
 
 /**
  * 
@@ -36,7 +35,7 @@ import common.ResponseUtil;
 @Adapter( trcode = {"HR00001"} )
 public class HR00001_ADT_SearchHR extends AbstractTemplateAdapter implements IAdapterJob{
 
-	private ILogger logger = LoggerService.getLogger(HR00001_ADT_SearchHR.class);
+	private static final Logger logger = LoggerFactory.getLogger(HR00001_ADT_SearchHR.class);
 	
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {

@@ -4,20 +4,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.adapter.loaders.IAdapterLoader;
 
-
 public class CowayAnnotationBeanAdapterLoader implements IAdapterLoader, ApplicationContextAware  {
 
-    private static ILogger logger = LoggerService.getLogger(CowayAnnotationBeanAdapterLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(CowayAnnotationBeanAdapterLoader.class);
     private Map<String, String> beanContext = new ConcurrentHashMap<String, String>();
     private ApplicationContext appContext;
     private boolean init = false;

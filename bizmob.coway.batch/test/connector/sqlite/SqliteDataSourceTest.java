@@ -1,11 +1,8 @@
 package connector.sqlite;
 
-import static org.junit.Assert.*;
-
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import connector.sqlite.SqliteDataSource;
 import connector.sqlite.doctor.mapper.DoctorBomMapper;
 
 

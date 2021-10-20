@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mcnc.bizmob.adapter.DBAdapter;
@@ -11,8 +13,6 @@ import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
 import adapter.common.SapCommonMapperException;
 import connect.exception.ConnectClientException;
@@ -26,10 +26,9 @@ import connect.http.coway.data.InsertUserResponseDO;
 import connect.http.coway.data.MdmUserSyncRequestDO;
 import connect.http.coway.data.UpdateUserRequestDO;
 import connect.http.coway.data.UpdateUserResponseDO;
-
 public class CGR221_AppstoreLoginService {
 
-	private ILogger logger = LoggerService.getLogger(CGR221_AppstoreLoginService.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR221_AppstoreLoginService.class);
 
 	@Autowired
 	private SAPAdapter sapAdapter;

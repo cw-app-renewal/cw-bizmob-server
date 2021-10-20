@@ -1,13 +1,7 @@
 package batch.scheduler;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import batch.cody.CodyBatchZip;
-import batch.doctor.DoctorBatchZip;
 
 @Deprecated
 public class SystemOutTimerService {

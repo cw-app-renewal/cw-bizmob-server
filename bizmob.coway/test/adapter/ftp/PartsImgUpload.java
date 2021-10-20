@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import adapter.common.TestAdapter;
-
 import com.mcnc.common.util.IOUtil;
 
+import adapter.common.TestAdapter;
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
-
 import connect.ftp.FtpClientService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

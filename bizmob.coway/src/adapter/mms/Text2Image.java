@@ -14,13 +14,11 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jackson.JsonNode;
-
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class Text2Image {
 
-	private ILogger logger = LoggerService.getLogger(Text2Image.class);
+	private static final Logger logger = LoggerFactory.getLogger(Text2Image.class);
 
 	String bkImageName = "bkReceipt_blank.jpg";
 	BufferedImage bkOrgImage = null;

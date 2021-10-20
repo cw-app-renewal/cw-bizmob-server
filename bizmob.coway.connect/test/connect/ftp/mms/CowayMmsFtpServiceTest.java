@@ -14,8 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mcnc.common.util.IOUtil;
 
-import connect.ftp.FtpClientService;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-ftp-applicationContext.xml")
 public class CowayMmsFtpServiceTest {

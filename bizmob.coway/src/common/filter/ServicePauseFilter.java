@@ -20,13 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class ServicePauseFilter implements Filter {
 	
-	private ILogger logger = LoggerService.getLogger(ServicePauseFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServicePauseFilter.class);
 	
 	private static String _ERROR_CODE = "ERR9999";
     private static PropertiesConfiguration configuration = null;

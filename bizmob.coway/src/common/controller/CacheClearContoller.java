@@ -1,4 +1,4 @@
-package web;
+package common.controller;
 
 import java.io.IOException;
 

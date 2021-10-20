@@ -8,14 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mcnc.common.util.CompressUtil;
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
 public class CodyBatchZip {
 
-	private ILogger logger = LoggerService.getLogger(CodyBatchZip.class);
+	private static final Logger logger = LoggerFactory.getLogger(CodyBatchZip.class);
 	
 	private static final String COM_DATABASE_CODY_PATH = "/SYNC/CODY/CODY/WC_COM";
 	private static final String COM_DATABASE_ING_PATH = "/SYNC/CODY/ING/WC_COM";

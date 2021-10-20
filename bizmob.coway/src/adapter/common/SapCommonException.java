@@ -5,17 +5,16 @@ import java.util.Map;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.smart.common.Smart;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
 import common.ConfigurationManager;
-
 public class SapCommonException {
 
-	private static ILogger logger = LoggerService.getLogger(SapCommonException.class);
+	private static final Logger logger = LoggerFactory.getLogger(SapCommonException.class);
 	
 	private String errCode = "";
 	private String errMsg = "";

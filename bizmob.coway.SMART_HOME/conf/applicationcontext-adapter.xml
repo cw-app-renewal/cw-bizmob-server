@@ -29,17 +29,9 @@
 	</context:component-scan>
 	
 	<bean id="annotationBeanAdapterLoader" class="com.mcnc.smart.hybrid.adapter.loaders.AnnotationBeanAdapterLoader"/>
-	<!-- 
-	<bean id="annotationBeanAdapterLoader" class="adapter.CowayAnnotationBeanAdapterLoader"/>
-	-->
 	<bean id="adapterDispatcher" class="adapter.CowayLoaderAdapterDispatcher">
 		<constructor-arg index="0"><ref local="annotationBeanAdapterLoader" /></constructor-arg>
 	</bean>
- 	<!-- 
-	<bean id="adapterDispatcher" class="com.mcnc.smart.hybrid.adapter.dispatcher.LoaderAdapterDispatcher">
-		<constructor-arg index="0"><ref local="annotationBeanAdapterLoader" /></constructor-arg>
-	</bean>
-	-->
 		
 	<!-- sync db downloader --> 
 	<bean id="syncZipDownloader" class="adapter.sync.CGS000_ADT_SyncZipDownloader"/>
@@ -157,11 +149,19 @@
  		</property>
  	</bean> 
  	-->
- 		
- 	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
+ 	
+	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
+		<constructor-arg index="0" ref="jcoProps"/>
+		<!-- <constructor-arg index="1" value="/webapps/mobile-msfa.coway.dev/bizmob/ABAP_AS_WITH_POOL"/>  -->
+		<constructor-arg index="1" value="/ABAP_AS_WITH_POOL"/>
+	</bean>	
+
+ 	<!--
+	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
 		<constructor-arg ref="jcoProps"/>
 	</bean>
-	
+	-->
+
 	<!-- ftp connection -->
 	<bean id="ftpSessionFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
 		<property name="host" value="10.101.1.57"/>
@@ -205,6 +205,7 @@
 	</util:list>
 	
 	<!-- coway mms dataSoruce -->
+	 <!-- Old Data Source
 	<bean id="cowayMms_dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 	    <property name="url" value="jdbc:oracle:thin:@10.101.5.73:1521:KTSMS" /> 
@@ -217,7 +218,22 @@
 		<property name="validationQuery" value="select 1 from dual" />
 	    <property name="testOnBorrow" value="true"/>
 	    <property name="removeAbandoned" value="true"/>
+	</bean> -->
+
+	<bean id="cowayMms_dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+	    <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+	    <property name="url" value="jdbc:oracle:thin:@10.101.1.88:1521:CWSMS" /> 
+	    <property name="username" value="CWSMS" />
+ 	    <property name="password" value="CWSMS" />
+	    <property name="initialSize" value="1" />
+	    <property name="maxActive" value="1" />
+	    <property name="maxIdle" value="1" />
+	    <property name="poolPreparedStatements" value="true" />
+	    <property name="validationQuery" value="select 1 from dual" />
+	    <property name="testOnBorrow" value="true"/>
+	    <property name="removeAbandoned" value="true"/>
 	</bean>
+
 	
 	<!-- coway mms dataSource mapping -->
 	<bean id="cowayMmsSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -235,7 +251,7 @@
 		<property name="cowayMmsSessionTemplate" ref="cowayMmsSessionTemplate"/>
 	</bean>
 	
-	<!-- MQTT Service -->
+		<!-- MQTT Service -->
 	<bean id="getAccessTokenService" class="adapter.cis.service.GetAccessTokenService"/>
 	<bean id="getAuthTokenService" class="adapter.cis.service.GetAccessTokenService"/>
 		

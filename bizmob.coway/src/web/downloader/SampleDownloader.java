@@ -11,16 +11,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.downloader.Attachment;
 import com.mcnc.smart.downloader.URLDownloader;
 import com.mcnc.smart.hybrid.server.web.control.DownloadController;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
-
 
 /**
  * 샘플 다운로드. http://{context_root}/download/sample 로 매핑된다.
@@ -28,7 +27,7 @@ import com.mcnc.smart.hybrid.server.web.io.Downloader;
  */
 @Component
 public class SampleDownloader extends AbstractDownloader implements Downloader {
-    private ILogger logger = LoggerService.getLogger(SampleDownloader.class);
+    private static final Logger logger = LoggerFactory.getLogger(SampleDownloader.class);
     
     public SampleDownloader() {
         // set buffer size 16kb of memory

@@ -5,8 +5,8 @@
 <configuration>
 	<properties>
 		
-<!-- 		<property name="SMART_HOME" value="/app/webapp/SMART_HOME" />		 -->
-	<property name="SMART_HOME" value="D:\serverSource\coway_cody\bizmob.coway.SMART_HOME" />
+	<!-- <property name="SMART_HOME" value="/app/webapp/SMART_HOME" />  -->
+	<property name="SMART_HOME" value="C:\Users\regar\git\CodyDoctor-Server\bizmob.coway.SMART_HOME" />
 		<property name="DATABASE" value="ORACLE" />
 		<!-- nfc DATABASE
 		<property name="NFC_DATABASE" value="POSTGRE" />
@@ -27,26 +27,26 @@
 		<typeHandler javaType="boolean" jdbcType="CHAR" handler="com.mcnc.common.mybatis.handler.BooleanCharTypeHandler" />
 		<typeHandler javaType="boolean" jdbcType="VARCHAR" handler="com.mcnc.common.mybatis.handler.BooleanCharTypeHandler" />
 	</typeHandlers>
+<!-- data source -->
 	<environments default="CowayErrorCode">
-<!-- 	<environments default="BIZMOBNFC"> -->
 		<environment id="JournalDB">
 			<transactionManager type="MANAGED" />
 			<dataSource type="JNDI">
-				<property name="data_source" value="java:comp/env/BIZMOB" />
+				<property name="data_source" value="java:comp/env/bizmobServerDS" />
 			</dataSource>
 		</environment>
 		<environment id="BizMOBDB">
 			<transactionManager type="MANAGED" />
 			<dataSource type="JNDI">
-				<property name="data_source" value="java:comp/env/BIZMOB" />
+				<property name="data_source" value="java:comp/env/bizmobServerDS" />
 			</dataSource>
 		</environment>
 		<environment id="CowayErrorCode">
 			<transactionManager type="MANAGED" />
 			<dataSource type="JNDI">
-				<property name="data_source" value="java:comp/env/BIZMOB" />
+				<property name="data_source" value="java:comp/env/bizmobServerDS" />
 			</dataSource>
-		 	<!-- 
+			<!-- 
 			<transactionManager type="JDBC"/>
 			<dataSource type="POOLED">
 				<property name="driver" value="org.sqlite.JDBC" />
@@ -54,14 +54,13 @@
 				<property name="poolMaximumActiveConnections" value="3" />
 				<property name="poolMaximumIdleConnections" value="1" />
 			</dataSource>
-			-->
-			
+			-->	
 		</environment>
 		<!-- NFC data_Source
 		<environment id="BIZMOBNFC">
 			<transactionManager type="MANAGED" />
 			<dataSource type="JNDI">
-				<property name="data_source" value="java:comp/env/BIZMOBNFC" />
+				<property name="data_source" value="BIZMOBNFC" />
 			</dataSource>
 		</environment>
 		 -->
@@ -91,8 +90,7 @@
 		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW902.xml" />		
 		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW903.xml" />		
 		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW904.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW905.xml" />
-		 -->		
+		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW905.xml" />		
+		 -->
 	</mappers>
-	
 </configuration>

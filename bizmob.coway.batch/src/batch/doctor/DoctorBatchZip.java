@@ -8,14 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mcnc.common.util.CompressUtil;
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
 public class DoctorBatchZip {
 
-	private ILogger logger = LoggerService.getLogger(DoctorBatchZip.class);
+	private static final Logger logger = LoggerFactory.getLogger(DoctorBatchZip.class);
 	
 	private static final String COM_DATABASE_PATH = "/SYNC/CSDR/CSDR/WD_COM";
 	private static final String COM_DATABASE_ING_PATH = "/SYNC/CSDR/ING/WD_COM";

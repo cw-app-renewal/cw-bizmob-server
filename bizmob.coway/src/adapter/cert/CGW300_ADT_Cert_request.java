@@ -9,12 +9,12 @@ import java.util.Date;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.kcp.J_PP_CLI_N;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
@@ -23,7 +23,6 @@ import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import adapter.common.NfcCommonResponse;
 import common.ResponseUtil;
 import kr.co.kcp.CT_CLI;
-
 
 /**
  * 
@@ -35,7 +34,7 @@ import kr.co.kcp.CT_CLI;
 @Adapter( trcode = {"CGW300"} )
 public class CGW300_ADT_Cert_request extends AbstractTemplateAdapter implements IAdapterJob{
 
-	private ILogger logger = LoggerService.getLogger(CGW300_ADT_Cert_request.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGW300_ADT_Cert_request.class);
 	
 	@SuppressWarnings("static-access")
 	@Override

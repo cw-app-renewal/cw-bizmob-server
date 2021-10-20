@@ -49,7 +49,7 @@
 	<update id="updateProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
 	<![CDATA[
 	UPDATE PRODUCT
-	SET PART_NM = #{PART_NM}, BARCODE_YN = #{BARCODE_YN}, EXPEND_YN = #{EXPEND_YN}, GB_TP = #{GB_TP, MODE=IN}, KIT_REG_YN = #{KIT_REG_YN}, FILTER_TP = #{FILTER_TP}
+	SET PART_NM = #{PART_NM}, BARCODE_YN = #{BARCODE_YN}, EXPEND_YN = #{EXPEND_YN}, GB_TP = #{GB_TP}, KIT_REG_YN = #{KIT_REG_YN}, FILTER_TP = #{FILTER_TP}
 	WHERE GOODS_CD = #{GOODS_CD} AND PART_CD = #{PART_CD}
 	]]>		
 	</update>

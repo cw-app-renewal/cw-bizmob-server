@@ -5,19 +5,18 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import connect.ftp.FtpClientService;
-
 @Deprecated
 public class CGR100_ADT_ImageDownloader extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGR100_ADT_ImageDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR100_ADT_ImageDownloader.class);
 		
 	@Autowired
 	FtpClientService ftpClientService;
