@@ -19,18 +19,18 @@ import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
+import common.util.FileAttachmentService;
 import connect.exception.ConnectClientException;
-import connect.ftp.FtpClientService;
+
 @Component
 public class CGR153_ADT_QMImageDownloader extends AbstractDownloader implements Downloader {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGR153_ADT_QMImageDownloader.class);
 
-	@Autowired
-	private FtpClientService ftpClientService;
-	
 	private static final String ISO_8859_1_ENCODING = "iso-8859-1";
 	private static final String UTF_8_ENCODING = "utf-8";
+	
+	@Autowired FileAttachmentService fileAttachmentService;
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {
@@ -83,15 +83,16 @@ public class CGR153_ADT_QMImageDownloader extends AbstractDownloader implements 
 		
 		try {
 			
-			long startTime = System.currentTimeMillis();
 			
-			byte[] fileByte = ftpClientService.downloadFile(filePath, fileName);
 			
-			logger.info(">>>> File Down Time [" +  ((System.currentTimeMillis() - startTime) / 1000.0) + "초]");
 			
-			bais = new ByteArrayInputStream(fileByte);
+			byte[] 					byteArray 	= fileAttachmentService.download(filePath, fileName, true);
 			
-			send( response, fileName, getFileExt(fileName), bais, fileByte.length, fileStartPos );
+			
+			
+			bais = new ByteArrayInputStream(byteArray);
+			
+			send( response, fileName, getFileExt(fileName), bais, byteArray.length, fileStartPos );
 		} catch ( ConnectClientException e ) {
 			
 			logger.error("ConnectClientException IO Exception !! :: ", e);

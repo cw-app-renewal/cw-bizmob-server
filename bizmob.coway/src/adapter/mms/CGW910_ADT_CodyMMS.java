@@ -20,7 +20,6 @@ import adapter.common.SapCommonResponse;
 import common.ResponseUtil;
 import common.ftp.CowayFtpFilePath;
 import connect.db.mms.CowayMmsDao;
-import connect.ftp.FtpClientService;
 import connect.ftp.mms.CowayMmsFtpUtils;
 
 @Adapter(trcode = {"CGW910"})
@@ -29,7 +28,6 @@ public class CGW910_ADT_CodyMMS extends AbstractTemplateAdapter implements IAdap
 	private static final Logger logger = LoggerFactory.getLogger(CGW910_ADT_CodyMMS.class);
 
 	@Autowired private CowayMmsDao cowayMmsDao;
-	@Autowired FtpClientService ftpClientService;
 	
 	//웹서버 그림파일저장 경로(mms메시지 발송)
 	private final String CHECK_IMAGE_PATH = "/oradata/WJSMSEXCEL/img/";
@@ -61,7 +59,7 @@ public class CGW910_ADT_CodyMMS extends AbstractTemplateAdapter implements IAdap
 			filePath = filePath.replace("..", "");
 			fileName = fileName.replace("..", "");
 			
-			logger.debug("download full file path = [" + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName + "]");
+			
 			
 			String 	imgFullPathName = "";
 			long	start			= System.currentTimeMillis();

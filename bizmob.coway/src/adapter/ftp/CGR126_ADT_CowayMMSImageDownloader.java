@@ -17,14 +17,14 @@ import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import common.ftp.CowayFtpFilePath;
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
+
 @Component
 public class CGR126_ADT_CowayMMSImageDownloader extends AbstractDownloader implements Downloader {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGR126_ADT_CowayMMSImageDownloader.class);
 		
-	@Autowired
-	FtpClientService ftpClientService;
+	@Autowired FileAttachmentService fileAttachmentService;
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {
@@ -56,14 +56,15 @@ public class CGR126_ADT_CowayMMSImageDownloader extends AbstractDownloader imple
 		filePath = filePath.replace("..", "");
 		fileName = fileName.replace("..", "");
 		
-		logger.debug("download full file path = [" + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName + "]");
+		
 		
 	    ByteArrayInputStream bais = null;
 		
 	    try {
 		
 			//ftp
-			byte[] byteArray = ftpClientService.downloadFile(filePath, fileName);
+	    	
+			byte[] 					byteArray 	= fileAttachmentService.download(filePath, fileName, true);
 		  
 	    	// ftp 이미지 다운로드 : charset 조정
 //			String ftpHost = SmartConfig.getString("media.ftp.host", "10.101.1.57");

@@ -18,14 +18,14 @@ import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
+
 @Component
 public class CGR101_ADT_InstallImageDownloader extends AbstractDownloader implements Downloader {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGR101_ADT_InstallImageDownloader.class);
 		
-	@Autowired
-	FtpClientService ftpClientService;
+	@Autowired FileAttachmentService fileAttachmentService;
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {
@@ -56,15 +56,15 @@ public class CGR101_ADT_InstallImageDownloader extends AbstractDownloader implem
 
 		String filePath = CowayFtpFilePath.getCustomerFolder(orderNo);
 		String fileName = CowayFtpFileName.getInstallImgName(orderNo, imgSeq);
-		logger.debug("download full file path = [" + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName + "]");
+		
 		
 	    ByteArrayInputStream bais = null;
 		
 	    try {
 		
-			//ftp
-			byte[] byteArray = ftpClientService.downloadFile(filePath, fileName);
-		  
+			
+			byte[] 					byteArray 	= fileAttachmentService.download(filePath, fileName, true);
+			
 	        bais = new ByteArrayInputStream(byteArray);
        
 	    	send( response, fileName, getFileExt(fileName), bais, byteArray.length, fileStartPos );

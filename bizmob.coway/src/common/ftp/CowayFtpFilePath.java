@@ -10,7 +10,9 @@ public class CowayFtpFilePath extends CowayFtpFileType {
 	public static final String _FOLDER_SEPARATOR = "/";
 
 	// 개발서버인 경우 /dev 를, 운영서버는 ""를  사용하도록 설정
-	public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))?"/dev":"";
+	// public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))?"/dev":"";
+	// 2021-12-23 - FTP중계모듈에서 /dev 빼달라고 함
+	public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))? "":"";
 	
 	// /photo 를 root로 사용
 	private static final String _IMAGES_ROOT_FOLDER = _DEV_ROOT_FOLDER + _FOLDER_SEPARATOR + "photo";

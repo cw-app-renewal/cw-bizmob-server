@@ -28,13 +28,13 @@ import common.ResponseUtil;
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import common.ftp.CowayFtpFileType;
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
+
 @Adapter(trcode = { "CGR111" })
 public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGR111_ADT_ImageDelete.class);
 	
-	@Autowired private FtpClientService ftpClientService;
 	@Autowired private SAPAdapter sapAdapter;
 	@Autowired private DBAdapter dbAdapter;
 	
@@ -73,7 +73,10 @@ public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements I
 				String fileName 	= CowayFtpFileName.getCowayFtpFileName(imgType, jobDate, jobType, orderNo, jobSeq, imgSeq, procID, fileCa);
 				logBuffer.append("delete img ftp path = " + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName);		
 				
-				ftpClientService.deleteFile(filePath, fileName);
+//				ftpClientService.deleteFile(filePath, fileName);
+				FileAttachmentService service = new FileAttachmentService();
+				service.delete(filePath, fileName);
+				
 				logBuffer.append("== delete img end ========");
 				
 				if(CowayFtpFileType.getCowayImageTypeFlag(imgType) == 1) {

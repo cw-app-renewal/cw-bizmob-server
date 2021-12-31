@@ -33,18 +33,17 @@ import common.ResponseUtil;
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import common.ftp.CowayFtpFileType;
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
+
 @Adapter(trcode = { "CGR110" })
 public class CGR110_ADT_ImageUpload extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGR110_ADT_ImageUpload.class);
 	
-	@Autowired private FtpClientService ftpClientService;
 	@Autowired private LocalFileStorageAccessor uploadStorageAccessor;
 	@Autowired private SAPAdapter sapAdapter;
 	@Autowired private DBAdapter dbAdapter;
 	
-	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		
@@ -87,7 +86,15 @@ public class CGR110_ADT_ImageUpload extends AbstractTemplateAdapter implements I
 				imgNameMap.put("IMG_NAME", fileName);
 				
 				resImgNameList.add(imgNameMap);
-				ftpClientService.uploadFile(filePath, fileName, getUploadImgData(imgUid));
+				
+				/*
+				 * 2021-11-05, 이미지파일 업로드 변경 ftp -> api
+				 */
+				FileAttachmentService service = new FileAttachmentService();
+				service.upload(filePath, fileName, getUploadImgData(imgUid), true);
+//				ftpClientService.uploadFile(filePath, fileName, getUploadImgData(imgUid));
+				
+				
 				logBuffer.append("== upload img end ========");
 				
 				if(CowayFtpFileType.getCowayImageTypeFlag(imgType) == CowayFtpFileType._IMG_FLAG_CUSTOMER) {
