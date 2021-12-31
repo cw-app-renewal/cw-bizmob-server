@@ -4,6 +4,7 @@ import org.springframework.dao.DataAccessException;
 
 import connector.sqlite.AbstractSqliteSessionTemplate;
 import connector.sqlite.cody.dao.data.CodyProductDO;
+import connector.sqlite.doctor.dao.data.DoctorQtCodeDO;
 
 
 public class CodyBomDao extends AbstractSqliteSessionTemplate  {
@@ -45,5 +46,20 @@ public class CodyBomDao extends AbstractSqliteSessionTemplate  {
 	
 		return (int) getCodyComSessionTemplate().update(CODY_BOM_NAMESPACE + ".createRD007_ExportTable");
 	}
+
+	public int deleteQtCodeData() throws Exception {
+			
+		return (int) getCodyComSessionTemplate().delete(CODY_BOM_NAMESPACE + ".deleteQtCodeData");
+	}
+
+	public int insertQtCodeData(DoctorQtCodeDO code) throws Exception {
+		
+		return (int) getCodyComSessionTemplate().insert(CODY_BOM_NAMESPACE + ".insertQtCodeData", code);
+	}
+	
+	public int createQtCodeTable() throws DataAccessException {
+		
+		return (int) getCodyComSessionTemplate().update(CODY_BOM_NAMESPACE + ".createQtCodeTable");
+	}	
 	
 }

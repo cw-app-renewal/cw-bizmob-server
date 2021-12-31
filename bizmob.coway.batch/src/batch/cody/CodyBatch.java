@@ -21,6 +21,8 @@ import connector.sqlite.cody.dao.CodyBomDao;
 import connector.sqlite.cody.dao.CodyComDao;
 import connector.sqlite.cody.dao.data.CodyCommonCodeDO;
 import connector.sqlite.cody.dao.data.CodyProductDO;
+import connector.sqlite.doctor.dao.DoctorComDao;
+import connector.sqlite.doctor.dao.data.DoctorQtCodeDO;
 public class CodyBatch {
 
 	private static final Logger logger = LoggerFactory.getLogger(CodyBatch.class);
@@ -33,6 +35,10 @@ public class CodyBatch {
 	@Autowired
 	CodyBomDao codyBomDao;
 		
+	@Autowired
+	DoctorComDao doctorComDao;
+	
+	private List<DoctorQtCodeDO> qtCodeList = null;
 	private List<CodyCommonCodeDO> commonCodeList = null;
 	private List<CodyProductDO> productList = null;
 	
@@ -56,11 +62,17 @@ public class CodyBatch {
 			count = insertProductTable();
 			logger.debug("------------------ Cody Product Table Creation End :: count = " + count + " ------------------------------");
 			
+			logger.debug("------------------ QtCode Table Creation Start ------------------------------");
+			count = insertQtCodeTable();
+			logger.debug("------------------ QtCode Table Creation End :: count = " + count + " ------------------------------");
+			
 			codyBomDao.createRD007_ExportTable();
 			codyBomDao.createRD007_O_ITAB1Table();
 			codyBomDao.createRD007_O_ITAB2Table();
 			logger.debug("------------------ Cody RD007 Table Creation End ------------------------------");
-				
+			
+			
+			
 		} catch (Exception e) {
 			logger.error("", e);
 		}	
@@ -71,6 +83,8 @@ public class CodyBatch {
 	public boolean executeRfc() {
 		
 		try {		
+			sapAdapter.execute("ZPDA_TRAN_SP_CSDR_CODE_DIS", null, new QTSapMapper());
+			
 			sapAdapter.execute("ZPDA_TRAN_SP_CODY_CODE_DIS", null, new SapMapper());
 	
 		} catch (Exception e) {
@@ -112,8 +126,7 @@ public class CodyBatch {
 		
 		int insertCount = 0;
 		
-		TransactionStatus status = codyBomDao.getCodyComTransactionManager().getTransaction(new DefaultTransactionDefinition());
-		
+		TransactionStatus status = codyBomDao.getCodyComTransactionManager().getTransaction(new DefaultTransactionDefinition());		
 		try {
 			
 			codyBomDao.deleteProductData();
@@ -132,6 +145,27 @@ public class CodyBatch {
 		return insertCount;
 	}
 	
+	public int insertQtCodeTable() throws Exception {
+		int insertCount = 0;
+		TransactionStatus status = null;
+		try {				
+			status = codyBomDao.getCodyComTransactionManager().getTransaction(new DefaultTransactionDefinition());
+			codyBomDao.createQtCodeTable();
+			codyBomDao.deleteQtCodeData();
+			
+			for(DoctorQtCodeDO code : qtCodeList) {
+				insertCount += codyBomDao.insertQtCodeData(code);				
+			}
+
+			codyBomDao.getCodyComTransactionManager().commit(status);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			codyBomDao.getCodyComTransactionManager().rollback(status);
+			throw e;
+		}
+		
+		return insertCount;		
+	}
 	
 	
 	class SapMapper extends AbstractSapMapper {
@@ -167,5 +201,37 @@ public class CodyBatch {
 			}
 		}
 	}
+	
+	class QTSapMapper extends AbstractSapMapper {
+
+		@Override
+		public JCoFunction mappingRequestObjectToSapData(JCoFunction function, Object param) throws AdapterException {
+			
+			return function;
+		}
+
+		@Override
+		public Object mappingResponseSapDataToObject(JCoFunction function) 	throws AdapterException {
+		
+			JCoTable qtCodeTable = function.getTableParameterList().getTable("O_ITAB1");
+			qtCodeList = convertSapTableToObjectList(qtCodeTable, DoctorQtCodeDO.class);
+			logger.info(" qualtity code sap record count = " + qtCodeList.size());
+			
+			return null;
+		}
+
+		@Override
+		public void verifySapResult(JCoFunction function) throws AdapterException {
+			
+			JCoParameterList paramList = function.getExportParameterList();
+			JCoStructure struct = paramList.getStructure("E_RETURN");
+			String type = struct.getString("TYPE");
+			if(type.equals("T") != true) {
+				throw new AdapterException("", struct.getString("MESSAGE"));
+			}
+		}
+	}
+	
+	
 	
 }

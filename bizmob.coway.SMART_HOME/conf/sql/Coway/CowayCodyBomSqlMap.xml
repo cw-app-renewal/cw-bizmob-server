@@ -92,5 +92,43 @@
 	]]>	
 	</update>
 	
+	<delete id="deleteQtCodeData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM QT_CODE
+	]]>	
+	</delete>
+	
+	<insert id="insertQtCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQtCodeDO">
+	<![CDATA[
+	INSERT INTO QT_CODE (
+		DIV_CD, PRDHA, CODEGROUP, CODEGROUP_DTL, CODEGROUP_NM, CODEGROUP_DTL_NM, PL_YN, PROC_DTL_OPT, PART_CHG_YN, AS_IN_YN, CAUSEBYCUST_YN
+	) VALUES (
+		#{DIV_CD}, #{PRDHA}, #{CODEGROUP}, #{CODEGROUP_DTL}, #{CODEGROUP_NM}, #{CODEGROUP_DTL_NM}, #{PL_YN}, #{PROC_DTL_OPT}, #{PART_CHG_YN}, #{AS_IN_YN}, #{CAUSEBYCUST_YN}
+	)
+	]]>		
+	</insert>
+	
+	<update id="createQtCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS QT_CODE ( 
+	    DIV_CD           			TEXT		/* 코드분류 */
+	    ,PRDHA            		TEXT		/* 제품계층구조 */
+	    ,CODEGROUP        	TEXT		/* 그룹코드 */
+	    ,CODEGROUP_DTL    	TEXT		/* 그룹상세코드 */
+	    ,CODEGROUP_NM     	TEXT		/* 그룹코드명 */
+	    ,CODEGROUP_DTL_NM TEXT		/* 그룹상세코드명 */
+	    ,PL_YN            			TEXT		/* PL 여부 */
+	    ,PROC_DTL_OPT     		TEXT		/* 처리형태 상세제한 구분 */
+	    ,PART_CHG_YN      		TEXT		/* 부품교환 필수여부 */
+	    ,AS_IN_YN         		TEXT		/* 수리입고 구분 필수여부 */
+	    ,CAUSEBYCUST_YN   	TEXT 		/* 고객과실 여부 */
+	);
+	CREATE INDEX IDX_CODEGROUP ON QT_CODE ( 
+	    CODEGROUP ASC
+	    ,CODEGROUP_DTL ASC
+	);
+	]]>	
+	</update>
+	
 
 </mapper>
