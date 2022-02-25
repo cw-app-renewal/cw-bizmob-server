@@ -20,6 +20,7 @@ import com.sap.conn.jco.JCoTable;
 import connector.sqlite.cody.dao.CodyBomDao;
 import connector.sqlite.cody.dao.CodyComDao;
 import connector.sqlite.cody.dao.data.CodyCommonCodeDO;
+import connector.sqlite.cody.dao.data.CodyMaterialDO;
 import connector.sqlite.cody.dao.data.CodyProductDO;
 import connector.sqlite.doctor.dao.DoctorComDao;
 import connector.sqlite.doctor.dao.data.DoctorQtCodeDO;
@@ -41,6 +42,7 @@ public class CodyBatch {
 	private List<DoctorQtCodeDO> qtCodeList = null;
 	private List<CodyCommonCodeDO> commonCodeList = null;
 	private List<CodyProductDO> productList = null;
+	private List<CodyMaterialDO> materialList = null;
 	
 	public boolean createDatabase() {
 		
@@ -187,6 +189,10 @@ public class CodyBatch {
 			commonCodeList = convertSapTableToObjectList(commonCodeTable, CodyCommonCodeDO.class);
 			logger.debug("common Code sap record count = " + commonCodeList.size());
 		
+			JCoTable materialTable = function.getTableParameterList().getTable("O_ITAB3");
+			materialList = convertSapTableToObjectList(materialTable, CodyMaterialDO.class);
+			logger.debug("common Code sap record count = " + commonCodeList.size());
+			
 			return null;
 		}
 

@@ -1,4 +1,4 @@
-package test.common;
+package batch.cody;
 
 import org.junit.BeforeClass;
 
