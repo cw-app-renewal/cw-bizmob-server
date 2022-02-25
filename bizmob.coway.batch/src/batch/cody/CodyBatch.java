@@ -191,7 +191,7 @@ public class CodyBatch {
 		
 			JCoTable materialTable = function.getTableParameterList().getTable("O_ITAB3");
 			materialList = convertSapTableToObjectList(materialTable, CodyMaterialDO.class);
-			logger.debug("common Code sap record count = " + commonCodeList.size());
+			logger.debug("common Code sap record count = " + materialList.size());
 			
 			return null;
 		}
