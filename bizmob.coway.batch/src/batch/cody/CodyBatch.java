@@ -64,6 +64,10 @@ public class CodyBatch {
 			count = insertProductTable();
 			logger.debug("------------------ Cody Product Table Creation End :: count = " + count + " ------------------------------");
 			
+			logger.debug("------------------ Cody Material Table Creation Start ------------------------------");
+			count = insertMaterialTable();
+			logger.debug("------------------ Cody Material Table Creation End :: count = " + count + " ------------------------------");
+			
 			logger.debug("------------------ QtCode Table Creation Start ------------------------------");
 			count = insertQtCodeTable();
 			logger.debug("------------------ QtCode Table Creation End :: count = " + count + " ------------------------------");
@@ -86,7 +90,6 @@ public class CodyBatch {
 		
 		try {		
 			sapAdapter.execute("ZPDA_TRAN_SP_CSDR_CODE_DIS", null, new QTSapMapper());
-			
 			sapAdapter.execute("ZPDA_TRAN_SP_CODY_CODE_DIS", null, new SapMapper());
 	
 		} catch (Exception e) {
@@ -146,6 +149,28 @@ public class CodyBatch {
 		
 		return insertCount;
 	}
+
+	public int insertMaterialTable() throws DataAccessException {
+		
+		int insertCount = 0;
+		TransactionStatus status = codyBomDao.getCodyComTransactionManager().getTransaction(new DefaultTransactionDefinition());		
+		try {
+			codyBomDao.createMaterialTable();
+			codyBomDao.deleteMaterialData();
+			
+			for(CodyMaterialDO material : materialList) {
+				
+				insertCount += codyBomDao.insertMaterialData(material);				
+			}
+
+			codyBomDao.getCodyComTransactionManager().commit(status);
+		} catch (DataAccessException e) {
+			codyBomDao.getCodyComTransactionManager().rollback(status);
+			throw e;
+		}
+		
+		return insertCount;
+	}
 	
 	public int insertQtCodeTable() throws Exception {
 		int insertCount = 0;
@@ -191,7 +216,7 @@ public class CodyBatch {
 		
 			JCoTable materialTable = function.getTableParameterList().getTable("O_ITAB3");
 			materialList = convertSapTableToObjectList(materialTable, CodyMaterialDO.class);
-			logger.debug("common Code sap record count = " + materialList.size());
+			logger.info("material Code sap record count = " + materialList.size());
 			
 			return null;
 		}

@@ -36,6 +36,13 @@
 	]]>	
 	</delete>
 	
+	<delete id="deleteMaterialData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM MATERIAL
+	]]>	
+	</delete>
+	
+	
 	<insert id="insertProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
 	<![CDATA[
 	INSERT INTO PRODUCT (
