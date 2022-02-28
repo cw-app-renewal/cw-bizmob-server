@@ -85,7 +85,7 @@ public class CodyBatch {
 	public boolean executeRfc() {
 		
 		try {		
-			sapAdapter.execute("ZPDA_TRAN_SP_CODY_CODE_DIS", null, new QTSapMapper());
+			sapAdapter.execute("ZPDA_TRAN_SP_CSDR_CODE_DIS", null, new QTSapMapper());
 			
 			sapAdapter.execute("ZPDA_TRAN_SP_CODY_CODE_DIS", null, new SapMapper());
 	
