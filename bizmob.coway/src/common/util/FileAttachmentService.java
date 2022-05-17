@@ -132,7 +132,7 @@ public class FileAttachmentService {
 		    byteData = resEntity.getBody();
 		    
 		} else {
-			downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
+			downPath = SmartConfig.getString("coway.attach.download.base64.path", defaultDownPath);
 			
 			ResponseEntity<String> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, String.class, params);
 			
