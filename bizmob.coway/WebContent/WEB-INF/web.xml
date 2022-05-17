@@ -6,15 +6,13 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" >
 
-    <display-name>SMART2</display-name>
-
-    <description>SMART2 web application</description>
+    <display-name>Coway Mobile</display-name>
+    <description>Coway Mobile</description>
 
     <!-- smart home setting -->
     <context-param>
         <param-name>SMART_HOME</param-name>
-		<param-value>/app/webapp/SMART_HOME</param-value>
-		<!-- <param-value>C:\Users\regar\git\CodyDoctor-Server\bizmob.coway.SMART_HOME</param-value> -->    	        
+		<param-value>${SMART_HOME}</param-value>    	        
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -116,8 +114,6 @@
         <extension>manifest</extension>
         <mime-type>text/cache-manifest</mime-type>
     </mime-mapping>
-
-    
 	<error-page>
 		<error-code>400</error-code>
 		<location>/error/err_400.jsp</location>

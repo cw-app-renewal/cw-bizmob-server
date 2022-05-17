@@ -34,32 +34,30 @@ public class FileAttachmentService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean upload(String filePath, String fileName, byte[] fileData, boolean isBinary) throws AdapterException {
 		boolean 		result 				= false;
-		String			defaultBaseUrl		= "https://api-gw.coway.dev";
-		String 			defaultUploadPath 	= "/attachments/v1";
+		String			defaultBaseUrl		= "https://storage-proxy.coway.dev";
+		String 			defaultUploadPath 	= "/v1/attachments/put/binary";
 		
 		try {
 			
 			String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
-			String 			uploadPath 		= SmartConfig.getString("coway.attach.upload.path", defaultUploadPath);
-			
-			//테스트용
-//			String baseUrl 		= defaultBaseUrl;
-//			String uploadPath 		= defaultUploadPath;
-			
+			String 			uploadPath 		= ""; 
 			
 			RestTemplate 	restTemplate 	= new RestTemplate();
 			HttpHeaders 	headers 		= new HttpHeaders();
 			
 			if(isBinary) {
+				
+				uploadPath = SmartConfig.getString("coway.attach.upload.binary.path", defaultUploadPath);
+				
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 			    headers.setAcceptCharset(Arrays.asList(Charset.defaultCharset()));
 			    
-				Map<String, String> 	params 		= new HashMap<>();
+				Map<String, String> 	params 			= new HashMap<>();
 				params.put("contentType", 	"image/jpeg");
 				params.put("destFileName", 	fileName);
 				params.put("destFilePath", 	filePath);
 			    
-			    HttpEntity<byte[]> 		requestEntity = new HttpEntity(fileData, headers);
+			    HttpEntity<byte[]> 		requestEntity 	= new HttpEntity(fileData, headers);
 			    uploadPath = uploadPath + "?destFilePath={destFilePath}&destFileName={destFileName}&contentType={contentType}";
 			    
 			    FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
@@ -75,6 +73,7 @@ public class FileAttachmentService {
 			    
 			} else {
 				headers.setContentType(MediaType.APPLICATION_JSON);
+				uploadPath = SmartConfig.getString("coway.attach.upload.base64.path", defaultUploadPath);
 			    
 			    String			base64EncData	= Base64.encodeBase64String(fileData);
 			    
@@ -102,23 +101,23 @@ public class FileAttachmentService {
 	
 	public byte[] download(String filePath, String fileName, boolean isBinary) throws Exception {
 		
-		String			defaultBaseUrl	= "https://api-gw.coway.dev";
-		String 			defaultDownPath = "/attachments/v1?destFilePath={destFilePath}&destFileName={destFileName}&isBinary={isBinary}";
+		String			defaultBaseUrl	= "https://storage-proxy.coway.dev";
+		String 			defaultDownPath = "/v1/attachments/get/binary?destFilePath={destFilePath}&destFileName={destFileName}";
 		
 		String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
-		String 			downPath 		= SmartConfig.getString("coway.attach.down.path", defaultDownPath);
+		String 			downPath 		= "";
 		
 		Map<String, String> params 			= new HashMap<>();
 		params.put("destFileName", fileName);
 		params.put("destFilePath", filePath);
-		params.put("isBinary", "N");
 		
 		RestTemplate	 		restTemplate 	= new RestTemplate();
 		HttpEntity<?> 			requestEntity 	= null;
 		byte[] 					byteData		= new byte[] {};
 		
 		if(isBinary) {
-			params.put("isBinary", "Y");	
+			
+			downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
 			
 			HttpHeaders headers = new HttpHeaders();
 		    headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM, MediaType.ALL));
@@ -133,6 +132,8 @@ public class FileAttachmentService {
 		    byteData = resEntity.getBody();
 		    
 		} else {
+			downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
+			
 			ResponseEntity<String> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, String.class, params);
 			
 			String 					resBody 		= resEntity.getBody();
@@ -153,13 +154,13 @@ public class FileAttachmentService {
 	public boolean delete(String filePath, String fileName) {
 		
 		boolean 		result 				= false;
-		String			defaultBaseUrl		= "https://api-gw.coway.dev";
-		String 			defaultDeletePath 	= "/attachments/v1?destFilePath={destFilePath}&destFileName={destFileName}";
+		String			defaultBaseUrl		= "https://storage-proxy.coway.dev";
+		String 			defaultDeletePath 	= "/v1/attachments/delete?destFilePath={destFilePath}&destFileName={destFileName}";
 		
 		try {
 			
 			String 				baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
-			String 				uploadPath 		= SmartConfig.getString("coway.attach.upload.path", defaultDeletePath);
+			String 				uploadPath 		= SmartConfig.getString("coway.attach.delete.path", defaultDeletePath);
 			
 			RestTemplate 		restTemplate 	= new RestTemplate();
 			Map<String, String> params 			= new HashMap<>();
