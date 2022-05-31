@@ -110,7 +110,7 @@ public class TestJunit{
 		String fileName = "20B431900860_inst_01.jpg";
 		
 		try {
-			File file = new File("d:/Koala.jpg");
+			File file = new File("d:/1.jpg");
 			FileInputStream fis = new FileInputStream(file);
 			byte[] fileData = IOUtils.toByteArray(fis);
 			boolean result = service.upload(path, fileName, fileData, true);

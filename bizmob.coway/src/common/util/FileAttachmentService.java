@@ -35,7 +35,7 @@ public class FileAttachmentService {
 	public boolean upload(String filePath, String fileName, byte[] fileData, boolean isBinary) throws AdapterException {
 		boolean 		result 				= false;
 		String			defaultBaseUrl		= "https://storage-proxy.coway.dev";
-		String 			defaultUploadPath 	= "/v1/attachments/put/binary";
+		String 			defaultUploadPath 	= "/v1/binary-file";
 		
 		try {
 			
@@ -102,7 +102,7 @@ public class FileAttachmentService {
 	public byte[] download(String filePath, String fileName, boolean isBinary) throws Exception {
 		
 		String			defaultBaseUrl	= "https://storage-proxy.coway.dev";
-		String 			defaultDownPath = "/v1/attachments/get/binary?destFilePath={destFilePath}&destFileName={destFileName}";
+		String 			defaultDownPath = "/v1/binary-file";
 		
 		String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
 		String 			downPath 		= "";
@@ -155,7 +155,7 @@ public class FileAttachmentService {
 		
 		boolean 		result 				= false;
 		String			defaultBaseUrl		= "https://storage-proxy.coway.dev";
-		String 			defaultDeletePath 	= "/v1/attachments/delete?destFilePath={destFilePath}&destFileName={destFileName}";
+		String 			defaultDeletePath 	= "/v1/file?destFilePath={destFilePath}&destFileName={destFileName}";
 		
 		try {
 			
