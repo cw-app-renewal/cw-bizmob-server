@@ -27,7 +27,8 @@
 	<!--  uploader 설정 	-->
 	<bean id="uploadStorageAccessor" class="com.mcnc.smart.hybrid.server.web.dao.LocalFileStorageAccessor" destroy-method="removeAll">
 		<constructor-arg index="0">
-			<value>#{contextParameters.SMART_HOME}/upload_temp</value>
+			<!-- <value>#{contextParameters.SMART_HOME}/upload_temp</value>  -->
+			<value>/opt/upload_temp</value>
 		</constructor-arg>
 	</bean>
 

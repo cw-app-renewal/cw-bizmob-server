@@ -102,6 +102,10 @@
 			<fileset dir="../bizmob.coway.SMART_HOME/deployment/real/conf"/>
 		</copy>
 
+		<copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf" overwrite="true">
+					<fileset dir="../bizmob.coway.SMART_HOME/deployment/real/conf"/>
+		</copy>
+		
 		
 		<!-- delete the used libraries of a war project -->
 		<delete dir="${java.lib}" />
