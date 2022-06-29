@@ -151,21 +151,21 @@
 <beans profile="prd.homecare">
 	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
 		<constructor-arg index="0" ref="jcoProps"/>			
-		<constructor-arg index="1" value="/webapps/homecare-msfa.coway.com/bizmob/ABAP_AS_WITH_POOL"/>
+		<constructor-arg index="1" value="/webapps/#{systemProperties['sap.connector.url']}/bizmob/ABAP_AS_WITH_POOL"/>
 	</bean>	
 </beans>
 
 <beans profile="prd.sales">
 	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
 		<constructor-arg index="0" ref="jcoProps"/>			
-		<constructor-arg index="1" value="/webapps/homecare-msfa.coway.com/bizmob/ABAP_AS_WITH_POOL"/>
+		<constructor-arg index="1" value="/webapps/#{systemProperties['sap.connector.url']}/bizmob/ABAP_AS_WITH_POOL"/>
 	</bean>	
 </beans>
 
 <beans profile="prd.svc">
 	<bean id="sapConnector" class="com.mcnc.bizmob.adapter.sap.SapConnector">
 		<constructor-arg index="0" ref="jcoProps"/>			
-		<constructor-arg index="1" value="/webapps/homecare-msfa.coway.com/bizmob/ABAP_AS_WITH_POOL"/>
+		<constructor-arg index="1" value="/webapps/#{systemProperties['sap.connector.url']}/bizmob/ABAP_AS_WITH_POOL"/>
 	</bean>	
 </beans>	
 	
