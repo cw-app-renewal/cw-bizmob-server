@@ -56,9 +56,10 @@ public class FileAttachmentService {
 				params.put("contentType", 	"image/jpeg");
 				params.put("destFileName", 	fileName);
 				params.put("destFilePath", 	filePath);
+				params.put("privacy", "N");
 			    
 			    HttpEntity<byte[]> 		requestEntity 	= new HttpEntity(fileData, headers);
-			    uploadPath = uploadPath + "?destFilePath={destFilePath}&destFileName={destFileName}&contentType={contentType}";
+			    uploadPath = uploadPath + "?destFilePath={destFilePath}&destFileName={destFileName}&contentType={contentType}&privacy={privacy}";
 			    
 			    FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
 			    restTemplate.getMessageConverters().add(formHttpMessageConverter);
@@ -110,6 +111,7 @@ public class FileAttachmentService {
 		Map<String, String> params 			= new HashMap<>();
 		params.put("destFileName", fileName);
 		params.put("destFilePath", filePath);
+		params.put("privacy", "N");
 		
 		RestTemplate	 		restTemplate 	= new RestTemplate();
 		HttpEntity<?> 			requestEntity 	= null;
@@ -166,6 +168,8 @@ public class FileAttachmentService {
 			Map<String, String> params 			= new HashMap<>();
 			params.put("destFileName", fileName);
 			params.put("destFilePath", filePath);
+			params.put("permanently", "Y");
+			
 			
 			long start = System.currentTimeMillis();
 			restTemplate.delete(baseUrl + uploadPath, params);
