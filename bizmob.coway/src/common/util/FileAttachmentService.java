@@ -52,23 +52,27 @@ public class FileAttachmentService {
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 			    headers.setAcceptCharset(Arrays.asList(Charset.defaultCharset()));
 			    
-				Map<String, String> 	params 			= new HashMap<>();
+				/*Map<String, String> 	params 			= new HashMap<>();
 				params.put("contentType", 	"image/jpeg");
 				params.put("destFileName", 	fileName);
 				params.put("destFilePath", 	filePath);
-				params.put("privacy", "N");
+				params.put("privacy", "N");*/
 			    
 			    HttpEntity<byte[]> 		requestEntity 	= new HttpEntity(fileData, headers);
-			    uploadPath = uploadPath + "?destFilePath={destFilePath}&destFileName={destFileName}&contentType={contentType}&privacy={privacy}";
+			    uploadPath = uploadPath +
+						"?destFilePath=" + filePath +
+						"&destFileName=" + fileName +
+						//"&contentType={contentType}" +
+						"&privacy=N";
 			    
 			    FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
 			    restTemplate.getMessageConverters().add(formHttpMessageConverter);
 			    restTemplate.getMessageConverters().remove(6); //json컨버터 제거
 			    
-			    logger.info("File Upload Url = " + baseUrl + uploadPath + " :: " +  params.toString());
+			    logger.info("File Upload Url = " + baseUrl + uploadPath + " :: ");
 			    
 			    long start = System.currentTimeMillis();
-			    restTemplate.exchange(baseUrl + uploadPath, HttpMethod.PUT, requestEntity, String.class, params);
+			    restTemplate.exchange(baseUrl + uploadPath, HttpMethod.PUT, requestEntity, String.class);
 			    long end = System.currentTimeMillis();
 			    logger.info("{} File Upload Time ::  [" +  (end - start) + " ms]", fileName);
 			    
@@ -79,7 +83,7 @@ public class FileAttachmentService {
 			    String			base64EncData	= Base64.encodeBase64String(fileData);
 			    
 			    ObjectNode reqObjNode = JsonUtil.objectNode();
-			    reqObjNode.put("contentType",	"image/jpeg");
+			    //reqObjNode.put("contentType",	"image/jpeg");
 			    reqObjNode.put("destFileName", 	fileName);
 			    reqObjNode.put("destFilePath", 	filePath);
 			    reqObjNode.put("base64EncData", base64EncData);
@@ -108,10 +112,10 @@ public class FileAttachmentService {
 		String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
 		String 			downPath 		= "";
 		
-		Map<String, String> params 			= new HashMap<>();
+		/*Map<String, String> params 			= new HashMap<>();
 		params.put("destFileName", fileName);
 		params.put("destFilePath", filePath);
-		params.put("privacy", "N");
+		params.put("privacy", "N");*/
 		
 		RestTemplate	 		restTemplate 	= new RestTemplate();
 		HttpEntity<?> 			requestEntity 	= null;
@@ -120,14 +124,18 @@ public class FileAttachmentService {
 		if(isBinary) {
 			
 			downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
-			
+			downPath = downPath +
+					"?destFilePath=" + filePath +
+					"&destFileName=" + fileName +
+					"&privacy=N";
+
 			HttpHeaders headers = new HttpHeaders();
 		    headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM, MediaType.ALL));
 		
 		    requestEntity = new HttpEntity<Object>(headers);
 		    
 		    long start = System.currentTimeMillis();
-		    ResponseEntity<byte[]> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, byte[].class, params);
+		    ResponseEntity<byte[]> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, byte[].class);
 		    long end = System.currentTimeMillis();
 		    logger.info("{} File Download Time ::  [" +  (end - start) + " ms]", fileName);
 		    
@@ -135,8 +143,12 @@ public class FileAttachmentService {
 		    
 		} else {
 			downPath = SmartConfig.getString("coway.attach.download.base64.path", defaultDownPath);
-			
-			ResponseEntity<String> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, String.class, params);
+			downPath = downPath +
+					"?destFilePath=" + filePath +
+					"&destFileName=" + fileName +
+					"&privacy=N";
+
+			ResponseEntity<String> 	resEntity 		=  restTemplate.exchange(baseUrl + downPath, HttpMethod.GET, requestEntity, String.class);
 			
 			String 					resBody 		= resEntity.getBody();
 			JsonNode 				node 			= JsonUtil.toObject(resBody, JsonNode.class);
@@ -157,7 +169,7 @@ public class FileAttachmentService {
 		
 		boolean 		result 				= false;
 		String			defaultBaseUrl		= "https://storage-proxy.coway.dev";
-		String 			defaultDeletePath 	= "/v1/file?destFilePath={destFilePath}&destFileName={destFileName}";
+		String 			defaultDeletePath 	= "/v1/file";
 		
 		try {
 			
@@ -165,14 +177,17 @@ public class FileAttachmentService {
 			String 				uploadPath 		= SmartConfig.getString("coway.attach.delete.path", defaultDeletePath);
 			
 			RestTemplate 		restTemplate 	= new RestTemplate();
-			Map<String, String> params 			= new HashMap<>();
+			/*Map<String, String> params 			= new HashMap<>();
 			params.put("destFileName", fileName);
 			params.put("destFilePath", filePath);
-			params.put("permanently", "Y");
-			
-			
+			params.put("permanently", "Y");*/
+
+			uploadPath 	= uploadPath +
+					"?destFilePath=" + filePath +
+					"&destFileName=" + fileName;
+
 			long start = System.currentTimeMillis();
-			restTemplate.delete(baseUrl + uploadPath, params);
+			restTemplate.delete(baseUrl + uploadPath);
 			long end = System.currentTimeMillis();
 		    logger.info("{} File Deleted Time ::  [" +  (end - start) + " ms]", fileName);
 			
