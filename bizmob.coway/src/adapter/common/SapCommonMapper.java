@@ -86,8 +86,6 @@ public class SapCommonMapper extends AbstractSapMapper {
 
 					if (jCoListMetaData.getName(i).startsWith("I_")) {
 
-						logger.info("jCoListMetaData.getName(" + i + ") + " + jCoListMetaData.getName(i));
-
 						ArrayNode arrayNode = (ArrayNode) bodyNode.get(jCoListMetaData.getName(i));
 
 						if (arrayNode == null || arrayNode.equals("")) {
@@ -96,7 +94,6 @@ public class SapCommonMapper extends AbstractSapMapper {
 						}
 
 						if (arrayNode.size() < 1) {
-							logger.info("arrayNode.size() is 0 + " + i);
 							continue;
 						}
 
@@ -107,7 +104,6 @@ public class SapCommonMapper extends AbstractSapMapper {
 
 						for (JsonNode node : arrayNode) {
 
-							logger.info("for JsonNode node + " + i + ", " + node.toString());
 							table.appendRow();
 
 							JCoFieldIterator tableFieldIter = table.getFieldIterator();

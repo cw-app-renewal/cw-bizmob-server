@@ -1,35 +1,28 @@
 package adapter.mms;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-
-import org.codehaus.jackson.JsonNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import adapter.common.SapCommonResponse;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.mcnc.smart.hybrid.server.web.dao.LocalFileStorageAccessor;
-
-import adapter.common.SapCommonResponse;
 import common.ResponseUtil;
-import connect.db.mms.CowayMmsDao;
-import connect.ftp.mms.CowayMmsFtpUtils;
+import common.util.FileAttachmentService;
+import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 @Adapter(trcode = {"CGW900"})
 public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGW900_ADT_UploadMMS.class);
 
-	@Autowired private CowayMmsDao cowayMmsDao;
 	@Autowired private LocalFileStorageAccessor uploadStorageAccessor;
-
-	private final String CHECK_IMAGE_PATH = "/oradata/WJSMSEXCEL/img/"; 	//웹서버 그림파일저장 경로(mms메시지 발송)
 
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
@@ -52,30 +45,31 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 			String 		uid3 				= reqBodyNode.findPath("I_UID3").getValueAsText();
 			boolean 	testMode 			= reqBodyNode.findPath("I_TEST_MODE").getBooleanValue();
 			String 		flag 				= reqBodyNode.findPath("I_FLAG").getValueAsText();
-			String 		rsrvdId 			= CowayMMSInfo.getMMSUploadId(flag, deptCode);
-			
-			
+
+			if (testMode) {
+				// 테스트서버일 시 허용된 전화번호인지 체크
+			}
+
 			String 				imgFullPath1 		= "";
 			String 				imgFullPath2 		= "";
 			String 				imgFullPath3 		= "";
-			String 				ftpHost 			= SmartConfig.getString("coway.mms.ftp.host", "10.101.5.74");
-			String 				ftpUserName 		= SmartConfig.getString("coway.mms.ftp.username", "wjsms");
-			String 				ftpPassword 		= SmartConfig.getString("coway.mms.ftp.password", "!dnvwjsms1");
-			CowayMmsFtpUtils 	ftpUtils 			= new CowayMmsFtpUtils(ftpHost, ftpUserName, ftpPassword);
-			
+
 			//파일 경로 확인
 			SimpleDateFormat 	date2 				= new SimpleDateFormat("yyyyMM");
 			String 				yyyymm 				= date2.format(new Date());
 			SimpleDateFormat 	date3 				= new SimpleDateFormat("yyyyMMdd");
 			String 				yyyymmdd 			= date3.format(new Date());
+			//웹서버 그림파일저장 경로(mms메시지 발송)
+			String CHECK_IMAGE_PATH = "/oradata/WJSMSEXCEL/img/";
 			String 				imgPath 			= CHECK_IMAGE_PATH + yyyymm + "/" + yyyymmdd;
 			
 			long start = System.currentTimeMillis();
 			try{
 				
-				imgFullPath1 = this.uploadImage(uid, imgPath, ftpUtils);
-				imgFullPath2 = this.uploadImage(uid2, imgPath, ftpUtils);
-				imgFullPath3 = this.uploadImage(uid3, imgPath, ftpUtils);
+				imgFullPath1 = this.uploadImage(uid, imgPath);
+				// 2번 3번 이미지는 UMS 지원불가, 추후 2회 전송 등 고려
+				//imgFullPath2 = this.uploadImage(uid2, imgPath, ftpUtils);
+				//imgFullPath3 = this.uploadImage(uid3, imgPath, ftpUtils);
 				
 			} catch(Exception e){
 				long end = System.currentTimeMillis();
@@ -86,25 +80,29 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 				
 				return ResponseUtil.makeResponse(obj, errResponse.getSapCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 			}
-				
-			//oracle procedure call 처리
-			Map<String, Object> resMap = null;
-			if(testMode == true) {
-				//테스트 모드
-				logger.debug("CGW900 :: mms upload test mode !! callSpMms3ImageTest execute!!");
-				resMap = cowayMmsDao.callSpMms3ImageTest(phnId, invnr, title, content, rsrvdId, imgFullPath1, imgFullPath2, imgFullPath3);
-			} else {
-				//운영모드
-				logger.debug("CGW900 :: mms upload running mode !! callSpMms3Image execute !!");
-				resMap = cowayMmsDao.callSpMms3Image(phnId, invnr, title, content, rsrvdId, imgFullPath1, imgFullPath2, imgFullPath3);
-			}
+
+			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
+			cowayUMSRequestDO.setTRAN_PHONE(phnId);
+			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			cowayUMSRequestDO.setTITLE(title);
+			cowayUMSRequestDO.setMESSAGE(content);
+			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());
+			cowayUMSRequestDO.setAUTOTYPEDESC(CowayUMSInfo.getAutotypeDesc(flag, deptCode));
+			cowayUMSRequestDO.setDEPTCODE_OP(CowayUMSInfo.getDeptCodeOp());
+			cowayUMSRequestDO.setDEPTCODE(CowayUMSInfo.getDeptCode());
+			cowayUMSRequestDO.setLEGACYID(invnr);
+			cowayUMSRequestDO.setSENDTYPE("R");
+			cowayUMSRequestDO.setATTACH(imgFullPath1);
+
+			CowayUMSClient cowayUMSClient = new CowayUMSClient();
+			Map<String, Object> resMap = cowayUMSClient.callUMSApi(cowayUMSRequestDO);
+
 			long end = System.currentTimeMillis();
-			
-			//등록 결과 확인
-			String rtnCode = resMap.get("rtn_code").toString();
-			String rtnMsg = resMap.get("rtn_msg").toString();
-			
-			if(rtnCode.equals("0") == true) {
+
+			// /result/mms?keyType={apikey}&value={전송응답key}
+			// 문자전송결과 상세조회 가능
+
+			if("13".equals(resMap.get("code"))) {
 				//업로드 성공
 				logger.debug("CGW900 :: image upload end!!");
 			} else {
@@ -112,7 +110,7 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 				logger.debug("CGW900 :: call sp result - " + resMap.toString());
 				SapCommonResponse errResponse = new SapCommonResponse();
 				errResponse.setSapCommonHeader(reqHeaderNode);
-				errResponse.setSapErrorMessage(rtnMsg);
+				errResponse.setSapErrorMessage((String) resMap.get("msg"));
 				
 				return ResponseUtil.makeResponse(obj, errResponse.getSapCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 			}	
@@ -126,9 +124,7 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 		
 	}
 	
-	private String uploadImage(String uid, String imgPath, CowayMmsFtpUtils ftpUtils) throws Exception{
-		
-		
+	private String uploadImage(String uid, String imgPath) throws Exception{
 		
 		//upload file 처리
 		if ( (uid == null) || ("".equalsIgnoreCase(uid)) ) {
@@ -137,12 +133,6 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 			
 		} else {
 			
-/*			imgFileName = uploadStorageAccessor.getFileName(uid);
-			if(imgFileName == null || imgFileName.equals("") == true) {
-				//오류 처리 - 업로드 파일 실패
-				logger.error("CGW900 :: uploadImage() :: multipart upload temp file not found!! :: multipart uid = " + uid);
-				throw new Exception("업로드 파일을 찾을 수 없습니다.");
-			}*/
 			String imgFileName = uid + ".jpg";
 			byte[] imgData = uploadStorageAccessor.load(uid);
 			logger.debug("CGW900 :: image file name = " + imgFileName);
@@ -152,23 +142,19 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 				logger.error("CGW900 :: uploadImage() :: multipart upload temp file not found!! :: multipart uid = " + uid);
 				throw new Exception("업로드 파일을 찾을 수 없습니다.");
 			}
-			
+
+			FileAttachmentService service = new FileAttachmentService();
 			//ftp upload
 			try {
-				boolean result = ftpUtils.ftpUpload(imgPath, imgFileName, imgData);
-				if(result == false) {
-					//오류 처리 - 파일 업로드 실패
-					logger.error("CGW900 :: uploadImage() :: image ftp upload fail!!");
-					throw new Exception("MMS 이미지 업로드에 실패했습니다.");
-				}
+				service.upload(imgPath, imgFileName, imgData, true);
 			} catch (Exception e) {
 				logger.error("CGW900 :: uploadImage() :: ", e);
 				throw new Exception(e.getLocalizedMessage());
 			} finally {
 				uploadStorageAccessor.remove(uid);
 			}
-			
-			return imgPath + "/" + imgFileName;
+
+			return service.getDownloadUrl(imgPath, imgFileName);
 		}
 	}
 	

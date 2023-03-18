@@ -1,22 +1,18 @@
 package adapter.mms;
 
-import java.util.Map;
-
-import org.codehaus.jackson.JsonNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import adapter.common.SapCommonResponse;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
-import adapter.common.SapCommonResponse;
 import common.ResponseUtil;
-import connect.db.mms.CowayMmsDao;
+import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 /**
  * @class CGW901_ADT_LMS
  * @since 2013-07-16
@@ -26,10 +22,7 @@ import connect.db.mms.CowayMmsDao;
 public class CGW901_ADT_LMS extends AbstractTemplateAdapter implements IAdapterJob {
 
 	private static final Logger logger = LoggerFactory.getLogger(CGW901_ADT_LMS.class);
-	@Autowired private CowayMmsDao cowayMmsDao;
-	
-	private static final String ERROR_CODE = "ADAP0000";
-	
+
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		
@@ -45,33 +38,45 @@ public class CGW901_ADT_LMS extends AbstractTemplateAdapter implements IAdapterJ
 			String 		title 			= reqBodyNode.findPath("I_TITLE").getValueAsText();
 			String 		content 		= reqBodyNode.findPath("I_CONTENT").getValueAsText();
 			String 		flag 			= reqBodyNode.findPath("I_FLAG").getValueAsText();
-			String 		rsrvdId 		= CowayMMSInfo.getMMSUploadId(flag, deptCode);
-			
-			Map<String, Object> resMap 	= null;
+
 			boolean 			isTest 	= Boolean.parseBoolean(SmartConfig.getString("coway.mms.upload.test.mode", "true"));
-			long 				start 	= System.currentTimeMillis();
-			if ( isTest ) {
-				//테스트 모드
-				logger.debug(">>>> CGW901 lms test mode !! sp_lms_test execute!!");
-				resMap = cowayMmsDao.callSpLmsTest(phnId, invnr, title, content, rsrvdId);
-			} else {
-				//운영모드
-				logger.debug(">>>> CGW901 lms running mode !! sp_lms execute !!");
-				resMap = cowayMmsDao.callSpLms(phnId, invnr, title, content, rsrvdId);
+
+			if (isTest) {
+				// 테스트서버일 시 허용된 전화번호인지 체크
 			}
-			long 				end 	= System.currentTimeMillis();
-			String 				rtnCode = resMap.get("rtn_code").toString();
-			String 				rtnMsg 	= resMap.get("rtn_msg").toString();
-			
-			if ( rtnCode.equalsIgnoreCase("0") ) {
-				logger.debug(">>>> CGW901 LMS upload SUCCESS!!");
+
+			long 				start 	= System.currentTimeMillis();
+
+			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
+			cowayUMSRequestDO.setTRAN_PHONE(phnId);
+			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			cowayUMSRequestDO.setTITLE(title);
+			cowayUMSRequestDO.setMESSAGE(content);
+			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());
+			cowayUMSRequestDO.setAUTOTYPEDESC(CowayUMSInfo.getAutotypeDesc(flag, deptCode));
+			cowayUMSRequestDO.setDEPTCODE_OP(CowayUMSInfo.getDeptCodeOp());
+			cowayUMSRequestDO.setDEPTCODE(CowayUMSInfo.getDeptCode());
+			cowayUMSRequestDO.setLEGACYID(invnr);
+			cowayUMSRequestDO.setSENDTYPE("R");
+
+			CowayUMSClient cowayUMSClient = new CowayUMSClient();
+			Map<String, Object> resMap = cowayUMSClient.callUMSApi(cowayUMSRequestDO);
+
+			long end = System.currentTimeMillis();
+
+			// /result/mms?keyType={apikey}&value={전송응답key}
+			// 문자전송결과 상세조회 가능
+
+			if("13".equals(resMap.get("code"))) {
+				//업로드 성공
+				logger.debug("CGW901 :: image upload end!!");
 			} else {
-				logger.debug(">>>> CGW901 LMS call sp result = " + resMap.toString());
-				
+				//오류 처리
+				logger.debug("CGW901 :: call sp result - " + resMap.toString());
 				SapCommonResponse errResponse = new SapCommonResponse();
 				errResponse.setSapCommonHeader(reqHeaderNode);
-				errResponse.setSapErrorMessage(rtnMsg);
-				
+				errResponse.setSapErrorMessage((String) resMap.get("msg"));
+
 				return ResponseUtil.makeResponse(obj, errResponse.getSapCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 			}	
 			

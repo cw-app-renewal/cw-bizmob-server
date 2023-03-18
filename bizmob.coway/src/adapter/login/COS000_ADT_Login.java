@@ -1,18 +1,6 @@
 package adapter.login;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.ListUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.JsonNodeFactory;
-import org.codehaus.jackson.node.ObjectNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import adapter.common.SapCommonMapperException;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
@@ -22,15 +10,22 @@ import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
-import adapter.common.SapCommonMapperException;
 import common.BizmobUtil;
 import common.ResponseUtil;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Adapter(trcode = {"CGR000"})
-public class CGR000_ADT_Login extends AbstractTemplateAdapter implements IAdapterJob {
+import java.util.List;
+import java.util.Map;
 
-	private static final Logger logger = LoggerFactory.getLogger(CGR000_ADT_Login.class);
+@Adapter(trcode = {"COS000"})
+public class COS000_ADT_Login extends AbstractTemplateAdapter implements IAdapterJob {
+
+	private static final Logger logger = LoggerFactory.getLogger(COS000_ADT_Login.class);
 
 	@Autowired private SAPAdapter 	sapAdapter;
 	@Autowired private DBAdapter 	dbAdapter;
@@ -63,7 +58,7 @@ public class CGR000_ADT_Login extends AbstractTemplateAdapter implements IAdapte
 				boolean isValid = false;
 
 				for (String phone : userList) {
-					if (phone.equals(reqBodyNode.get("I_PHN_NO").getValueAsText())) {
+					if (phone.equals(reqBodyNode.get("I_PHNNO").getValueAsText())) {
 						isValid = true;
 						break;
 					}

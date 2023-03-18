@@ -1,5 +1,6 @@
 package connect.http.coway;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import connect.exception.ConnectClientException;
@@ -27,9 +31,23 @@ import connect.http.coway.data.InsertUserRequestDO;
 import connect.http.coway.data.MdmUserResignRequestDO;
 import connect.http.coway.data.MdmUserSyncRequestDO;
 import connect.http.coway.data.UpdateUserRequestDO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.DefaultResponseErrorHandler;
+import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
 
 public class CowayCommonHttpClient {
 
+	private static final Logger logger = LoggerFactory.getLogger(CowayCommonHttpClient.class);
 	
 	private HttpClientTemplate httpClientTemplate;
 
@@ -43,105 +61,278 @@ public class CowayCommonHttpClient {
 	
 	
 	public JsonNode deleteDeviceList(String serverUrl, DeleteDeviceListRequestDO deleteDeviceListObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/deleteDeviceList.json");
-		UrlEncodedFormEntity entity = null;
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : deleteDeviceListObj.getDeleteDeviceListNameValueLimitList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/deleteDeviceList.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(deleteDeviceListObj.getDeleteDeviceListNameValueLimitList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-	
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();		
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	public JsonNode deleteUserList(String serverUrl, DeleteUserListRequestDO deleteUserListObj)  throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/deleteUserList.json");
-		UrlEncodedFormEntity entity = null;
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : deleteUserListObj.getDeleteUserListNameValueLimitList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/deleteUserList.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(deleteUserListObj.getDeleteUserListNameValueLimitList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();	
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	public JsonNode initDeviceAuth(String serverUrl, InitDeviceAuthRequestDO initDeviceAuthObj) throws ConnectClientException {
 
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/initDeviceAuth.json");
-		UrlEncodedFormEntity entity = null;
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : initDeviceAuthObj.getInitDeviceAuthNameValueLimitList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/initDeviceAuth.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(initDeviceAuthObj.getInitDeviceAuthNameValueLimitList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();	
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	public JsonNode insertDevice(String serverUrl, InsertDeviceRequestDO insertDeviceObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/insertDevice.json");
-		UrlEncodedFormEntity entity = null;
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : insertDeviceObj.getInsertDeviceNameValueList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/insertDevice.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(insertDeviceObj.getInsertDeviceNameValueList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();	
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	public JsonNode insertUser(String serverUrl, InsertUserRequestDO insertUserObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/insertUser.json");
-		UrlEncodedFormEntity entity = null;
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : insertUserObj.getInsertUserNameValueList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/insertUser.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(insertUserObj.getInsertUserNameValueList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
 	}
 
 	public JsonNode updateUser (String serverUrl, UpdateUserRequestDO updateUserObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/updateUser.json");
-		UrlEncodedFormEntity entity = null;
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+		for (NameValuePair pair : updateUserObj.getUpdateUserNameValueList()) {
+			map.add(pair.getName(), pair.getValue());
+		}
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<MultiValueMap<String, String>> requestParam = new HttpEntity<>(map, getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/open/updateUser.json", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			entity = new UrlEncodedFormEntity(updateUserObj.getUpdateUserNameValueList(), HTTP.UTF_8);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-	    httpPost.setEntity(entity);
-	    httpPost.setHeaders( getDefaultHeaders() );
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	public JsonNode postSmartAdmin (String serverUrl, String contextUrl, ArrayList<NameValuePair> qparams) throws ConnectClientException {
@@ -179,45 +370,83 @@ public class CowayCommonHttpClient {
 	 * MDM 서버 인터페이스 
 	 */
 	public JsonNode mdmUserSyncCheck(String serverUrl, MdmUserSyncRequestDO mdmUserSyncObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/SSM/userSyncCheck.do");
-		httpPost.setHeader("Content-Type", "application/json");
-		
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<String> requestParam = new HttpEntity<>(mdmUserSyncObj.toJsonNode().toString(), getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/SSM/userSyncCheck.do", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			StringEntity entity = new StringEntity(mdmUserSyncObj.toJsonNode().toString(), "UTF-8");
-			httpPost.setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-//		UrlEncodedFormEntity entity = null;
-//		try {
-//			entity = new UrlEncodedFormEntity(mdmUserSyncObj.getMdmUserSyncNameValueList(), HTTP.UTF_8);
-//		} catch (UnsupportedEncodingException e) {
-//			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-//		}	
-//	    httpPost.setEntity(entity);
-//	    httpPost.setHeaders( getDefaultHeaders() );	
-	    
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 
 	public JsonNode mdmUserResignCheck(String serverUrl, MdmUserResignRequestDO mdmUserResignObj) throws ConnectClientException {
-		
-		HttpPost httpPost = new HttpPost(serverUrl + "/SSM/userResignCheck.do");
-		httpPost.setHeader("Content-Type", "application/json");
-		
+
+		RestTemplate getTokenTemplate = new RestTemplate();
+		ResponseErrorHandler getTokenErrorHandler = new DefaultResponseErrorHandler() {
+			@Override
+			public void handleError(ClientHttpResponse response) throws IOException {
+				logger.warn("response status: '{}', headers: '{}', body: '{}'",
+						response.getStatusCode(), response.getHeaders(), response.getBody());
+			}
+		};
+
+		getTokenTemplate.setErrorHandler(getTokenErrorHandler);
+		// Add the Jackson message converter
+		getTokenTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+		HttpHeaders getTokenHeaders = new HttpHeaders();
+		getTokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		//HttpEntity<ArrayList<NameValuePair>> requestParam = new HttpEntity<>(insertUserObj.getInsertUserNameValueList(), getTokenHeaders);
+		HttpEntity<String> requestParam = new HttpEntity<>(mdmUserResignObj.toJsonNode().toString(), getTokenHeaders);
+
+		ResponseEntity<String> getTokenResponse = getTokenTemplate.postForEntity(serverUrl + "/SSM/userResignCheck.do", requestParam , String.class);
+		logger.error(getTokenResponse.toString());
+
+		JsonNode actualObj = null;
+
 		try {
-			StringEntity entity = new StringEntity(mdmUserResignObj.toJsonNode().toString(), "UTF-8");
-			httpPost.setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
-			throw new ConnectClientException(e, ConnectClientExceptionCode.UNSUPPORTED_ENCODING_EXCEPTION);
-		}	
-		
-		MessageResponse messageResponse = getHttpClientTemplate().sendAndReceive(MessageResponse.class, httpPost);
-		
-		return messageResponse.entityToJsonNode();
+			ObjectMapper mapper = new ObjectMapper();
+			JsonFactory f = new JsonFactory();
+			JsonParser p = f.createJsonParser(getTokenResponse.getBody());
+			actualObj = mapper.readTree(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+
+		return actualObj;
+
 	}
 	
 	/**

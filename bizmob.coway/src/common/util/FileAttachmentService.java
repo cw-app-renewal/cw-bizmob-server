@@ -38,6 +38,10 @@ public class FileAttachmentService {
 		String 			defaultUploadPath 	= "/v1/binary-file";
 		
 		try {
+
+			if (filePath != null && filePath.length() > 1 &&filePath.endsWith("/")) {
+				filePath = filePath.substring(0, filePath.length() - 1);
+			}
 			
 			String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
 			String 			uploadPath 		= ""; 
@@ -57,7 +61,7 @@ public class FileAttachmentService {
 				params.put("destFileName", 	fileName);
 				params.put("destFilePath", 	filePath);
 				params.put("privacy", "N");*/
-			    
+
 			    HttpEntity<byte[]> 		requestEntity 	= new HttpEntity(fileData, headers);
 			    uploadPath = uploadPath +
 						"?destFilePath=" + filePath +
@@ -120,9 +124,13 @@ public class FileAttachmentService {
 		RestTemplate	 		restTemplate 	= new RestTemplate();
 		HttpEntity<?> 			requestEntity 	= null;
 		byte[] 					byteData		= new byte[] {};
-		
+
+		if (filePath != null && filePath.length() > 1 &&filePath.endsWith("/")) {
+			filePath = filePath.substring(0, filePath.length() - 1);
+		}
+
 		if(isBinary) {
-			
+
 			downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
 			downPath = downPath +
 					"?destFilePath=" + filePath +
@@ -172,7 +180,11 @@ public class FileAttachmentService {
 		String 			defaultDeletePath 	= "/v1/file";
 		
 		try {
-			
+
+			if (filePath != null && filePath.length() > 1 &&filePath.endsWith("/")) {
+				filePath = filePath.substring(0, filePath.length() - 1);
+			}
+
 			String 				baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
 			String 				uploadPath 		= SmartConfig.getString("coway.attach.delete.path", defaultDeletePath);
 			
@@ -199,5 +211,25 @@ public class FileAttachmentService {
 		
 		return result;
 		
+	}
+
+	public String getDownloadUrl(String filePath, String fileName) {
+		String			defaultBaseUrl	= "https://storage-proxy.coway.dev";
+		String 			defaultDownPath = "/v1/binary-file";
+
+		String 			baseUrl 		= SmartConfig.getString("coway.attach.base.url", defaultBaseUrl);
+		String 			downPath 		= "";
+
+		if (filePath != null && filePath.length() > 1 &&filePath.endsWith("/")) {
+			filePath = filePath.substring(0, filePath.length() - 1);
+		}
+
+		downPath = SmartConfig.getString("coway.attach.download.binary.path", defaultDownPath);
+		downPath = baseUrl + downPath +
+				"?destFilePath=" + filePath +
+				"&destFileName=" + fileName +
+				"&privacy=N";
+
+		return downPath;
 	}
 }

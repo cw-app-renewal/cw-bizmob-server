@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import connect.http.coway.CowayCommonHttpClient;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -18,6 +19,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import connect.exception.ConnectClientException;
 import connect.exception.ConnectClientExceptionCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MessageResponse implements IMessageResponse {
 
@@ -25,6 +28,8 @@ public class MessageResponse implements IMessageResponse {
 	private long	endTime;
 	
 	private HttpResponse	httpResponse;
+
+	private static final Logger logger = LoggerFactory.getLogger(MessageResponse.class);
 	
 	public void setResponse(HttpResponse httpResponse, long startTime, long endTime) throws ConnectClientException {
 		setHttpResponse( httpResponse );
@@ -111,6 +116,8 @@ public class MessageResponse implements IMessageResponse {
 	}
 	
 	private JsonNode jsonParserToString(String msg) throws JsonParseException, IOException {
+		logger.error("===========================");
+		logger.error(msg);
     	ObjectMapper mapper = new ObjectMapper(); 
 		JsonFactory f = new JsonFactory();
 		JsonParser p = f.createJsonParser(msg); 

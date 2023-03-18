@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adapter.ftp.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,61 +20,6 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
-import adapter.ftp.CGR101_ADT_InstallImageDownloader;
-import adapter.ftp.CGR102_ADT_AddressImageDownloader;
-import adapter.ftp.CGR103_ADT_MemoImageDownloader;
-import adapter.ftp.CGR104_ADT_GoodsImageDownloader;
-import adapter.ftp.CGR105_ADT_PartsImageDownloader;
-import adapter.ftp.CGR106_ADT_MediaDownloader;
-import adapter.ftp.CGR113_ADT_PlImageDownloader;
-import adapter.ftp.CGR114_ADT_FireImageDownloader;
-import adapter.ftp.CGR115_ADT_QAImageDownloader;
-import adapter.ftp.CGR116_ADT_BbsSmtImageDownloader;
-import adapter.ftp.CGR117_ADT_AfterImageDownloader;
-import adapter.ftp.CGR118_ADT_NoinstImageDownloader;
-import adapter.ftp.CGR119_ADT_NanImageDownloader;
-import adapter.ftp.CGR120_ADT_SurveyImageDownloader;
-import adapter.ftp.CGR121_ADT_InstallReturnImageDownloader;
-import adapter.ftp.CGR122_ADT_Noinst2ImageDownloader;
-import adapter.ftp.CGR123_ADT_Nan1ImageDownloader;
-import adapter.ftp.CGR124_ADT_Nan2ImageDownloader;
-import adapter.ftp.CGR125_ADT_Nan3ImageDownloader;
-import adapter.ftp.CGR126_ADT_CowayMMSImageDownloader;
-import adapter.ftp.CGR127_ADT_AirImageDownloader;
-import adapter.ftp.CGR128_ADT_HomeplImageDownloader;
-import adapter.ftp.CGR129_ADT_PlhcImageDownloader;
-import adapter.ftp.CGR130_ADT_CoreImageDownloader;
-import adapter.ftp.CGR131_ADT_FeederImageDownloader;
-import adapter.ftp.CGR132_ADT_KINDImageDownloader;
-import adapter.ftp.CGR133_ADT_EtcOrderImageDownloader;
-import adapter.ftp.CGR134_ADT_Nan4ImageDownloader;
-import adapter.ftp.CGR135_ADT_Nan5ImageDownloader;
-import adapter.ftp.CGR136_ADT_Nan6ImageDownloader;
-import adapter.ftp.CGR137_ADT_townGasCloseImageDownloader;
-import adapter.ftp.CGR138_ADT_csqImageDownloader;
-import adapter.ftp.CGR139_ADT_PlrImageDownloader;
-import adapter.ftp.CGR140_ADT_PlrMovImageDownloader;
-import adapter.ftp.CGR141_ADT_WatermapImageDownloader;
-import adapter.ftp.CGR142_ADT_UniformImageDownloader;
-import adapter.ftp.CGR143_ADT_plMovDownloader;
-import adapter.ftp.CGR144_ADT_firmMovDownloader;
-import adapter.ftp.CGR145_ADT_opinImageDownloader;
-import adapter.ftp.CGR146_ADT_LadderImageDownloader;
-import adapter.ftp.CGR147_ADT_BillImageDownloader;
-import adapter.ftp.CGR148_ADT_mentImgDownloader;
-import adapter.ftp.CGR149_ADT_Nan7ImageDownloader;
-import adapter.ftp.CGR150_ADT_Nan8ImageDownloader;
-import adapter.ftp.CGR151_ADT_SpManualDownloader;
-import adapter.ftp.CGR152_ADT_HybridTopperImageDownloader;
-import adapter.ftp.CGR153_ADT_QMImageDownloader;
-import adapter.ftp.CGR154_ADT_QMMovDownloader;
-import adapter.ftp.CGR155_ADT_RvImageDownloader;
-import adapter.ftp.CGR156_ADT_cPlrMovDownloader;
-import adapter.ftp.CGR157_ADT_cPlMovDownloader;
-import adapter.ftp.CGR158_ADT_asSkillDownloader;
-import adapter.ftp.CGR159_ADT_Nan9ImageDownloader;
-import adapter.ftp.CGR160_ADT_QabmMovDownloader;
-import adapter.ftp.CGR161_ADT_HplbImageDownloader;
 import adapter.sync.CGS000_ADT_SyncZipDownloader;
 
 /*
@@ -245,7 +191,9 @@ public class CowayDownloadController {
 	
 	@Autowired
 	private CGR161_ADT_HplbImageDownloader	hplbImageDownloader;
-	
+
+	@Autowired
+	private CGR163_ADT_WithServiceImageDownloader withServiceImageDownloader;
 	
 	/**
 	 * 
