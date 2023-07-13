@@ -52,8 +52,9 @@ public class SapCommonMapperException extends SapCommonMapper {
 		JCoStructure 		struct 		= paramList.getStructure("E_RETURN");
 		String 				type 		= struct.getString("TYPE");
 		if(type.equals("T") != true) {
-			SapCommonException sapCommonException = new SapCommonException(trCode, struct.getString("MESSAGE"), dbAdapter);
-			throw new AdapterException(sapCommonException.getErrCode(), sapCommonException.getErrMsg());
+			//SapCommonException sapCommonException = new SapCommonException(trCode, struct.getString("MESSAGE"), dbAdapter);
+			throw new AdapterException(trCode, struct.getString("MESSAGE"));
+			//throw new AdapterException(sapCommonException.getErrCode(), sapCommonException.getErrMsg());
 		}
 	}
 

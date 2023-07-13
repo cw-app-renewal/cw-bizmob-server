@@ -397,7 +397,8 @@ public class CowayDownloadController {
 		} else if ( target.equalsIgnoreCase("noinstMov") ) { 
 					
 					downloader = qabmMovDownloader;
-			
+		} else if ( target.equalsIgnoreCase("with") ) {
+			downloader = withServiceImageDownloader;
 		} else {
 			throw new Exception("downloader target 경로가 잘못되었습니다.");
 		}

@@ -47,9 +47,12 @@ public class CGW901_ADT_LMS extends AbstractTemplateAdapter implements IAdapterJ
 
 			long 				start 	= System.currentTimeMillis();
 
+			content = content + " (담당자 : " + invnr + ")";
+
 			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
 			cowayUMSRequestDO.setTRAN_PHONE(phnId);
 			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			//cowayUMSRequestDO.setTRAN_CALLBACK(invnr);
 			cowayUMSRequestDO.setTITLE(title);
 			cowayUMSRequestDO.setMESSAGE(content);
 			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());

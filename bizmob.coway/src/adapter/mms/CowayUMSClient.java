@@ -15,6 +15,8 @@ import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class CowayUMSClient {
@@ -37,7 +39,9 @@ public class CowayUMSClient {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+        httpHeaders.set("auth-id", CowayUMSInfo.getAuthId());
+        httpHeaders.set("auth-key", CowayUMSInfo.getAuthKey());
 
         Gson gson = new GsonBuilder().create();
 

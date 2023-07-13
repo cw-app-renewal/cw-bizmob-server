@@ -81,9 +81,12 @@ public class CGW900_ADT_UploadMMS extends AbstractTemplateAdapter implements IAd
 				return ResponseUtil.makeResponse(obj, errResponse.getSapCommonResponse(), trCode, (end - start), reqBodyNode,this.getClass().getName());
 			}
 
+			content = content + " (담당자 : " + invnr + ")";
+
 			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
 			cowayUMSRequestDO.setTRAN_PHONE(phnId);
 			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			//cowayUMSRequestDO.setTRAN_CALLBACK(invnr);
 			cowayUMSRequestDO.setTITLE(title);
 			cowayUMSRequestDO.setMESSAGE(content);
 			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());

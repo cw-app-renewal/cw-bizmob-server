@@ -81,7 +81,7 @@ public class Text2Image {
 	}
 	
 	private void drawString(Graphics2D g2d, JsonNode I_ITAB){
-		Font t = new Font("굴림체", Font.BOLD, 34);
+		Font t = new Font("나눔고딕", Font.BOLD, 34);
 		
 		//int[] positionArray = {LeftX, LeftY, RightX, bold style, font size};
 		int[][] textPosArray = {

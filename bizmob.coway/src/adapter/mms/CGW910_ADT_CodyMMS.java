@@ -87,6 +87,7 @@ public class CGW910_ADT_CodyMMS extends AbstractTemplateAdapter implements IAdap
 			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
 			cowayUMSRequestDO.setTRAN_PHONE(phnId);
 			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			//cowayUMSRequestDO.setTRAN_CALLBACK(invnr);
 			cowayUMSRequestDO.setTITLE(title);
 			cowayUMSRequestDO.setMESSAGE(content);
 			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());

@@ -76,6 +76,7 @@ public class SapCommonResponse {
 		//response
 		JsonNodeFactory factory = JsonNodeFactory.instance;
 
+		//if (sapCommonResponse == null)
 		sapCommonResponse = new ObjectNode(factory);
 		ObjectNode resBodyNode = new ObjectNode(factory);	
 		

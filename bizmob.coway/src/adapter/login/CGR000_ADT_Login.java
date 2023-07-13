@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import adapter.common.SapCommonMapper;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.codehaus.jackson.JsonNode;
@@ -73,8 +74,9 @@ public class CGR000_ADT_Login extends AbstractTemplateAdapter implements IAdapte
 					return ResponseUtil.makeFailResponse(obj, errCode, "시스템 점검중입니다.", trCode, reqBodyNode, rfcName, null, this.getClass().getName());
 				}
 			}
-			
-			SapCommonMapperException 	mapper 			= new SapCommonMapperException(trCode, dbAdapter);
+
+			//SapCommonMapperException 	mapper 			= new SapCommonMapperException(trCode, dbAdapter);
+			SapCommonMapper 			mapper			= new SapCommonMapper(trCode, dbAdapter);
 			long						start			= System.currentTimeMillis();
 			Map<String, Object> 		resMap 			= (Map<String, Object>) sapAdapter.execute(rfcName, reqBodyNode, mapper);
 			long						end				= System.currentTimeMillis();

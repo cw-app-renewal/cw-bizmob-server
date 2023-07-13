@@ -34,12 +34,12 @@ public class SapCommonException {
 	}
 		
 	public void setError(String trCode, String errMsg, DBAdapter dbAdapter) {
-		this.errCode = findErrCode(trCode, errMsg, dbAdapter);
+		this.errCode = "SAPERR";//findErrCode(trCode, errMsg, dbAdapter);
 		this.errMsg = errMsg;	
 	}
 	
 	public SapCommonException(String trCode, String errMsg, DBAdapter dbAdapter) {
-		this.errCode = findErrCode(trCode, errMsg, dbAdapter);
+		this.errCode = "SAPERR";//findErrCode(trCode, errMsg, dbAdapter);
 		this.errMsg = errMsg;	
 	}
 	
@@ -59,7 +59,7 @@ public class SapCommonException {
 //		return trCode + "ADAP" + errCode;
 //	}
 	
-	private String findErrCode(String trCode, String errMsg, DBAdapter dbAdapter) {
+	/*private String findErrCode(String trCode, String errMsg, DBAdapter dbAdapter) {
 		
 		Map<String, String> inputMap = new HashMap<String, String>();
 		inputMap.put("trCode",trCode);
@@ -82,7 +82,7 @@ public class SapCommonException {
 		addErrorProperties(trCode+"ADAP"+errCode, errMsg);
 	
 		return trCode + "ADAP" + errCode;
-	}
+	}*/
 	
 	/*
 	 * table errCodeTalbe (errCode (auto-increment), errMsg)
@@ -104,7 +104,7 @@ public class SapCommonException {
 	 * display_message에 error code 추가
 	 * display_message는 applicationcontext-resources.xml에서 reloadable 되기 때문에 error code 추가하면 다시 로드한다. 
 	 */
-	private void addErrorProperties(String code, String message) {
+	/*private void addErrorProperties(String code, String message) {
 
 		boolean isConfig = ConfigurationManager.containsConfiguration("display_message");
 		if(isConfig == false) {
@@ -126,6 +126,6 @@ public class SapCommonException {
 			}
         } 
 		
-	}
+	}*/
 	
 }

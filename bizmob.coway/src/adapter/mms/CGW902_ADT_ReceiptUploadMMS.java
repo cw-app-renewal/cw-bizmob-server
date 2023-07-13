@@ -77,6 +77,7 @@ public class CGW902_ADT_ReceiptUploadMMS extends AbstractTemplateAdapter impleme
 			CowayUMSRequestDO cowayUMSRequestDO = new CowayUMSRequestDO();
 			cowayUMSRequestDO.setTRAN_PHONE(phnId);
 			cowayUMSRequestDO.setTRAN_CALLBACK("1588-5200");
+			//cowayUMSRequestDO.setTRAN_CALLBACK(invnr);
 			cowayUMSRequestDO.setTITLE(title);
 			cowayUMSRequestDO.setMESSAGE(content);
 			cowayUMSRequestDO.setAUTOTYPE(CowayUMSInfo.getAutotype());

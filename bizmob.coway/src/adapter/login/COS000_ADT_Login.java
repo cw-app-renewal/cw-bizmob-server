@@ -1,5 +1,6 @@
 package adapter.login;
 
+import adapter.common.SapCommonMapper;
 import adapter.common.SapCommonMapperException;
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
@@ -69,7 +70,7 @@ public class COS000_ADT_Login extends AbstractTemplateAdapter implements IAdapte
 				}
 			}
 			
-			SapCommonMapperException 	mapper 			= new SapCommonMapperException(trCode, dbAdapter);
+			SapCommonMapper 			mapper 			= new SapCommonMapper(trCode, dbAdapter);
 			long						start			= System.currentTimeMillis();
 			Map<String, Object> 		resMap 			= (Map<String, Object>) sapAdapter.execute(rfcName, reqBodyNode, mapper);
 			long						end				= System.currentTimeMillis();
