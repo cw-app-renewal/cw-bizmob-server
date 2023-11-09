@@ -60,7 +60,8 @@ public class CGR221_AppstoreLoginService {
 			logger.info("*** appstroe login I_PWD : " + I_PWD);
 
 			reqMap.put("I_PERNR", I_PERNR);
-			reqMap.put("I_PWD", URLDecoder.decode(I_PWD, "UTF-8"));
+			//reqMap.put("I_PWD", URLDecoder.decode(I_PWD, "UTF-8"));
+			reqMap.put("I_PWD", I_PWD);
 			reqMap.put("I_PHN_NO", I_PHN_NO);
 			logger.info("*** appstroe login info = " + reqMap.toString()); 
 			
