@@ -3,6 +3,7 @@ package common;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.mcnc.smart.common.config.SmartConfig;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.slf4j.Logger;
@@ -25,14 +26,20 @@ public class ResponseUtil {
 			resultNode.put("error_code", "");
 			resultNode.put("error_text", "");
 			resultNode.put("info_text", "");
-			
+
+			// dev flag
+			resultNode.put("profile", SmartConfig.getString("coway.ums.profile", ""));
+
 			obj = new JsonAdaptorObject();
 			obj.put(TYPE.RESULT, resultNode);
 			obj.put(TYPE.RESPONSE, resNode);
 			
 			JsonNode 	headerNode 		= (JsonNode) JsonUtil.getValue(resNode, "header");
+			ObjectNode    bodyNode      = (ObjectNode) JsonUtil.getValue(resNode, "body");
+			bodyNode.put("profile", SmartConfig.getString("coway.ums.profile", ""));
+
 			String 		clientName 	= (String) JsonUtil.getValue(headerNode, "message_version");
-			String 		strResNode 		= JsonUtil.toJson(JsonUtil.getValue(resNode, "body"));
+			String 		strResNode 		= JsonUtil.toJson(bodyNode);
 			int length = strResNode.length();
 			if(length > 1024) {
 				strResNode = strResNode.substring(0, 1024) + "...";
@@ -72,14 +79,20 @@ public class ResponseUtil {
 			resultNode.put("error_code", "");
 			resultNode.put("error_text", "");
 			resultNode.put("info_text", "");
-			
+
+			// dev flag
+			resultNode.put("profile", SmartConfig.getString("coway.ums.profile", ""));
+
 			obj = new JsonAdaptorObject();
 			obj.put(TYPE.RESULT, resultNode);
 			obj.put(TYPE.RESPONSE, resNode);
 			
 			JsonNode 	headerNode 		= (JsonNode) JsonUtil.getValue(resNode, "header");
+			ObjectNode    bodyNode      = (ObjectNode) JsonUtil.getValue(resNode, "body");
+			bodyNode.put("profile", SmartConfig.getString("coway.ums.profile", ""));
+
 			String 		clientName 	= (String) JsonUtil.getValue(headerNode, "message_version");
-			String 		strResNode 		= JsonUtil.toJson(JsonUtil.getValue(resNode, "body"));
+			String 		strResNode 		= JsonUtil.toJson(bodyNode);
 			int length = strResNode.length();
 			if(length > 1024) {
 				strResNode = strResNode.substring(0, 1024) + "...";
