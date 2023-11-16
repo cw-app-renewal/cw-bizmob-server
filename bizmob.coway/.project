@@ -3,6 +3,9 @@
 	<name>bizmob.coway</name>
 	<comment></comment>
 	<projects>
+		<project>bizmob.coway.adapter.model</project>
+		<project>bizmob.coway.connect</project>
+		<project>bizmob.coway.batch</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

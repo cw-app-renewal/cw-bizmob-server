@@ -9,20 +9,20 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
-import com.mcnc.smart.hybrid.server.web.io.Downloader;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /*
  * http://10.131.16.124:8080/bizmob/download/SyncDatabase/1?mode=1&file_name=WD_WORK.db&file_path=CSDR
  */
 
+import com.mcnc.common.util.IOUtil;
+import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
+import com.mcnc.smart.hybrid.server.web.io.Downloader;
+
 @Deprecated
 public class CGS000_ADT_SyncDataBaseDownloader  extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGS000_ADT_SyncDataBaseDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGS000_ADT_SyncDataBaseDownloader.class);
 		
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {

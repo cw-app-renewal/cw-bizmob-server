@@ -2,7 +2,6 @@ package connect.ftp.mms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
@@ -11,12 +10,8 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
-import connect.exception.ConnectClientException;
-import connect.ftp.FtpClientService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class CowayMmsFtpUtils {
 
 	private FTPClient client;
@@ -25,7 +20,7 @@ public class CowayMmsFtpUtils {
 	private String ftpPassword;
 	private String ftpCharset = null;
 	
-	private ILogger logger = LoggerService.getLogger(CowayMmsFtpUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(CowayMmsFtpUtils.class);
 	
 	public CowayMmsFtpUtils() {}
 	
@@ -142,30 +137,33 @@ public class CowayMmsFtpUtils {
 	public byte[] ftpDownload(String filePath, String fileName) throws Exception {
 		
 		ByteArrayOutputStream bos = null;
-		
+		StringBuffer sb = new StringBuffer();
 		try {
 			
 			if(client != null) {		
 				disconnect(this.client);		
 			} 
 			
-			logger.debug("== ftpDownload : connect() ====");
+			sb.append("== ftpDownload : connect() ====");
 			client = connect();
 						
-			logger.debug("== ftpDownload : new ByteArrayOutputStream() ====");
+			sb.append("\n").append("== ftpDownload : new ByteArrayOutputStream() ====");
 			//이미지 유무 확인
 			bos = new ByteArrayOutputStream();
 
-			logger.debug("== ftpDownload : client.retrieveFile() start ====");
 			boolean result = client.retrieveFile(filePath + "/" + fileName, bos);
-			logger.debug("== ftpDownload : client.retrieveFile() end, result =[" +result+"] ====");
+			sb.append("\n").append("== ftpDownload : client.retrieveFile() end, result =[" +result+"] ====");
 			
-			return bos.toByteArray();
+			byte[] bytes = bos.toByteArray();
+			sb.append("\n").append("== ftpDownload :" + filePath + "/" + fileName + " size : " + bytes.length);
+			return bytes;
 			
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			throw e;
 		
 		} finally {
+			logger.debug(sb.toString());
 			IOUtil.closeQuietly(bos);	bos = null;
 			disconnect(client);			client = null;
 		}

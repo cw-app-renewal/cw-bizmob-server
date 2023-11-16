@@ -1,7 +1,5 @@
 package common.ftp;
 
-import java.io.File;
-
 public class CowayFtpFileType {
 
 	protected static final String _IMG_TYPE_INSTALL = "1";		//설치 이미지
@@ -78,7 +76,9 @@ public class CowayFtpFileType {
 	
 	protected static final String _IMG_TYPE_HPLB = "61";		// 2019-05-24 (코디) PL 영수증 이미지
 	protected static final String _IMG_TYPE_QR_HOMECARE = "62";	// 2019-08-28 (코디) QR 이미지(홈케어)
-	
+
+	protected static final String _IMG_TYPE_WITH = "63";	// 2023-03-13 (서매) 위드서비스매니저
+
 	public static final int _IMG_FLAG_DEFAULT_WORK = 0;
 	public static final int _IMG_FLAG_WORK = 2;
 	public static final int _IMG_FLAG_CUSTOMER = 1;
@@ -150,7 +150,8 @@ public class CowayFtpFileType {
 			imgType.equalsIgnoreCase(_IMG_TYPE_NAN9) ||
 			imgType.equalsIgnoreCase(_MOV_TYPE_QABM) ||
 			imgType.equalsIgnoreCase(_IMG_TYPE_HYBRID) ||
-			
+			imgType.equalsIgnoreCase(_IMG_TYPE_WITH) ||
+
 			imgType.equalsIgnoreCase(_IMG_TYPE_QR_HOMECARE)) {
 			
 			return _IMG_FLAG_WORK;//작업 이미지
@@ -339,6 +340,9 @@ public class CowayFtpFileType {
 		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_QR_HOMECARE) ) {
 					return "QRH3";	
 		 
+		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_WITH) ) {
+					return "WITH";
+
 		} else {
 			return "";
 		}

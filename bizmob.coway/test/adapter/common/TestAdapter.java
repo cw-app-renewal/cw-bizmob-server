@@ -1,9 +1,5 @@
 package adapter.common;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
 import org.junit.BeforeClass;
 
 public class TestAdapter {

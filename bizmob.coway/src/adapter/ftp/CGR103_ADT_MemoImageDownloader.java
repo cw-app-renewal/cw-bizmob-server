@@ -1,33 +1,31 @@
 package adapter.ftp;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
+
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
-
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
 
 @Component
 public class CGR103_ADT_MemoImageDownloader extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(CGR103_ADT_MemoImageDownloader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR103_ADT_MemoImageDownloader.class);
 		
-	@Autowired
-	FtpClientService ftpClientService;
+	@Autowired FileAttachmentService fileAttachmentService;
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {
@@ -57,14 +55,14 @@ public class CGR103_ADT_MemoImageDownloader extends AbstractDownloader implement
 		}
 		String filePath = CowayFtpFilePath.getMemoFolder(tmpOrderNo);
 		String fileName = CowayFtpFileName.getMemoImgName(tmpOrderNo, imgSeq);
-		logger.debug("download full file path = [" + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName + "]");
+		
 		
 	    ByteArrayInputStream bais = null;
 		
 	    try {
 		
-			//ftp
-			byte[] byteArray = ftpClientService.downloadFile(filePath, fileName);
+	    	
+			byte[] 					byteArray 	= fileAttachmentService.download(filePath, fileName, true);
 		  
 	        bais = new ByteArrayInputStream(byteArray);
        

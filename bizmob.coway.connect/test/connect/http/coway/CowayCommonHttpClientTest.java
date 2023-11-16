@@ -1,7 +1,5 @@
 package connect.http.coway;
 
-import static org.junit.Assert.*;
-
 import org.codehaus.jackson.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +22,6 @@ import connect.http.coway.data.MdmUserResignRequestDO;
 import connect.http.coway.data.MdmUserSyncRequestDO;
 import connect.http.coway.data.UpdateUserRequestDO;
 import connect.http.coway.data.UpdateUserResponseDO;
-
 import test.common.TestCommon;
 
 @RunWith(SpringJUnit4ClassRunner.class)

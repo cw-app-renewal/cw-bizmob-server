@@ -1,19 +1,6 @@
 package connector.sqlite.doctor.dao;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-
 import connector.sqlite.AbstractSqliteSessionTemplate;
-import connector.sqlite.doctor.dao.data.DoctorWorkTableList;
 
 
 

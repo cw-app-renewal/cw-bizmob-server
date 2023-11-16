@@ -5,6 +5,15 @@
  
 <mapper namespace="CowayErrorCode">
 
+	<select id="selectAllowedUserOnPM" resultType="java.lang.String" statementType="PREPARED">
+	<![CDATA[
+		select PHONE
+		from TEST_ALLOW_USER
+		where USE_YN = 'Y'
+		  and START_DATE < SYSDATE and END_DATE > SYSDATE
+		]]>
+	</select>
+
 	<select id="selectErrorCode" parameterType="java.util.HashMap" resultType="java.lang.String" statementType="PREPARED">  
 	<![CDATA[
 	select errCode

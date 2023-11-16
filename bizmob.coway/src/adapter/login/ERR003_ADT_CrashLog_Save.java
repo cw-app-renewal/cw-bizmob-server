@@ -15,16 +15,15 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
 /**
  * @class ERR001_ADT_File_Save
  * @since 2013-06-17
@@ -33,7 +32,7 @@ import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 @Adapter(trcode = {"ERR003"})
 public class ERR003_ADT_CrashLog_Save extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(ERR003_ADT_CrashLog_Save.class);
+	private static final Logger logger = LoggerFactory.getLogger(ERR003_ADT_CrashLog_Save.class);
 	
 	
 	@Override
@@ -81,7 +80,7 @@ public class ERR003_ADT_CrashLog_Save extends AbstractTemplateAdapter implements
 				
 				logger.debug("로그 파일 저장에 실패하였습니다.");
 				
-				return makeFailReesponse("IMPL0002", "로그 파일 저장에 실패하였습니다.");
+				return makeFailResponse("IMPL0002", "로그 파일 저장에 실패하였습니다.");
 			}
 			
 			//response
@@ -107,7 +106,7 @@ public class ERR003_ADT_CrashLog_Save extends AbstractTemplateAdapter implements
 			
 			logger.error(">>>> Exception = ", e);
 			
-			return makeFailReesponse("IMPL0002", e.getLocalizedMessage());
+			return makeFailResponse("IMPL0002", e.getLocalizedMessage());
 		}
 	}
 	

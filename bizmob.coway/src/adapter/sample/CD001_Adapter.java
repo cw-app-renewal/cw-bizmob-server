@@ -1,32 +1,29 @@
 package adapter.sample;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import adapter.model.sample.CD001.CD001Request;
-import adapter.model.sample.header.HWHeader;
-import adapter.model.sample.CD001.CD001Request_Body;
-import adapter.model.sample.CD001.CD001Response;
-import adapter.model.sample.CD001.CD001Response_Body;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
-import com.sap.conn.jco.JCoTable;
 
+import adapter.model.sample.CD001.CD001Request;
+import adapter.model.sample.CD001.CD001Request_Body;
+import adapter.model.sample.CD001.CD001Response;
+import adapter.model.sample.CD001.CD001Response_Body;
+import adapter.model.sample.header.HWHeader;
 //@Adapter(trcode = { "CD001" })
 @Deprecated
 public class CD001_Adapter extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CD001_Adapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(CD001_Adapter.class);
 
 	@Autowired
 	private SAPAdapter sapAdapter;
@@ -60,11 +57,11 @@ public class CD001_Adapter extends AbstractTemplateAdapter implements IAdapterJo
 		
 		} catch (AdapterException e) {
 			logger.error("AdapterException :: ", e);
-			return makeFailReesponse(e.getErrorCode(), e.getErrorMessage());
+			return makeFailResponse(e.getErrorCode(), e.getErrorMessage());
 			
 		} catch (Exception e) {
 			logger.error("Exception :: ", e);
-			return makeFailReesponse(trCode + "IMPL0001", e.getMessage());
+			return makeFailResponse(trCode + "IMPL0001", e.getMessage());
 		}
 		
 	}

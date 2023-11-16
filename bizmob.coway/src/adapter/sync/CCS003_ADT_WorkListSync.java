@@ -6,26 +6,26 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import adapter.common.SapCommonMapperException;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
+import adapter.common.SapCommonMapperException;
+import common.ResponseUtil;
 //@Adapter(trcode = { "CCS003" })
 @Deprecated
 public class CCS003_ADT_WorkListSync extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CCS003_ADT_WorkListSync.class);
+	private static final Logger logger = LoggerFactory.getLogger(CCS003_ADT_WorkListSync.class);
 	
 	@Autowired
 	SAPAdapter sapAdapter;
@@ -77,11 +77,11 @@ public class CCS003_ADT_WorkListSync extends AbstractTemplateAdapter implements 
 		
 		} catch (AdapterException e) {
 			logger.error("AdapterException = " + e.getErrorCode() + ":: " + e.getErrorMessage(), e);
-			return makeFailReesponse(e.getErrorCode(), e.getErrorMessage());
+			return makeFailResponse(e.getErrorCode(), e.getErrorMessage());
 		
 		} catch (Exception e) {
 			logger.error("Exception = ", e);
-			return makeFailReesponse("IMPL0002", e.getLocalizedMessage());
+			return makeFailResponse("ADAP9000", e.getLocalizedMessage());
 		}
 	}
 }

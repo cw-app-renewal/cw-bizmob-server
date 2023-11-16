@@ -1,7 +1,5 @@
 package connect.db.mms;
 
-import static org.junit.Assert.*;
-
 import java.util.Map;
 
 import org.junit.Before;

@@ -9,24 +9,19 @@ import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.common.util.JsonUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.code.Codes;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
 
-import common.AdapterUtil;
-
+import common.BizmobUtil;
+import common.ResponseUtil;
 
 /**
  * 
@@ -39,17 +34,18 @@ import common.AdapterUtil;
 @Adapter( trcode = {"ACUPI03"} )
 public class ACUPI03_ADT_HistoryACUPI2 extends AbstractTemplateAdapter implements IAdapterJob{
 
-	private ILogger logger = LoggerService.getLogger(ACUPI03_ADT_HistoryACUPI2.class);
+	private static final Logger logger = LoggerFactory.getLogger(ACUPI03_ADT_HistoryACUPI2.class);
 	
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		
-		try {
-			
-			JsonNode 	reqRootNode 	= obj.get(JsonAdaptorObject.TYPE.REQUEST);
-			JsonNode 	reqHeaderNode 	= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
-			JsonNode 	reqBodyNode 	= reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
+		JsonNode 	reqRootNode 	= obj.get(JsonAdaptorObject.TYPE.REQUEST);
+		JsonNode 	reqHeaderNode 	= reqRootNode.findValue(Codes._JSON_MESSAGE_HEADER);
+		JsonNode 	reqBodyNode 	= reqRootNode.findValue(Codes._JSON_MESSAGE_BODY);
+		String		trCode			= reqHeaderNode.findPath("trcode").getValueAsText();
+		String		errorMsg		= "고객 개인정보 수집/활용에 대한 내역조회중 오류가 발생하였습니다.";
 		
+		try {	
 			String 		serverUrl 		= SmartConfig.getString("acupi.server.url");
 			String 		originKey 		= SmartConfig.getString("acupi.origin.key");
 			
@@ -60,38 +56,47 @@ public class ACUPI03_ADT_HistoryACUPI2 extends AbstractTemplateAdapter implement
 			
 			serverUrl += "/acupi/" + version + "/" + cid + "/history?start_date=" + from + "&end_date=" + to;
 			
-			HttpsURLConnection 	httpsURLConnection 	= AdapterUtil.getHttpsURLConnection(serverUrl);
+			HttpsURLConnection 	httpsURLConnection 	= BizmobUtil.getHttpsURLConnection(serverUrl);
 			InputStream 		is					= null;
 			try {
+				long 			start 				= System.currentTimeMillis();
 				httpsURLConnection.setRequestProperty("origin_key", originKey);
 				httpsURLConnection.connect();
+				long 			end 				= System.currentTimeMillis();
 				
 				if (HttpURLConnection.HTTP_OK <= httpsURLConnection.getResponseCode() &&  httpsURLConnection.getResponseCode() <= 299) {
 					
 					is 	= httpsURLConnection.getInputStream();
 					
 					String 				resBody 		= IOUtils.toString( is );
-					logger.debug("resBody : " + resBody);
 					JsonNode 			resBodyNode 	= JsonUtil.toObject(resBody, JsonNode.class);
-
 					JsonNodeFactory 	factory 		= JsonNodeFactory.instance;
-					JsonAdaptorObject 	resObj 			= new JsonAdaptorObject();
 					ObjectNode 			resRootNode 	= new ObjectNode(factory);
+					
 					resRootNode.put(Codes._JSON_MESSAGE_HEADER, reqHeaderNode);
 					resRootNode.put(Codes._JSON_MESSAGE_BODY, 	resBodyNode);
 					
-					return makeResponse(resObj, resRootNode);
-				}else{
-					logger.error("conn.getResponseCode() ::: " + String.valueOf(httpsURLConnection.getResponseCode()));
-					logger.error("conn.getResponseCode() ::: " + String.valueOf(httpsURLConnection.getResponseMessage()));
-					return makeFailReesponse("ACUPI03_IMPL0001", "고객 개인정보 수집/활용에 대한 조회 요청중 오류가 발생하였습니다");
+					return ResponseUtil.makeResponse(obj, resRootNode, trCode, (end - start), reqBodyNode,this.getClass().getName());
+				} else {
+					
+					try {
+						String	logMsg = String.valueOf(httpsURLConnection.getResponseCode()) + "::" + String.valueOf(httpsURLConnection.getResponseMessage());
+						logger.error(logMsg);
+					} catch (Exception e2) {
+					}
+					return ResponseUtil.makeFailResponse(obj, "IMPL0001", errorMsg, trCode, reqBodyNode, null, this.getClass().getName());
 				}
 				
 			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-				logger.error("conn.getResponseCode() ::: " + String.valueOf(httpsURLConnection.getResponseCode()));
-				logger.error("conn.getResponseCode() ::: " + String.valueOf(httpsURLConnection.getResponseMessage()));
-				return makeFailReesponse("ACUPI03_IMPL0002", "고객 개인정보 수집/활용에 대한 조회 요청중 오류가 발생하였습니다");
+				String logMsg = "";
+				
+				try {
+					logMsg = String.valueOf(httpsURLConnection.getResponseCode()) + "::" + String.valueOf(httpsURLConnection.getResponseMessage());	
+				} catch (Exception e2) {
+				}
+				
+				logger.error(logMsg, e); 
+				return ResponseUtil.makeFailResponse(obj, "IMPL0002", errorMsg, trCode, reqBodyNode, e, this.getClass().getName());
 			} finally {
 				if(httpsURLConnection != null) {
 					httpsURLConnection.disconnect();
@@ -102,11 +107,9 @@ public class ACUPI03_ADT_HistoryACUPI2 extends AbstractTemplateAdapter implement
 			}
 			
 		} catch( Exception e ) {
-			
-			logger.error("ACUPI03 Adapter Exception : ", e);
-			return makeFailReesponse("ACUPI03_IMPL0003", "고객 개인정보 수집/활용에 대한 조회 요청중 오류가 발생하였습니다");
-		}
-		
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.makeFailResponse(obj, "IMPL0003", errorMsg, trCode, reqBodyNode, e, this.getClass().getName());
+		} 
 	}
 
 }

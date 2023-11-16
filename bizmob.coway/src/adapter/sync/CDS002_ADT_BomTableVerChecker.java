@@ -1,22 +1,22 @@
 package adapter.sync;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
+import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
 import adapter.model.CDS002.CDS002Request;
 import adapter.model.CDS002.CDS002Request_Body;
 import adapter.model.CDS002.CDS002Response;
 import adapter.model.CDS002.CDS002Response_Body;
 import adapter.model.header.CowayCommonHeader;
-
-import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
 //@Adapter(trcode = { "CDS002" })
 @Deprecated
 public class CDS002_ADT_BomTableVerChecker extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CDS002_ADT_BomTableVerChecker.class);
+	private static final Logger logger = LoggerFactory.getLogger(CDS002_ADT_BomTableVerChecker.class);
 	
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
@@ -45,7 +45,7 @@ public class CDS002_ADT_BomTableVerChecker extends AbstractTemplateAdapter imple
 			
 		} catch (Exception e) {
 			logger.error("Exception :: ", e);
-			return makeFailReesponse(errCode, e.getLocalizedMessage());
+			return makeFailResponse(errCode, e.getLocalizedMessage());
 		}
 	}
 

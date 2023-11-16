@@ -3,7 +3,6 @@ package connector.sqlite.doctor.dao;
 import java.sql.SQLException;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.dao.DataAccessException;
 
 import connector.sqlite.SqliteDataSource;
 import connector.sqlite.doctor.mapper.DoctorBomMapper;

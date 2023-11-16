@@ -1,0 +1,17 @@
+{
+  "header" : {
+    "common_adapter" : false,
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "result" : false,
+    "rfc_name" : "",
+    "trcode" : "CIS002"
+  },
+  "body" : {
+    "creationDt" : "0",
+    "serial" : "TST02FA00000000001"
+  }
+}

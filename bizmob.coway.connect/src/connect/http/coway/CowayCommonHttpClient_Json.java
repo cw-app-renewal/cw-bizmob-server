@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.codehaus.jackson.JsonNode;
@@ -36,7 +35,7 @@ public class CowayCommonHttpClient_Json {
 	
 	public JsonNode deleteDeviceList(String serverUrl, DeleteDeviceListRequestDO deleteDeviceListObj) throws ConnectClientException {
 		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/deleteDeviceList.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/deleteDeviceList.json");
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		try {
@@ -54,7 +53,7 @@ public class CowayCommonHttpClient_Json {
 	
 	public JsonNode deleteUserList(String serverUrl, DeleteUserListRequestDO deleteUserListObj)  throws ConnectClientException {
 		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/deleteUserList.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/deleteUserList.json");
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		try {
@@ -71,7 +70,7 @@ public class CowayCommonHttpClient_Json {
 	
 	public JsonNode initDeviceAuth(String serverUrl, InitDeviceAuthRequestDO initDeviceAuthObj) throws ConnectClientException {
 
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/initDeviceAuth.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/initDeviceAuth.json");
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		try {
@@ -88,7 +87,7 @@ public class CowayCommonHttpClient_Json {
 	
 	public JsonNode insertDevice(String serverUrl, InsertDeviceRequestDO insertDeviceObj) throws ConnectClientException {
 		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/insertDevice.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/insertDevice.json");
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		try {
@@ -105,7 +104,7 @@ public class CowayCommonHttpClient_Json {
 	
 	public JsonNode insertUser(String serverUrl, InsertUserRequestDO insertUserObj) throws ConnectClientException {
 		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/insertUser.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/insertUser.json");
 		//httpPost.setHeaders( getDefaultHeaders() );
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-type", "application/json");
@@ -127,7 +126,7 @@ public class CowayCommonHttpClient_Json {
 
 	public JsonNode updateUser (String serverUrl, UpdateUserRequestDO updateUserObj) throws ConnectClientException {
 		
-		HttpPost httpPost = new HttpPost(serverUrl + "/smart-admin/open/updateUser.json");
+		HttpPost httpPost = new HttpPost(serverUrl + "/open/updateUser.json");
 		httpPost.setHeader("Content-Type", "application/json");
 		
 		try {

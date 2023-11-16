@@ -16,17 +16,17 @@ public class BizmobLogger implements ILogger {
 	public BizmobLogger() {
 		//org.apache.ibatis.logging.LogFactory.useLog4JLogging();
 		logger = Logger.getRootLogger();
-		org.apache.ibatis.logging.LogFactory.useLog4JLogging();
+//		org.apache.ibatis.logging.LogFactory.useLog4JLogging();
 	}
 
 	public BizmobLogger(Class<?> clazz) {
 		//org.apache.ibatis.logging.LogFactory.useLog4JLogging();
 		this.clazzName = clazz.getName();
 		logger = Logger.getLogger(clazzName);
-		if(useLog4JLogging == false) {
-			org.apache.ibatis.logging.LogFactory.useLog4JLogging();
-			useLog4JLogging = true;
-		}
+//		if(useLog4JLogging == false) {
+//			org.apache.ibatis.logging.LogFactory.useLog4JLogging();
+//			useLog4JLogging = true;
+//		}
 	}
 	
 	@Override

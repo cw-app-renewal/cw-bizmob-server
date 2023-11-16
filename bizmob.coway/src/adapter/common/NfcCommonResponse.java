@@ -1,9 +1,6 @@
 package adapter.common;
 
-import java.io.Console;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
@@ -12,13 +9,11 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import adapter.model.header.CowayCommonHeader;
-import ch.qos.logback.classic.Logger;
-
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.hybrid.common.code.Codes;
-import com.sap.tc.logging.ConsoleLog;
+
+import adapter.model.header.CowayCommonHeader;
 
 public class NfcCommonResponse {
 

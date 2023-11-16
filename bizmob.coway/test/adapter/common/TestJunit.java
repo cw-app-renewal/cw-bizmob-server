@@ -1,5 +1,8 @@
 package adapter.common;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -13,9 +16,12 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-public class TestJunit {
+import common.util.FileAttachmentService;
+
+public class TestJunit{
 
 	@Test
 	public void test() {
@@ -74,9 +80,44 @@ public class TestJunit {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
+	@Test
+	public void fileDownload() {
+		FileAttachmentService service = new FileAttachmentService();
+		
+		String path = "/photo/";
+		String fileName = "test7.jpg";
+		
+		try {
+			byte[] fileData = service.download(path, fileName, false);
+			File file = new File("d:/test7.jpg");
+			FileOutputStream fos = new FileOutputStream(file);
+			
+			IOUtils.write(fileData, fos);
+			IOUtils.closeQuietly(fos);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void fileUpload() {
+		FileAttachmentService service = new FileAttachmentService();
+		
+		String path = "/dev/photo/customer/20B/431/900/860/";
+		String fileName = "20B431900860_inst_01.jpg";
+		
+		try {
+			File file = new File("d:/1.jpg");
+			FileInputStream fis = new FileInputStream(file);
+			byte[] fileData = IOUtils.toByteArray(fis);
+			boolean result = service.upload(path, fileName, fileData, true);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

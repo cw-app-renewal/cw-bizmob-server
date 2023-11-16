@@ -1,13 +1,5 @@
 package connect.ftp.mms;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.Properties;
-import java.util.Vector;
-
-import org.junit.Test;
-
 /*import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelSftp.LsEntry;

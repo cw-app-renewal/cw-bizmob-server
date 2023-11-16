@@ -1,30 +1,24 @@
 package adapter.mms;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.codehaus.jackson.JsonNode;
-
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class Text2Image {
 
-	private ILogger logger = LoggerService.getLogger(Text2Image.class);
+	private static final Logger logger = LoggerFactory.getLogger(Text2Image.class);
 
 	String bkImageName = "bkReceipt_blank.jpg";
 	BufferedImage bkOrgImage = null;
@@ -87,7 +81,7 @@ public class Text2Image {
 	}
 	
 	private void drawString(Graphics2D g2d, JsonNode I_ITAB){
-		Font t = new Font("굴림체", Font.BOLD, 34);
+		Font t = new Font("나눔고딕", Font.BOLD, 34);
 		
 		//int[] positionArray = {LeftX, LeftY, RightX, bold style, font size};
 		int[][] textPosArray = {

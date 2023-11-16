@@ -23,6 +23,34 @@
 	);
 	]]>	
 	</update>
+	
+	<update id="createMaterialTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS MATERIAL ( 
+	
+		GOODS_CD	TEXT	/* 제품코드 */
+		,PART_CD	TEXT	/* 부품코드 */
+		,PRDHA	TEXT	/* 제품계층구조 */
+		,PART_NM	TEXT	/* 자재명(부품) */
+		,FILTER_YN	TEXT	/* 필터여부 */
+		,EXAM_YN	TEXT	/* 점검코드여부 */
+		,BARCODE_YN	TEXT	/* 바코드 필수 여부 */
+		,EXPEND_YN	TEXT	/* 소모성자재여부 */
+		,GB_TP	TEXT	/* 설치자재여부(아답터 피팅류) */
+		,SALE_AMT	TEXT	/* 판매금액 */
+		,EXTWG_TP	TEXT	/* 자재세부구분(A:아답터류) */
+		,HEART_PLUS_YN	TEXT	/* 순환키트등록대상여부 */
+		,SLT_PROC_TP	TEXT	/* 지정부품대상처리형태 */
+		,LIMIT_QTY	TEXT	/* 입력제한수량 */
+		,OPT_FILTER_YN	TEXT	/* 옵션필터여부 */
+	);
+	CREATE INDEX IDX_GOODS_CD ON MATERIAL ( 
+	    GOODS_CD ASC
+	    ,PART_CD ASC
+	);
+	]]>	
+	</update>
+	
 
 	<update id="dropProductTable" statementType="STATEMENT">
 	<![CDATA[
@@ -36,6 +64,12 @@
 	]]>	
 	</delete>
 	
+	<delete id="deleteMaterialData" statementType="STATEMENT">
+	<![CDATA[
+		DELETE FROM MATERIAL
+	]]>	
+	</delete>
+	
 	<insert id="insertProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
 	<![CDATA[
 	INSERT INTO PRODUCT (
@@ -46,10 +80,71 @@
 	]]>		
 	</insert>
 	
+	<insert id="insertMaterialData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyMaterialDO">
+	<![CDATA[
+	INSERT INTO MATERIAL (
+		GOODS_CD
+		,PART_CD
+		,PRDHA
+		,PART_NM
+		,FILTER_YN
+		,EXAM_YN
+		,BARCODE_YN
+		,EXPEND_YN
+		,GB_TP
+		,SALE_AMT
+		,EXTWG_TP
+		,HEART_PLUS_YN
+		,SLT_PROC_TP
+		,LIMIT_QTY
+		,OPT_FILTER_YN
+
+	) VALUES (
+		#{GOODS_CD}
+		,#{PART_CD}
+		,#{PRDHA}
+		,#{PART_NM}
+		,#{FILTER_YN}
+		,#{EXAM_YN}
+		,#{BARCODE_YN}
+		,#{EXPEND_YN}
+		,#{GB_TP}
+		,#{SALE_AMT}
+		,#{EXTWG_TP}
+		,#{HEART_PLUS_YN}
+		,#{SLT_PROC_TP}
+		,#{LIMIT_QTY}
+		,#{OPT_FILTER_YN}
+	)
+	]]>		
+	</insert>
+	
+	
 	<update id="updateProductData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyProductDO">
 	<![CDATA[
 	UPDATE PRODUCT
-	SET PART_NM = #{PART_NM}, BARCODE_YN = #{BARCODE_YN}, EXPEND_YN = #{EXPEND_YN}, GB_TP = #{GB_TP, MODE=IN}, KIT_REG_YN = #{KIT_REG_YN}, FILTER_TP = #{FILTER_TP}
+	SET PART_NM = #{PART_NM}, BARCODE_YN = #{BARCODE_YN}, EXPEND_YN = #{EXPEND_YN}, GB_TP = #{GB_TP}, KIT_REG_YN = #{KIT_REG_YN}, FILTER_TP = #{FILTER_TP}
+	WHERE GOODS_CD = #{GOODS_CD} AND PART_CD = #{PART_CD}
+	]]>		
+	</update>
+
+	<update id="updateMaterialData" statementType="PREPARED" parameterType="connector.sqlite.cody.dao.data.CodyMaterialDO">
+	<![CDATA[
+	UPDATE MATERIAL
+	SET 
+		,PRDHA			=	#{PRDHA}
+		,PART_NM		=	#{PART_NM}
+		,FILTER_YN		=	#{FILTER_YN}
+		,EXAM_YN		=	#{EXAM_YN}
+		,BARCODE_YN		=	#{BARCODE_YN}
+		,EXPEND_YN		=	#{EXPEND_YN}
+		,GB_TP			=	#{GB_TP}
+		,SALE_AMT		=	#{SALE_AMT}
+		,EXTWG_TP		=	#{EXTWG_TP}
+		,HEART_PLUS_YN	=	#{HEART_PLUS_YN}
+		,SLT_PROC_TP	=	#{SLT_PROC_TP}
+		,LIMIT_QTY		=	#{LIMIT_QTY}
+		,OPT_FILTER_YN	=	#{OPT_FILTER_YN}
 	WHERE GOODS_CD = #{GOODS_CD} AND PART_CD = #{PART_CD}
 	]]>		
 	</update>
@@ -88,6 +183,44 @@
 		PART_CD TEXT			/* 부품코드 */
 		,RENT_QTY TEXT			/* 차용수량 */
 		,PROC_QTY TEXT 			/* 사용수량 */ 
+	);
+	]]>	
+	</update>
+	
+	<delete id="deleteQtCodeData" statementType="STATEMENT">
+	<![CDATA[
+	DELETE FROM QT_CODE
+	]]>	
+	</delete>
+	
+	<insert id="insertQtCodeData" statementType="PREPARED" parameterType="connector.sqlite.doctor.dao.data.DoctorQtCodeDO">
+	<![CDATA[
+	INSERT INTO QT_CODE (
+		DIV_CD, PRDHA, CODEGROUP, CODEGROUP_DTL, CODEGROUP_NM, CODEGROUP_DTL_NM, PL_YN, PROC_DTL_OPT, PART_CHG_YN, AS_IN_YN, CAUSEBYCUST_YN
+	) VALUES (
+		#{DIV_CD}, #{PRDHA}, #{CODEGROUP}, #{CODEGROUP_DTL}, #{CODEGROUP_NM}, #{CODEGROUP_DTL_NM}, #{PL_YN}, #{PROC_DTL_OPT}, #{PART_CHG_YN}, #{AS_IN_YN}, #{CAUSEBYCUST_YN}
+	)
+	]]>		
+	</insert>
+	
+	<update id="createQtCodeTable" statementType="STATEMENT">
+	<![CDATA[
+	CREATE TABLE IF NOT EXISTS QT_CODE ( 
+	    DIV_CD           			TEXT		/* 코드분류 */
+	    ,PRDHA            		TEXT		/* 제품계층구조 */
+	    ,CODEGROUP        	TEXT		/* 그룹코드 */
+	    ,CODEGROUP_DTL    	TEXT		/* 그룹상세코드 */
+	    ,CODEGROUP_NM     	TEXT		/* 그룹코드명 */
+	    ,CODEGROUP_DTL_NM TEXT		/* 그룹상세코드명 */
+	    ,PL_YN            			TEXT		/* PL 여부 */
+	    ,PROC_DTL_OPT     		TEXT		/* 처리형태 상세제한 구분 */
+	    ,PART_CHG_YN      		TEXT		/* 부품교환 필수여부 */
+	    ,AS_IN_YN         		TEXT		/* 수리입고 구분 필수여부 */
+	    ,CAUSEBYCUST_YN   	TEXT 		/* 고객과실 여부 */
+	);
+	CREATE INDEX IDX_CODEGROUP ON QT_CODE ( 
+	    CODEGROUP ASC
+	    ,CODEGROUP_DTL ASC
 	);
 	]]>	
 	</update>

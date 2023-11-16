@@ -1,19 +1,17 @@
 package adapter.login;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
+import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
+import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
 import adapter.model.CDR000.CDR000Request;
 import adapter.model.CDR000.CDR000Request_Body;
 import adapter.model.CDR000.CDR000Response;
 import adapter.model.CDR000.CDR000Response_Body;
 import adapter.model.header.CowayCommonHeader;
-
-import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
-import com.mcnc.bizmob.adapter.DBAdapter;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.mcnc.smart.hybrid.adapter.api.Adapter;
-import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
-import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
-
 @Deprecated
 public class CDR000_ADT_DoctorLogin extends AbstractTemplateAdapter implements IAdapterJob {
 
@@ -24,7 +22,7 @@ public class CDR000_ADT_DoctorLogin extends AbstractTemplateAdapter implements I
 	 *  rfc_name = ZSMT_IF_SP_CSDR_RD002
 	 */
 	
-	private ILogger logger = LoggerService.getLogger(CDR000_ADT_DoctorLogin.class);
+	private static final Logger logger = LoggerFactory.getLogger(CDR000_ADT_DoctorLogin.class);
 			
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 
@@ -56,7 +54,8 @@ public class CDR000_ADT_DoctorLogin extends AbstractTemplateAdapter implements I
 			
 		} catch (Exception e) {
 			logger.error("Exception :: ", e);
-			return makeFailReesponse(errCode, e.getLocalizedMessage());
+			return makeFailResponse(errCode, e.getLocalizedMessage());
+				   
 		}
 	}
 

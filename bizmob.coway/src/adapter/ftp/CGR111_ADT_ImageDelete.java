@@ -1,97 +1,86 @@
 package adapter.ftp;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import adapter.common.SapCommonMapper;
-import adapter.common.SapCommonMapperException;
-import adapter.common.SapCommonResponse;
-import adapter.model.DELETE.DELETERequest;
-import adapter.model.DELETE.DELETERequest_Body;
-import adapter.model.DELETE.DELETERequest_Body_img_list;
-import adapter.model.DELETE.DELETEResponse;
-import adapter.model.DELETE.DELETEResponse_Body;
-import adapter.model.header.CowayCommonHeader;
 
 import com.mcnc.bizmob.adapter.AbstractTemplateAdapter;
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.adapter.api.Adapter;
 import com.mcnc.smart.hybrid.adapter.api.IAdapterJob;
 import com.mcnc.smart.hybrid.common.server.JsonAdaptorObject;
+
+import adapter.common.SapCommonMapperException;
+import adapter.common.SapCommonResponse;
+import adapter.model.DELETE.DELETERequest;
+import adapter.model.DELETE.DELETERequest_Body;
+import adapter.model.DELETE.DELETERequest_Body_img_list;
+import adapter.model.header.CowayCommonHeader;
+import common.ResponseUtil;
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import common.ftp.CowayFtpFileType;
-import common.ftp.CowayImageCustomerTypeDO;
-import common.ftp.CowayImageCustomerTypeListDO;
-import common.ftp.CowayImageWorkTypeDO;
-import common.ftp.CowayImageWorkTypeListDO;
-
-import connect.ftp.FtpClientService;
+import common.util.FileAttachmentService;
 
 @Adapter(trcode = { "CGR111" })
 public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements IAdapterJob {
 
-	private ILogger logger = LoggerService.getLogger(CGR111_ADT_ImageDelete.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR111_ADT_ImageDelete.class);
 	
-	@Autowired
-	private FtpClientService ftpClientService;
-
-	@Autowired
-	private SAPAdapter sapAdapter;
-
-	@Autowired
-	private DBAdapter dbAdapter;
+	@Autowired private SAPAdapter sapAdapter;
+	@Autowired private DBAdapter dbAdapter;
 	
 	@Override
 	public JsonAdaptorObject onProcess(JsonAdaptorObject obj) {
 		
-		String errCode = "ADAP0000";
+		DELETERequest 						request 			= new DELETERequest(obj);
+		CowayCommonHeader 					reqHeader 			= request.getHeader();
+		DELETERequest_Body 					reqBody 			= request.getBody();
+		String								trCode				= reqHeader.getTrcode();
 		
-		try {
-			//request 
-			DELETERequest request = new DELETERequest(obj);
-			
-			CowayCommonHeader reqHeader = request.getHeader();
-			//request body
-			DELETERequest_Body reqBody = request.getBody();
-			//logger.debug("delete image body :: " + reqBody.toString());
-			List<DELETERequest_Body_img_list> reqImgList = reqBody.getImg_list();
-			String procID = reqBody.getI_PROC_ID();
-			
-			//List<CowayImageWorkTypeDO> workImgList = new ArrayList<CowayImageWorkTypeDO>();
-			//List<CowayImageCustomerTypeDO> customerImgList = new ArrayList<CowayImageCustomerTypeDO>();
-			List<Map<String, Object>> workImgMapList = new ArrayList<Map<String,Object>>();
-			List<Map<String, Object>> customerImgMapList = new ArrayList<Map<String,Object>>();
-			List<Map<String, Object>> memoImgMapList = new ArrayList<Map<String,Object>>();
-			
+		List<DELETERequest_Body_img_list> 	reqImgList 			= reqBody.getImg_list();
+		String 								procID 				= reqBody.getI_PROC_ID();
+		
+		List<Map<String, Object>> 			workImgMapList 		= new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> 			customerImgMapList 	= new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> 			memoImgMapList 		= new ArrayList<Map<String,Object>>();
+		
+		StringBuffer						logBuffer			= new StringBuffer();
+		long 								start 				= System.currentTimeMillis();
+		String[]							rfcNames			= {"ZSMT_IF_SP_CSDR_WR201", "ZSMT_IF_SP_CODY_WR202", "ZSMT_IF_SP_CSDR_WR202" };
+		
+		try {			
 			for(DELETERequest_Body_img_list img : reqImgList) {
 				
-				logger.debug("delete img info = " + img.toString());				
-				String imgType = img.getImg_type();
-				String jobDate = img.getJob_dt();
-				String jobType = img.getJob_tp();
-				String orderNo = img.getOrder_no();
-				String jobSeq = img.getJob_seq();
-				String imgSeq = img.getImg_seq();
-				String fileCa = img.getFILECA();
+				logBuffer.append("delete img info = " + img.toString());				
+				String imgType 		= img.getImg_type();
+				String jobDate 		= img.getJob_dt();
+				String jobType 		= img.getJob_tp();
+				String orderNo 		= img.getOrder_no();
+				String jobSeq 		= img.getJob_seq();
+				String imgSeq 		= img.getImg_seq();
+				String fileCa 		= img.getFILECA();
 				
-				String filePath = CowayFtpFilePath.getCowayFtpFilePath(imgType, jobDate, jobType, orderNo, jobSeq, imgSeq, procID);
-				String fileName = CowayFtpFileName.getCowayFtpFileName(imgType, jobDate, jobType, orderNo, jobSeq, imgSeq, procID, fileCa);
-				logger.debug("delete img ftp path = " + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName);		
+				String filePath 	= CowayFtpFilePath.getCowayFtpFilePath(imgType, jobDate, jobType, orderNo, jobSeq, imgSeq, procID);
+				String fileName 	= CowayFtpFileName.getCowayFtpFileName(imgType, jobDate, jobType, orderNo, jobSeq, imgSeq, procID, fileCa);
+				logBuffer.append("delete img ftp path = " + filePath + CowayFtpFilePath._FOLDER_SEPARATOR + fileName);		
 				
-				//ftp
-				ftpClientService.deleteFile(filePath, fileName);
+//				ftpClientService.deleteFile(filePath, fileName);
+				FileAttachmentService service = new FileAttachmentService();
+				service.delete(filePath, fileName);
+				
+				logBuffer.append("== delete img end ========");
 				
 				if(CowayFtpFileType.getCowayImageTypeFlag(imgType) == 1) {
+					
 					//고객이미지
 					Map<String, Object> customerImgMap = new HashMap<String, Object>();
 					customerImgMap.put("COMMAND", "D");
@@ -101,7 +90,9 @@ public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements I
 					customerImgMap.put("ORDER_NO", orderNo);
 					customerImgMap.put("FILECA", fileCa);
 					customerImgMapList.add(customerImgMap);
+					
 				} else if(CowayFtpFileType.getCowayImageTypeFlag(imgType) == 3) {
+					
 					//영업노트 메모 이미지
 					Map<String, Object> memoImgMap = new HashMap<String, Object>();
 					memoImgMap.put("COMMAND", "D");
@@ -111,6 +102,7 @@ public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements I
 					memoImgMap.put("ORDER_NO", orderNo);
 					memoImgMap.put("FILECA", fileCa);
 					memoImgMapList.add(memoImgMap);	
+					
 				} else {
 					//작업 이미지
 					Map<String, Object> workImgMap = new HashMap<String, Object>();
@@ -133,22 +125,21 @@ public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements I
 				customerImgObj.put("I_PROC_ID", procID);
 				customerImgObj.put("I_ITAB1", customerImgMapList);
 				
-				//execute
-				logger.info("*************** Delete Image RFC NAME = " + "ZSMT_IF_SP_CSDR_WR201");
-				Map<String, Object> resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CSDR_WR201", AdapterUtil.ConvertJsonNode(customerImgObj), new SapCommonMapperException("CGR111", dbAdapter));
-				logger.debug("*************** ZSMT_IF_SP_CSDR_WR201 RFC Return = " + resMap.toString());
+				JsonNode 					reqNode 		= AdapterUtil.ConvertJsonNode(customerImgObj);
+				SapCommonMapperException 	mapper 			= new SapCommonMapperException("CGR111", dbAdapter);
+				sapAdapter.execute("ZSMT_IF_SP_CSDR_WR201", reqNode, mapper);
 			}
 			
-			if(memoImgMapList.size() > 0) {			
+			if(memoImgMapList.size() > 0) {
+				
 				//영업노트 메모 이미지 SAP 등록
 				Map<String, Object> memoImgObj = new HashMap<String, Object>();
 				memoImgObj.put("I_PROC_ID", procID);
 				memoImgObj.put("I_ITAB1", memoImgMapList);
 				
-				//execute
-				logger.info("*************** Delete Image RFC NAME = " + "ZSMT_IF_SP_CODY_WR202");
-				Map<String, Object> resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CODY_WR202", AdapterUtil.ConvertJsonNode(memoImgObj), new SapCommonMapperException("CGR110", dbAdapter));
-				logger.debug("*************** RFC Return = " + resMap.toString());
+				JsonNode 					reqNode 		= AdapterUtil.ConvertJsonNode(memoImgObj);
+				SapCommonMapperException 	mapper 			= new SapCommonMapperException("CGR111", dbAdapter);
+				sapAdapter.execute("ZSMT_IF_SP_CODY_WR202", reqNode, mapper);
 			}
 			
 			if(workImgMapList.size() > 0) {
@@ -157,34 +148,21 @@ public class CGR111_ADT_ImageDelete extends AbstractTemplateAdapter implements I
 				workImgObj.put("I_PROC_ID", procID);
 				workImgObj.put("I_ITAB1", workImgMapList);
 				
-				//execute
-				logger.info("*************** Delete Image RFC NAME = " + "ZSMT_IF_SP_CSDR_WR202");
-				Map<String, Object> resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CSDR_WR202", AdapterUtil.ConvertJsonNode(workImgObj), new SapCommonMapperException("CGR111", dbAdapter));
-				logger.debug("*************** RFC Return = " + resMap.toString());
+				JsonNode 					reqNode 		= AdapterUtil.ConvertJsonNode(workImgObj);
+				SapCommonMapperException 	mapper 			= new SapCommonMapperException("CGR111", dbAdapter);
+				sapAdapter.execute("ZSMT_IF_SP_CSDR_WR202", reqNode, mapper);
 			}
 			
-			//response body
-			/*DELETEResponse_Body resBody = new DELETEResponse_Body();
-			resBody.setResult(true);
-			
-			DELETEResponse response = new DELETEResponse();
-			response.setHeader(reqHeader);
-			response.setBody(resBody);
-			
-			//
-			return makeResponse(obj, response.toJsonNode());*/
-			
-			JsonAdaptorObject resObj = new JsonAdaptorObject();
-			
-			SapCommonResponse response = new SapCommonResponse(reqHeader);
-			
-			return makeResponse(resObj, response.getSapCommonResponse());
+			long 				end 		= System.currentTimeMillis();
+			SapCommonResponse 	response = new SapCommonResponse(reqHeader);
+			return ResponseUtil.makeResponse(obj, response.getSapCommonResponse(), trCode, (end - start), rfcNames.toString(), reqBody.toJsonNode(), this.getClass().getName());		
 			
 		} catch (Exception e) {
-			logger.error("Exception :: ", e);
-			return makeFailReesponse(errCode, e.getLocalizedMessage());
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.makeFailResponse(obj, "IMPL0001", "요청처리에 실패하였습니다.", trCode, reqBody.toJsonNode(), e, this.getClass().getName());
+		} finally {
+			logger.debug(logBuffer.toString());
+			logBuffer = null;
 		}
 	}
-
-	
 }

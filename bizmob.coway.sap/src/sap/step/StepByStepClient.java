@@ -2,10 +2,8 @@ package sap.step;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Properties;
+
 import com.sap.conn.jco.AbapException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoDestinationManager;
@@ -15,9 +13,6 @@ import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
 import com.sap.conn.jco.ext.DestinationDataProvider;
-import com.sap.conn.jco.ext.JCoSessionReference;
-import com.sap.conn.jco.ext.SessionException;
-import com.sap.conn.jco.ext.SessionReferenceProvider;
 
 
 public class StepByStepClient

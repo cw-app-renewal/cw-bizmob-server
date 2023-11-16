@@ -5,15 +5,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.apache.commons.net.ftp.FTPFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.integration.file.remote.session.Session;
 
 import com.mcnc.common.util.IOUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
 import connect.exception.ConnectClientException;
 import connect.exception.ConnectClientExceptionCode;
@@ -23,7 +22,7 @@ public class FtpClientService extends FtpClientTemplate {
 	
 	private static final String _FOLDER_SEPARATOR = "/";
 	
-	private ILogger logger = LoggerService.getLogger(FtpClientService.class);
+	private static final Logger logger = LoggerFactory.getLogger(FtpClientService.class);
 	
 	public byte[] downloadFile(String filePath, String fileName) throws ConnectClientException {
 		

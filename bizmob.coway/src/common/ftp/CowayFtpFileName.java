@@ -80,6 +80,7 @@ public class CowayFtpFileName extends CowayFtpFileType {
 	private static final String _QABM_MOV_PREFIX = "qabm";		// 2016-05-24 (코디) 난 이미지_9
 	private static final String _HPLB_IMG_PREFIX = "hplb";		// 2019-08-05 (코디) HPLB 이미지_9
 	private static final String _QR_HOMECARE_IMG_PREFIX = "qr";		// 2019-08-05 qr 이미지_9
+	private static final String _WITH_IMG_PREFIX = "with";
 	/*
 	 * 고객 제품 설치 사진 파일명 규칙 = inst_고객주문번호_이미지순번.jpg
 	 */
@@ -672,6 +673,11 @@ public class CowayFtpFileName extends CowayFtpFileType {
 	public static String getMentImgName(String jobDate, String orderNo, String imgSeq) {
 		return jobDate + "_" + orderNo+ "_ment" + "_" + imgSeq + _IMG_POSTFIX;
 	}
+
+	public static String getWithImgName(String jobDate, String jobType, String orderNo, String jobSeq, String imgSeq) {
+		return jobDate + "_" + jobType + "_" + orderNo + "_" + jobSeq  + "_" + _WITH_IMG_PREFIX + "_" + imgSeq + _IMG_POSTFIX;
+	}
+
 	/*
 	 * 
 	 */
@@ -860,6 +866,8 @@ public class CowayFtpFileName extends CowayFtpFileType {
 			name = getWorkHplbImgName(orderNo, imgSeq);
 		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_QR_HOMECARE) ) {
 			name = getQRHCImgName(orderNo, jobDate);
+		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_WITH) ) {
+			name = getWithImgName(jobDate, jobType, orderNo, jobSeq, imgSeq);
 		} else {
 			name = "";
 		}

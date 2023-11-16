@@ -6,28 +6,28 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mcnc.common.util.FileUtil;
 import com.mcnc.common.util.IOUtil;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.mcnc.smart.hybrid.server.web.io.AbstractDownloader;
 import com.mcnc.smart.hybrid.server.web.io.Downloader;
 
 import common.ftp.CowayFtpFileName;
 import common.ftp.CowayFtpFilePath;
 import common.ftp.DownloadDO;
+import common.util.FileAttachmentService;
 import connect.exception.ConnectClientException;
-import connect.ftp.FtpClientService;
 
 @Component
 public class CGR148_ADT_mentImgDownloader extends AbstractDownloader implements Downloader {
 
-	private ILogger logger = LoggerService.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(CGR148_ADT_mentImgDownloader.class);
 
-	@Autowired private FtpClientService ftpClientService;
+	@Autowired FileAttachmentService fileAttachmentService;
 	
 	@Override
 	public void download(String target, String uid, Map<String, Object> params) throws Exception {
@@ -59,12 +59,13 @@ public class CGR148_ADT_mentImgDownloader extends AbstractDownloader implements 
 		
 		try {
 			long 	startTime 	= System.currentTimeMillis();
-			byte[] 	fileByte 	= ftpClientService.downloadFile(filePath, fileName);
+			
+			byte[] 					byteArray 	= fileAttachmentService.download(filePath, fileName, true);
 			
 			logBuffer.append(">>>> File Down Time [" +  ((System.currentTimeMillis() - startTime) / 1000.0) + "초]");
 			
-			bais = new ByteArrayInputStream(fileByte);
-			send( response, fileName, FileUtil.getExtension(fileName), bais, fileByte.length, fileStartPos );
+			bais = new ByteArrayInputStream(byteArray);
+			send( response, fileName, FileUtil.getExtension(fileName), bais, byteArray.length, fileStartPos );
 			
 		} catch ( ConnectClientException e ) {
 			logger.error("ConnectClientException IO Exception !! :: ", e);

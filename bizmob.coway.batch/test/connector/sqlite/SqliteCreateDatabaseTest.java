@@ -1,7 +1,5 @@
 package connector.sqlite;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
 
 import org.junit.Test;
@@ -11,10 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import test.common.TestCommon;
-
-
-import connector.sqlite.SqliteCreateDatabase;
+import batch.cody.TestCommon;
 
 
 

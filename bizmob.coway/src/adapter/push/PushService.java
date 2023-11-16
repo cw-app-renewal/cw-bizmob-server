@@ -6,21 +6,18 @@ import java.util.Map;
 
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ch.qos.logback.classic.db.DBAppender;
-
 import com.mcnc.bizmob.adapter.DBAdapter;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
 import connect.exception.ConnectClientException;
 import connect.http.coway.CowayCommonHttpClient;
-
 @Deprecated
 public class PushService {
 
-	private ILogger logger = LoggerService.getLogger(PushService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PushService.class);
 
 	@Autowired
 	private DBAdapter dbAdapter;

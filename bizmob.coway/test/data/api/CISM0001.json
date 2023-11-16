@@ -1,0 +1,16 @@
+{
+  "header" : {
+    "accessToken" : "2",
+    "error_code" : "",
+    "error_text" : "",
+    "info_text" : "",
+    "login_session_id" : "",
+    "message_version" : "",
+    "refreshToken" : "1",
+    "result" : true,
+    "trcode" : "CISM0001"
+  },
+  "body" : {
+    "grantType" : "client_credentials"
+  }
+}

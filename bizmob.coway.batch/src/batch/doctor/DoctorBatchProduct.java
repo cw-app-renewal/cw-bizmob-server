@@ -2,17 +2,16 @@ package batch.doctor;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 import com.sap.conn.jco.JCoFunction;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
@@ -21,10 +20,9 @@ import com.sap.conn.jco.JCoTable;
 import connector.sqlite.doctor.dao.DoctorBomDao;
 import connector.sqlite.doctor.dao.data.DoctorProductDO;
 
-
 public class DoctorBatchProduct {
 
-	private ILogger logger = LoggerService.getLogger(DoctorBatchProduct.class);
+	private static final Logger logger = LoggerFactory.getLogger(DoctorBatchProduct.class);
 
 	@Autowired
 	SAPAdapter sapAdapter;

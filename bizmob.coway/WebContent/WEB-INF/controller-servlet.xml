@@ -85,7 +85,7 @@
 	</bean>
 	<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
 		<constructor-arg>
-			<value>#{contextParameters.SMART_HOME}/upload_temp</value>  <!-- Upload Temp Directory 설정 -->
+			<value>/opt/bizmob/upload_temp</value>  <!-- Upload Temp Directory 설정 -->
 		</constructor-arg>
 	</bean>
 
@@ -93,9 +93,9 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*.json"/>
 	          <bean class="web.TimeCheckInterceptor">
-	          	<property name="maxValidMinutes">
-	          		<value>10</value>		          		
-	          	</property>
+				<property name="maxValidMinutes">
+					<value>10</value>
+				</property>
 	          	<property name="uncheckTrCodes">
 	          		<list>
 		          		<value>ZZ0006</value>		          		

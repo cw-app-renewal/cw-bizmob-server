@@ -1,21 +1,21 @@
 package adapter.appstore;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import adapter.common.SapCommonMapperException;
 
 import com.mcnc.bizmob.adapter.DBAdapter;
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
 import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.smart.common.config.SmartConfig;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
 
+import adapter.common.SapCommonMapperException;
 import connect.exception.ConnectClientException;
 import connect.http.coway.CowayCommonHttpClient;
 import connect.http.coway.data.InitDeviceAuthRequestDO;
@@ -27,10 +27,9 @@ import connect.http.coway.data.InsertUserResponseDO;
 import connect.http.coway.data.MdmUserSyncRequestDO;
 import connect.http.coway.data.UpdateUserRequestDO;
 import connect.http.coway.data.UpdateUserResponseDO;
-
 public class CGR221_AppstoreLoginService {
 
-	private ILogger logger = LoggerService.getLogger(CGR221_AppstoreLoginService.class);
+	private static final Logger logger = LoggerFactory.getLogger(CGR221_AppstoreLoginService.class);
 
 	@Autowired
 	private SAPAdapter sapAdapter;
@@ -57,18 +56,21 @@ public class CGR221_AppstoreLoginService {
 			
 			Map<String, String> reqMap = new HashMap<String, String>();
 			Map<String, Object> resMap = null;
-			
+
+			logger.info("*** appstroe login I_PWD : " + I_PWD);
+
 			reqMap.put("I_PERNR", I_PERNR);
+			//reqMap.put("I_PWD", URLDecoder.decode(I_PWD, "UTF-8"));
 			reqMap.put("I_PWD", I_PWD);
 			reqMap.put("I_PHN_NO", I_PHN_NO);
-			logger.debug("*** appstroe login info = " + reqMap.toString()); 
+			logger.info("*** appstroe login info = " + reqMap.toString()); 
 			
 			//sap 인증
 			try {
 				//execute
 				logger.info("*************** Appstore Login RFC NAME = " + "ZSMT_IF_SP_CR221");
 				resMap = (Map<String, Object>) sapAdapter.execute("ZSMT_IF_SP_CR221", AdapterUtil.ConvertJsonNode(reqMap), new SapCommonMapperException("AppLog", dbAdapter));
-				logger.debug("***  RFC Return = " + resMap.toString());
+				logger.info("***  RFC Return = " + resMap.toString());
 			} catch (AdapterException e) {
 				logger.error("ZSMT_IF_SP_CR221 error :: ", e);
 				return e.getErrorMessage();
@@ -115,7 +117,7 @@ public class CGR221_AppstoreLoginService {
 			return "true";
 			
 		} catch (Exception e) {
-			logger.debug("appstore login error :: ", e);
+			logger.info("appstore login error :: ", e);
 			return e.getMessage();
 		}
 		
@@ -146,15 +148,15 @@ public class CGR221_AppstoreLoginService {
 			userInfo.setPrivateCreateFlag("N");
 					
 			JsonNode resultJson = cowayCommonHttpClient.insertUser(serverIp, userInfo);
-			logger.debug("*** smart-admin isnert user result = " + resultJson.toString());
+			logger.info("*** smart-admin isnert user result = " + resultJson.toString());
 			
 			InsertUserResponseDO userResult = new InsertUserResponseDO(resultJson);
-			//logger.debug("*** 사용자 정보 등록 결과 : " + userResult.toString());
+			//logger.info("*** 사용자 정보 등록 결과 : " + userResult.toString());
 			
 			if(userResult.getResultCode().equals("FAIL") == true) {
 				
 				String errorCode = userResult.getMessageCode();
-				logger.debug("*** smart-admin insert user fail message = " + userResult.getMessageCode());
+				logger.info("*** smart-admin insert user fail message = " + userResult.getMessageCode());
 				if(errorCode.equals("USER1020") == true) {
 					//기존 등록된 사용자일 경우는 update 처리함
 					rtnCode = updateUserInfoAdmiinServer(serverIp, userId, userName, employeeId, department, telNo);
@@ -163,8 +165,8 @@ public class CGR221_AppstoreLoginService {
 				}
 			}
 			
-		} catch (ConnectClientException e) {
-			logger.debug("insert user info error :: ", e);
+		} catch (Exception e) {
+			logger.info("insert user info error :: ", e);
 			rtnCode = e.getMessage();
 		}
 			
@@ -191,18 +193,18 @@ public class CGR221_AppstoreLoginService {
 			userInfo.setTel(telNo);
 			
 			JsonNode resultJson = cowayCommonHttpClient.updateUser(serverIp, userInfo);
-			logger.debug("*** smart-admin update user result = " + resultJson.toString());
+			logger.info("*** smart-admin update user result = " + resultJson.toString());
 			
 			UpdateUserResponseDO userResult = new UpdateUserResponseDO(resultJson);
-			//logger.debug("*** 사용자 수정 결과 결과 : " + userResult.toString());
+			//logger.info("*** 사용자 수정 결과 결과 : " + userResult.toString());
 			
 			if(userResult.getResultCode().equals("FAIL") == true) {
-				logger.debug("*** smart-admin update user fail message = " + userResult.getMessageCode());
+				logger.info("*** smart-admin update user fail message = " + userResult.getMessageCode());
 				rtnCode = userResult.getMessageCode();
 			}
 			
 		} catch (ConnectClientException e) {
-			logger.debug("insert user info error :: ", e);
+			logger.info("insert user info error :: ", e);
 			rtnCode = e.getMessage();
 		}
 		
@@ -221,14 +223,14 @@ public class CGR221_AppstoreLoginService {
 			deviceInfo.setDeviceAuthNo(deviceAuthNo);
 	
 			JsonNode resultJson = cowayCommonHttpClient.insertDevice(serverIp, deviceInfo);
-			logger.debug("*** smart-admin insert device result = " + resultJson.toString());
+			logger.info("*** smart-admin insert device result = " + resultJson.toString());
 			
 			InsertDeviceResponseDO deviceResult = new InsertDeviceResponseDO(resultJson);			
-			//logger.debug("*** 디바이스 등록 결과 " + deviceResult.toString());	
+			//logger.info("*** 디바이스 등록 결과 " + deviceResult.toString());	
 			
 			if(deviceResult.getResultCode().equals("FAIL") == true) {
 				String errorCode = deviceResult.getMessageCode();
-				logger.debug("*** smart-admin insert device fail message : " + deviceResult.getMessageCode());
+				logger.info("*** smart-admin insert device fail message : " + deviceResult.getMessageCode());
 				if(errorCode.equals("DEVI1010") == true) {
 					//이미 등록된 인증번호 라면 인증번호 초기화
 					rtnCode = initDeviceInfoAdminServer(serverIp, userId, deviceAuthNo);
@@ -238,7 +240,7 @@ public class CGR221_AppstoreLoginService {
 			}
 			
 		} catch (ConnectClientException e) {
-			logger.debug("insert device info error :: ", e);
+			logger.info("insert device info error :: ", e);
 			rtnCode = e.getMessage();
 		}
 			
@@ -255,18 +257,18 @@ public class CGR221_AppstoreLoginService {
 			deviceInfo.setDeviceAuthNoArray01(deviceAuthNo);
 	
 			JsonNode resultJson = cowayCommonHttpClient.initDeviceAuth(serverIp, deviceInfo);
-			logger.debug("*** smart-admin init device result = " + resultJson.toString());
+			logger.info("*** smart-admin init device result = " + resultJson.toString());
 			
 			InitDeviceAuthResponseDO deviceResult = new InitDeviceAuthResponseDO(resultJson);			
-			//logger.debug("*** 디바이스 초기화 결과 " + deviceResult.toString());	
+			//logger.info("*** 디바이스 초기화 결과 " + deviceResult.toString());	
 			
 			if(deviceResult.getResultCode().equals("FAIL") == true) {
-				logger.debug("*** smart-admin init device fail message : " + deviceResult.getMessageCode());
+				logger.info("*** smart-admin init device fail message : " + deviceResult.getMessageCode());
 				rtnCode = deviceResult.getMessageCode();
 			}
 			
 		} catch (ConnectClientException e) {
-			logger.debug("insert device info error :: ", e);
+			logger.info("insert device info error :: ", e);
 			rtnCode = e.getMessage();
 		}
 			
@@ -279,12 +281,12 @@ public class CGR221_AppstoreLoginService {
 			boolean syncEnable = Boolean.parseBoolean(SmartConfig.getString("mdm.user.sync.enable", "true"));
 			if(syncEnable == false) {
 				//mdm 사용자 sync 사용 여부
-				logger.debug("appstore :: MDM User Sync disable !!");
+				logger.info("appstore :: MDM User Sync disable !!");
 				return true;
 			}
 			
 			String serverUrl = SmartConfig.getString("mdm.server.url", "http://10.101.1.77:8080");
-			logger.debug("appstore :: MDM Server URL = " + serverUrl);
+			logger.info("appstore :: MDM Server URL = " + serverUrl);
 			
 			
 			MdmUserSyncRequestDO userInfo = new MdmUserSyncRequestDO();
@@ -295,10 +297,10 @@ public class CGR221_AppstoreLoginService {
 			userInfo.setCompanyId(companyId);
 			userInfo.setPositionId(positionId);
 			
-			logger.debug("appstore :: MdmUserSyncRequestDO info :: " + userInfo.toString());
+			logger.info("appstore :: MdmUserSyncRequestDO info :: " + userInfo.toString());
 			
 			JsonNode resultJson = cowayCommonHttpClient.mdmUserSyncCheck(serverUrl, userInfo);
-			logger.debug("appstore :: MDM Server UserSync result :: " + resultJson.toString());
+			logger.info("appstore :: MDM Server UserSync result :: " + resultJson.toString());
 			String resultString = resultJson.findPath("result").getTextValue();
 			if(resultString.equals("ok") == true) {
 				return true;

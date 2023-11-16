@@ -1,31 +1,18 @@
 package batch.doctor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-
-
-
 import com.mcnc.bizmob.adapter.SAPAdapter;
 import com.mcnc.bizmob.adapter.exception.AdapterException;
-import com.mcnc.bizmob.adapter.util.AdapterUtil;
 import com.mcnc.bizmob.adapter.sap.AbstractSapMapper;
-import com.mcnc.smart.common.logging.ILogger;
-import com.mcnc.smart.common.logging.LoggerService;
-import com.sap.conn.jco.JCoField;
-import com.sap.conn.jco.JCoFieldIterator;
 import com.sap.conn.jco.JCoFunction;
-import com.sap.conn.jco.JCoMetaData;
 import com.sap.conn.jco.JCoParameterList;
 import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
@@ -35,12 +22,10 @@ import connector.sqlite.doctor.dao.data.DoctorBBSImgDO;
 import connector.sqlite.doctor.dao.data.DoctorCommonCodeDO;
 import connector.sqlite.doctor.dao.data.DoctorQcBBSDO;
 import connector.sqlite.doctor.dao.data.DoctorQtCodeDO;
-import connector.sqlite.doctor.dao.data.DoctorWorkTableList;
-
 
 public class DoctorBatchCode {
 
-	private ILogger logger = LoggerService.getLogger(DoctorBatchCode.class);
+	private static final Logger logger = LoggerFactory.getLogger(DoctorBatchCode.class);
 	
 	@Autowired
 	SAPAdapter sapAdapter;

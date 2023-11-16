@@ -1,7 +1,5 @@
 package connector.sqlite.doctor.dao;
 
-import java.util.Map;
-
 import org.springframework.dao.DataAccessException;
 
 import connector.sqlite.AbstractSqliteSessionTemplate;

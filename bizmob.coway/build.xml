@@ -10,7 +10,9 @@
 	<property name="appName.war" value="./bizmob.war" />
 	<property name="java.webcontent" value="./WebContent" />
 	<property name="java.webinf" value="./WebContent/WEB-INF" />
-
+	
+	<property name="sap.lib" 			value="D:\mcnc\apache-tomcat-8.0.9" />
+	
 	<target name="preBuild">
 		<delete dir="${java.lib}" />
 	</target>
@@ -50,6 +52,10 @@
 		<fileset dir="${java.lib}">
 			<include name="**/*.jar"/>
 		</fileset>
+		
+		<fileset dir="../bizmob.coway.SMART_HOME/ext_lib">
+			<include name="*.jar"/>
+		</fileset>
 	</path>
 
 	<target name="compileWeb" depends="clean" description="Compile web application">
@@ -72,21 +78,34 @@
 	  	<tstamp>
 	    	<format property="currentTime" pattern="yyyyMMdd_HHmmss" unit="second"/>
 	  	</tstamp>
-		<move file="${appName.war}" tofile="../DEPLOYMENT/${currentTime}/real/webapps/${appName.war}"/>
+		<move file="${appName.war}" tofile="../DEPLOYMENT/${currentTime}/webapps/${appName.war}"/>
 
 		
-		<!-- home dir -->
-		<copy todir="../DEPLOYMENT/${currentTime}/real/home/conf">
+		<!-- home dev dir  -->
+		<copy todir="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf">
 			<fileset dir="../bizmob.coway.SMART_HOME/conf"/>
 		</copy>
-		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.json" tofile="../DEPLOYMENT/${currentTime}/real/home/conf/license/license.json"/>
-		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.sign" tofile="../DEPLOYMENT/${currentTime}/real/home/conf/license/license.sign"/>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.json" tofile="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf/license/license.json"/>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.sign" tofile="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf/license/license.sign"/>
+
+		
+		<!-- home real dir  -->
+		<copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf">
+			<fileset dir="../bizmob.coway.SMART_HOME/conf"/>
+		</copy>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.json" tofile="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf/license/license.json"/>
+		<copy file="../bizmob.coway.SMART_HOME/conf/license/license.sign" tofile="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf/license/license.sign"/>
 
 		
 		<!-- configuration -->
-		<copy todir="../DEPLOYMENT/${currentTime}/real/home/conf" overwrite="true">
+		<copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf" overwrite="true">
 			<fileset dir="../bizmob.coway.SMART_HOME/deployment/real/conf"/>
 		</copy>
+
+		<copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf" overwrite="true">
+					<fileset dir="../bizmob.coway.SMART_HOME/deployment/real/conf"/>
+		</copy>
+		
 		
 		<!-- delete the used libraries of a war project -->
 		<delete dir="${java.lib}" />

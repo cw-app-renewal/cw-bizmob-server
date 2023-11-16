@@ -1,19 +1,18 @@
 package common.ftp;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.mcnc.smart.common.config.SmartConfig;
-
-import common.util.DateUtil;
 
 public class CowayFtpFilePath extends CowayFtpFileType {
 
 	public static final String _FOLDER_SEPARATOR = "/";
 
 	// 개발서버인 경우 /dev 를, 운영서버는 ""를  사용하도록 설정
-	public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))?"/dev":"";
+	// public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))?"/dev":"";
+	// 2021-12-23 - FTP중계모듈에서 /dev 빼달라고 함
+	public static final String _DEV_ROOT_FOLDER = Boolean.parseBoolean(SmartConfig.getString("media.ftp.mode.dev", "false"))? "":"";
 	
 	// /photo 를 root로 사용
 	private static final String _IMAGES_ROOT_FOLDER = _DEV_ROOT_FOLDER + _FOLDER_SEPARATOR + "photo";
@@ -60,6 +59,9 @@ public class CowayFtpFilePath extends CowayFtpFileType {
 	// /pl root로 사용
 	private static final String _PLRECORD_ROOT_FOLDER = _DEV_ROOT_FOLDER + _FOLDER_SEPARATOR + "pl" + _FOLDER_SEPARATOR + "customer";
 	private static final String _HPLB_ROOT_FOLDER = _MOVIE_ROOT_FOLDER + _FOLDER_SEPARATOR + "hplb";		// 2015-05-20 (코디) PL등록
+
+	private static final String _WITH_ROOT_FOLDER = _IMAGES_ROOT_FOLDER + _FOLDER_SEPARATOR + "with";
+
 	/**
 	 * 제품(주문번호)과 관련된 이미지 저장 경로를 생성합니다.
 	 * 주문번호당 1개의 경로가 생성되고, 제품과 관련된 이미지(설치이미지, 설치주소이미지)등이 저장됩니다.
@@ -617,6 +619,18 @@ public class CowayFtpFilePath extends CowayFtpFileType {
 
 		return path;
 	}
+
+	public static String getWithFolder(String jobDate, String jobType, String jobSeq) {
+
+		String path = null;
+
+		path = _WITH_ROOT_FOLDER + _FOLDER_SEPARATOR
+				+ jobDate + _FOLDER_SEPARATOR
+				+ jobType + _FOLDER_SEPARATOR
+				+ jobSeq;
+
+		return path;
+	}
 	
 	/*
 	 * 
@@ -812,6 +826,8 @@ public class CowayFtpFilePath extends CowayFtpFileType {
 			
 		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_QR_HOMECARE) ) {
 			path = getQrh3WorkFolder(orderNo);
+		} else if ( imgType.equalsIgnoreCase(_IMG_TYPE_WITH) ) {
+			path = getWithFolder(jobDate, jobType, jobSeq);
 		}
 		
 		else {
