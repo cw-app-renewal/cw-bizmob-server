@@ -71,3 +71,4 @@ Servers/Tomcat*
 .recommenders/*
 
 
+/bin/
