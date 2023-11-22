@@ -70,27 +70,27 @@
 	<!-- sql map file  -->
 	<mappers>
 		<!-- smart jorunal -->
-		<mapper url="file:///${SMART_HOME}/conf/sql/${DATABASE}/journalSqlMap.xml" />
+		<mapper url="file://${SMART_HOME}/conf/sql/${DATABASE}/journalSqlMap.xml" />
 		<!-- authserver-db.jar -->
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Application.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Device.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/Env.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/PropValue.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/ServerLicense.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/User.xml" />
-		<mapper url="file:///${SMART_HOME}/conf/auth/${DATABASE}/ZZ0055.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/Application.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/Device.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/Env.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/PropValue.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/ServerLicense.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/User.xml" />
+		<mapper url="file://${SMART_HOME}/conf/auth/${DATABASE}/ZZ0055.xml" />		
 		<!-- coway error message -->
-		<mapper url="file:///${SMART_HOME}/conf/sql/Coway/CowayErrorSqlMap.xml" />
+		<mapper url="file://${SMART_HOME}/conf/sql/Coway/CowayErrorSqlMap.xml" />
 		<!-- device crush log -->
-		<mapper url="file:///${SMART_HOME}/conf/sql/Coway/CowayLogSqlMap.xml" />
+		<mapper url="file://${SMART_HOME}/conf/sql/Coway/CowayLogSqlMap.xml" />
 		<!-- nfc mapper
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR901.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR902.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW901.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW902.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW903.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW904.xml" />		
-		<mapper url="file:///${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW905.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR901.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCR902.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW901.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW902.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW903.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW904.xml" />		
+		<mapper url="file://${SMART_HOME}/conf/sql/${NFC_DATABASE}/NCCW905.xml" />		
 		 -->
 	</mappers>
 </configuration>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+>
+
+	<!-- 
+	<util:map id="contextParameters" map-class="java.util.HashMap">
+        <entry key="SMART_HOME" value="D:\bizmob\workspace\bizmob.coway.SMART_HOME"/>
+    </util:map>
+	
+	<import resource="file:D:\bizmob\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-adapter.xml"/>
+	<import resource="file:D:\bizmob\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-auth.xml"/>
+	<import resource="file:D:\bizmob\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-bizlogic.xml"/>
+	<import resource="file:D:\bizmob\workspace\bizmob.coway.SMART_HOME/conf/applicationcontext-resources.xml"/>
+	-->
+	 
+	 
+	<!-- ftp connection -->
+	<bean id="ftpSessionFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+		<property name="host" value="10.101.1.57"/>
+		<property name="port" value="21"/>
+		<property name="username" value="ftpuser_smt"/>
+		<property name="password" value="tm!ak@xm#"/>
+		<property name="clientMode" value="0"/>
+		<property name="fileType" value="2"/>
+		<property name="bufferSize" value="100000"/>
+		<property name="controlEncoding" value="EUC-KR"/>
+	</bean>
+	
+	<bean id="ftpClientService" class="connect.ftp.FtpClientService">
+		<property name="ftpSessionFactory" ref="ftpSessionFactory"/>
+	</bean>
+
+	<!-- http client -->
+	<bean id="httpClientTemplate" class="connect.http.HttpClientTemplate"/>
+	
+	<bean id="cowayCommonHttpClient" class="connect.http.coway.CowayCommonHttpClient">
+		<property name="httpClientTemplate" ref="httpClientTemplate"/>
+	</bean>
+	
+	<!-- coway mms sql-map -->
+	<util:list id="mmsMappers">
+		<value>classpath:connect/db/mms/CowayMmsSqlMap.xml</value>
+	</util:list>
+	
+	<!-- coway mms dataSoruce -->
+	<bean id="cowayMms_dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+	    <property name="url" value="jdbc:oracle:thin:@10.101.5.73:1521:KTSMS" /> 
+		<property name="username" value="wjmsgview " />
+		<property name="password" value="wjviewmsg!sbo" />
+	    <property name="initialSize" value="1" />
+	    <property name="maxActive" value="1" />
+	    <property name="maxIdle" value="1" />
+	    <property name="poolPreparedStatements" value="true" />
+	    <property name="validationQuery" value="select 1 from dual" />
+	    <property name="testOnBorrow" value="true"/>
+	    <property name="removeAbandoned" value="true"/>
+	</bean>
+	
+	<!-- coway mms dataSource mapping -->
+	<bean id="cowayMmsSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="cowayMms_dataSource" />
+		<property name="mapperLocations" ref="mmsMappers"/>
+	</bean>
+	
+	<!-- coway mms dataSource name mapping -->
+	<bean id="cowayMmsSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="cowayMmsSessionFactory" />
+	</bean>	
+	
+	<!-- coway mms dao -->
+	<bean id="cowayMmsDao" class="connect.db.mms.CowayMmsDao">
+		<property name="cowayMmsSessionTemplate" ref="cowayMmsSessionTemplate"/>
+	</bean>
+	
+	<!-- coway mms ftp connection -->
+	<bean id="cowayMmsFtpsSessionFactory" class="org.springframework.integration.ftp.session.DefaultFtpsSessionFactory">
+		<property name="host" value="10.101.5.74"/>
+		<property name="port" value="22"/>
+		<property name="username" value="wjsms"/>
+		<property name="password" value="!dnvwjsms1"/>
+		<property name="clientMode" value="0"/>
+		<property name="fileType" value="2"/>
+	</bean>
+	
+	<bean id="cowayMmsFtpsService" class="connect.ftp.mms.CowayMmsFtpsService">
+		<property name="cowayMmsFtpsSessionFactory" ref="cowayMmsFtpsSessionFactory"/>
+	</bean>
+			
+</beans>

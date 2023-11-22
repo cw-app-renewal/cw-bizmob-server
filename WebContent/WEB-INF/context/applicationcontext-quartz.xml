@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+                            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+        					http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd		
+                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<description>quartz</description>
+
+	<!-- 1. 실행할 비지니스 로직 클래스를 빈으로 등록 -->
+	<!-- 하나.주기적으로 실행될 클래스 설정 -->
+	<!-- property name은 jobClass로 fix, value는 사용자가 작성한 class 파일 위치 -->
+	<bean id="cowayBatchJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="batch.scheduler.BatchQuartzService" />	
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="doctorBatchZip" >
+					<ref bean="doctorBatchZip" />
+				</entry>
+				<entry key="codyBatchZip" >
+					<ref bean="codyBatchZip" />
+				</entry>
+				<entry key="userCloseBatch" >
+					<ref bean="userCloseBatch" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- 2. 해당빈이 스케줄을 만들 트리거 설정 -->
+	<!-- 둘.스케줄러의 interval time 설정 -->
+	<!-- 쿼츠에는 아래와 같이 몇초에 한번씩 돌게 하는 Simple type 과 -->
+	<!-- 무슨 요일 몇시에 한번씩 돌게 하는 날짜로 지정하는 Cron type 이 있다. -->
+	<!-- 현재는 Simple type으로 세팅 -->
+	<!-- jobDetail은 위에서 설정한 실제 동작할 클래스 id를 적어준다 -->
+	<!-- startDelay는 서버 시작후 몇초 뒤에 시작할지 세팅(ms 단위)  -->
+	<!-- repeatInterval은 몇 초에 한번씩 실행될 건지 세팅(ms 단위: 현재 1초) -->
+	<!-- bean id="systemOutTestTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="systemOutTest"/>
+		<property name="repeatInterval" value="300000"/>		
+		<property name="startDelay" value="20000"/>			
+	</bean -->
+	<!-- cronExpression을 통해서 스캐줄러 주기를 설정한다. --> 
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="cowayBatchJob"/>
+		<property name="cronExpression" value="0 0 1 * * ?"/>
+	</bean>
+
+	<!-- 3. 실제 동작되도록 설정 -->
+	<!--ref bean은 위에서 설정한 interval time 아이디를 넣어주면 됨  -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger"/>
+			</list>
+		</property>
+		<!-- Quartz 실행시 세팅 
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.class"> org.quartz.simpl.SimpleThreadPool </prop>
+				<prop key="org.quartz.threadPool.threadCount"> 5 </prop>
+				<prop key="org.quartz.threadPool.threadPriority"> 4 </prop>
+				<prop key="org.quartz.jobStore.class"> org.quartz.simpl.RAMJobStore </prop>
+				<prop key="org.quartz.jobStore.misfireThreshold"> 600000 </prop>
+			</props>
+		</property>
+		-->
+	</bean>
+
+	<!-- timer schedule setting 
+	<bean id="sysoutTimerTest" class="batch.scheduler.SystemOutTimerService" init-method="activate" destroy-method="deactivate" >
+	</bean>
+	-->
+	
+	<!-- sqlite sql -->
+	<util:list id="mappers">
+		<value>file://#{contextParameters.SMART_HOME}/conf/sql/Coway/CowayDoctorBomSqlMap.xml</value>
+		<value>file://#{contextParameters.SMART_HOME}/conf/sql/Coway/CowayDoctorComSqlMap.xml</value>
+		<value>file://#{contextParameters.SMART_HOME}/conf/sql/Coway/CowayCodyBomSqlMap.xml</value>
+		<value>file://#{contextParameters.SMART_HOME}/conf/sql/Coway/CowayCodyComSqlMap.xml</value>
+	</util:list>
+
+	<!-- sqlite dataSource -->
+	<bean id="doctorCom_dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+	    <property name="url" value="jdbc:sqlite:#{contextParameters.SMART_HOME}/SYNC/CSDR/ING/WD_COM" /> 
+	    <property name="initialSize" value="1" />
+	    <property name="maxActive" value="1" />
+	    <property name="maxIdle" value="1" />
+	    <property name="poolPreparedStatements" value="true" />
+	</bean>	
+	<bean id="codyCom_dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+	    <property name="url" value="jdbc:sqlite:#{contextParameters.SMART_HOME}/SYNC/CODY/ING/WC_COM" /> 
+	    <property name="initialSize" value="1" />
+	    <property name="maxActive" value="1" />
+	    <property name="maxIdle" value="1" />
+	    <property name="poolPreparedStatements" value="true" />
+	</bean>
+	 
+	<!-- data source mapping -->
+	<bean id="doctorComSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="doctorCom_dataSource"/>
+		<property name="mapperLocations" ref="mappers"/>
+	</bean>
+	<bean id="codyComSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="codyCom_dataSource"/>
+		<property name="mapperLocations" ref="mappers"/>
+	</bean>
+		
+	<!-- data source name mapping -->
+	<bean id="doctorComSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="doctorComSessionFactory" />
+	</bean>
+	<bean id="codyComSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="codyComSessionFactory" />
+	</bean>	
+	
+	<!-- transaction -->
+	<bean id="doctorComTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="doctorCom_dataSource"/>
+	</bean>
+	<bean id="codyComTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="codyCom_dataSource"/>
+	</bean>
+		
+	<!-- dao -->
+	<bean id="doctorBomDao" class="connector.sqlite.doctor.dao.DoctorBomDao">
+		<property name="doctorComSessionTemplate" ref="doctorComSessionTemplate"/>
+		<property name="doctorComTransactionManager" ref="doctorComTransactionManager"/>
+	</bean>
+	<bean id="doctorComDao" class="connector.sqlite.doctor.dao.DoctorComDao">
+		<property name="doctorComSessionTemplate" ref="doctorComSessionTemplate"/>
+		<property name="doctorComTransactionManager" ref="doctorComTransactionManager"/>
+	</bean>
+	<bean id="codyBomDao" class="connector.sqlite.cody.dao.CodyBomDao">
+		<property name="codyComSessionTemplate" ref="codyComSessionTemplate"/>
+		<property name="codyComTransactionManager" ref="codyComTransactionManager"/>
+	</bean>
+	<bean id="codyComDao" class="connector.sqlite.cody.dao.CodyComDao">
+		<property name="codyComSessionTemplate" ref="codyComSessionTemplate"/>
+		<property name="codyComTransactionManager" ref="codyComTransactionManager"/>
+	</bean>
+		
+	<!-- batch doctor -->
+	<bean id="doctorBatchCode" class="batch.doctor.DoctorBatchCode"/>
+	<bean id="doctorBatchProduct" class="batch.doctor.DoctorBatchProduct"/>
+	<bean id="doctorBatchZip" class="batch.doctor.DoctorBatchZip">
+		<property name="doctorBatchCode" ref="doctorBatchCode"/>
+		<property name="doctorBatchProduct" ref="doctorBatchProduct"/>
+	</bean>
+	
+	<!-- batch cody -->
+	<bean id="codyBatch" class="batch.cody.CodyBatch" />
+	<bean id="codyBatchZip" class="batch.cody.CodyBatchZip" >
+		<property name="codyBatch" ref="codyBatch"/>
+	</bean>
+	
+	<!-- user Close Batch -->
+	<bean id="userCloseBatch" class="batch.user.close.UserCloseBatch" />
+		
+</beans>
+	

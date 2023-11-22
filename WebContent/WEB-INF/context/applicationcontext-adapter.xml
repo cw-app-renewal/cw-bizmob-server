@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+        				http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd		
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+                        http://www.springframework.org/schema/integration/ftp http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd">
+                        
+	<description>adapter</description>
+
+	<context:annotation-config />
+	<context:component-scan base-package="adapter" use-default-filters="false">
+		<context:include-filter type="annotation" expression="com.mcnc.smart.hybrid.adapter.api.Adapter"/>
+	</context:component-scan>
+	
+	<context:component-scan base-package="com.mcnc.smart.hybrid.adapter.impl" use-default-filters="false">
+		<context:include-filter type="annotation" expression="com.mcnc.smart.hybrid.adapter.api.Adapter"/>
+		<context:exclude-filter type="regex" expression="com.mcnc.smart.hybrid.adapter.impl.ZZ0006_ADT_Update"/> 
+	</context:component-scan>
+	
+	<bean id="annotationBeanAdapterLoader" class="com.mcnc.smart.hybrid.adapter.loaders.AnnotationBeanAdapterLoader"/>
+	<bean id="adapterDispatcher" class="adapter.CowayLoaderAdapterDispatcher">
+		<constructor-arg index="0"><ref local="annotationBeanAdapterLoader" /></constructor-arg>
+	</bean>
+		
+	<!-- sync db downloader --> 
+	<bean id="syncZipDownloader" class="adapter.sync.CGS000_ADT_SyncZipDownloader"/>
+	<!-- image downloader -->
+	<bean id="installImageDownloader" class="adapter.ftp.CGR101_ADT_InstallImageDownloader"/>
+	<bean id="addressImageDownloader" class="adapter.ftp.CGR102_ADT_AddressImageDownloader"/>
+	<bean id="memoImageDownloader" class="adapter.ftp.CGR103_ADT_MemoImageDownloader"/>
+	<bean id="goodsImageDownloader" class="adapter.ftp.CGR104_ADT_GoodsImageDownloader"/>
+	<bean id="partsImageDownloader" class="adapter.ftp.CGR105_ADT_PartsImageDownloader"/>
+	<bean id="mediaDownloader" class="adapter.ftp.CGR106_ADT_MediaDownloader"/>
+	<bean id="plImageDownloader" class="adapter.ftp.CGR113_ADT_PlImageDownloader" />
+	<bean id="fireImageDownloader" class="adapter.ftp.CGR114_ADT_FireImageDownloader" />
+	<bean id="workImageDownloader" class="adapter.ftp.CGR115_ADT_QAImageDownloader" />
+	<bean id="bbsSmtImageDownloader" class="adapter.ftp.CGR116_ADT_BbsSmtImageDownloader" />
+	<bean id="afterImageDownloader" class="adapter.ftp.CGR117_ADT_AfterImageDownloader" />
+	<bean id="noinstImageDownloader" class="adapter.ftp.CGR118_ADT_NoinstImageDownloader" />
+	<bean id="nanImageDownloader" class="adapter.ftp.CGR119_ADT_NanImageDownloader" />
+	<bean id="surveyImageDownloader" class="adapter.ftp.CGR120_ADT_SurveyImageDownloader" />
+	<bean id="installReturnImageDownloader" class="adapter.ftp.CGR121_ADT_InstallReturnImageDownloader" />
+	<bean id="noinst2ImageDownloader" class="adapter.ftp.CGR122_ADT_Noinst2ImageDownloader" />
+	<bean id="nan1ImageDownloader" class="adapter.ftp.CGR123_ADT_Nan1ImageDownloader" />
+	<bean id="nan2ImageDownloader" class="adapter.ftp.CGR124_ADT_Nan2ImageDownloader" />
+	<bean id="nan3ImageDownloader" class="adapter.ftp.CGR125_ADT_Nan3ImageDownloader" />
+	<bean id="cowayMMSImageDownloader" class="adapter.ftp.CGR126_ADT_CowayMMSImageDownloader" />
+	<bean id="airImageDownloader" class="adapter.ftp.CGR127_ADT_AirImageDownloader" />
+	<bean id="homeplImageDownloader" class="adapter.ftp.CGR128_ADT_HomeplImageDownloader" />
+	<bean id="plhcImageDownloader" class="adapter.ftp.CGR129_ADT_PlhcImageDownloader" />
+	<bean id="coreImageDownloader" class="adapter.ftp.CGR130_ADT_CoreImageDownloader" />
+	<bean id="feederImageDownloader" class="adapter.ftp.CGR131_ADT_FeederImageDownloader" />
+	<bean id="kindImageDownloader" class="adapter.ftp.CGR132_ADT_KINDImageDownloader" />
+	<bean id="etcOrderImageDownloader" class="adapter.ftp.CGR133_ADT_EtcOrderImageDownloader" />
+	<bean id="nan4ImageDownloader" class="adapter.ftp.CGR134_ADT_Nan4ImageDownloader" />
+	<bean id="nan5ImageDownloader" class="adapter.ftp.CGR135_ADT_Nan5ImageDownloader" />
+	<bean id="nan6ImageDownloader" class="adapter.ftp.CGR136_ADT_Nan6ImageDownloader" />
+	<bean id="townGasCloseImageDownloader" class="adapter.ftp.CGR137_ADT_townGasCloseImageDownloader" />
+	<bean id="csqImageDownloader" class="adapter.ftp.CGR138_ADT_csqImageDownloader" />
+	<bean id="plrImageDownloader" class="adapter.ftp.CGR139_ADT_PlrImageDownloader" />
+	<bean id="plrMovImageDownloader" class="adapter.ftp.CGR140_ADT_PlrMovImageDownloader" />
+	<bean id="wmapImageDownloader" class="adapter.ftp.CGR141_ADT_WatermapImageDownloader" />
+	<bean id="unifImageDownloader" class="adapter.ftp.CGR142_ADT_UniformImageDownloader" />
+	<bean id="plMovDownloader" class="adapter.ftp.CGR143_ADT_plMovDownloader" />
+	<bean id="firmMovDownloader" class="adapter.ftp.CGR144_ADT_firmMovDownloader" />
+	<bean id="opinImageDownloader" class="adapter.ftp.CGR145_ADT_opinImageDownloader" />
+	<bean id="ladderImageDownloader" class="adapter.ftp.CGR146_ADT_LadderImageDownloader" />
+	<bean id="billImageDownloader" class="adapter.ftp.CGR147_ADT_BillImageDownloader" />	
+	<bean id="mentImageDownloader" class="adapter.ftp.CGR148_ADT_mentImgDownloader" />
+	
+	<bean id="nan7ImageDownloader" class="adapter.ftp.CGR149_ADT_Nan7ImageDownloader" />
+	<bean id="nan8ImageDownloader" class="adapter.ftp.CGR150_ADT_Nan8ImageDownloader" />
+	<bean id="spManualDownloader" class="adapter.ftp.CGR151_ADT_SpManualDownloader" />
+	<bean id="hybridTopperImageDownloader" class="adapter.ftp.CGR152_ADT_HybridTopperImageDownloader" />
+	<bean id="qmImageDownloader" class="adapter.ftp.CGR153_ADT_QMImageDownloader" /> 
+	<bean id="qmMovDownloader" class="adapter.ftp.CGR154_ADT_QMMovDownloader" />
+	<bean id="rvImageDownloader" class="adapter.ftp.CGR155_ADT_RvImageDownloader" />
+	<bean id="cPlrMovDownloader" class="adapter.ftp.CGR156_ADT_cPlrMovDownloader" />
+	<bean id="cPlMovDownloader" class="adapter.ftp.CGR157_ADT_cPlMovDownloader" />
+	<bean id="asSkillDownloader" class="adapter.ftp.CGR158_ADT_asSkillDownloader" />
+	<bean id="nan9ImageDownloader" class="adapter.ftp.CGR159_ADT_Nan9ImageDownloader" />
+	<bean id="qabmMovDownloader" class="adapter.ftp.CGR160_ADT_QabmMovDownloader" />
+	<bean id="hplbImageDownloader" class="adapter.ftp.CGR161_ADT_HplbImageDownloader" />
+	<bean id="withServiceImageDownloader" class="adapter.ftp.CGR163_ADT_WithServiceImageDownloader" />
+					
+	<!-- Sap Adapter -->
+	<bean id="sapAdapter" class="com.mcnc.bizmob.adapter.sap.SAPAdapterImpl" />
+	<!-- DB Dao Adapter -->
+	<bean id="myBatisDao" class="com.mcnc.bizmob.adapter.db.MyBatisGenericDao" />
+	<!-- DB Adapter -->
+	<bean id="dbAdapter" class="com.mcnc.bizmob.adapter.db.DBAdapterImpl" />
+
+	<!-- coway mms sql-map -->
+	<util:list id="mmsMappers">
+		<value>file://#{contextParameters.SMART_HOME}/conf/sql/Coway/CowayMmsSqlMap.xml</value>
+	</util:list>		
+
+	<!-- coway mms dataSource mapping -->
+	<bean id="cowayMmsSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="cowayMms_dataSource" />
+		<property name="mapperLocations" ref="mmsMappers"/>
+	</bean>
+	
+	<!-- coway mms dataSource name mapping -->
+	<bean id="cowayMmsSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="cowayMmsSessionFactory" />
+	</bean>	
+	
+	<!-- coway mms dao -->
+	<bean id="cowayMmsDao" class="connect.db.mms.CowayMmsDao">
+		<property name="cowayMmsSessionTemplate" ref="cowayMmsSessionTemplate"/>
+	</bean>
+	
+	<bean id="ftpClientService" class="connect.ftp.FtpClientService">
+		<property name="ftpSessionFactory" ref="ftpSessionFactory"/>
+	</bean>
+	
+	<!-- http client -->
+	<bean id="httpClientTemplate" class="connect.http.HttpClientTemplate"/>
+	
+	<bean id="cowayCommonHttpClient" class="connect.http.coway.CowayCommonHttpClient">
+		<property name="httpClientTemplate" ref="httpClientTemplate"/>
+	</bean>
+	
+	<!-- appstore login service -->
+	<bean id="appstoreLoginService" class="adapter.appstore.CGR221_AppstoreLoginService" />
+		
+	<!-- MQTT Service -->
+	<bean id="getAccessTokenService" class="adapter.cis.service.GetAccessTokenService"/>
+	<bean id="getAuthTokenService" class="adapter.cis.service.GetAccessTokenService"/>
+	
+	<bean id="fileAttachmentService" class="common.util.FileAttachmentService"/>	
+</beans>

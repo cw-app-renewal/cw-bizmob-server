@@ -1,33 +1,10 @@
-.gradle
+/.idea/
+/.settings/
 /build/
-*.class
-!gradle/wrapper/gradle-wrapper.jar
-
-#Gradle temporary files
-target/
-
-.MF
-.class
-.classpath
-
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+/out/
 .project
-.settings
-.springBeans
-
-#Eclipse files
-**/.project
-**/.classpath
-**/.settings/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
 *.iml
+<<<<<<< Updated upstream
 *.ipr
 
 **/*.iml
@@ -72,3 +49,5 @@ Servers/Tomcat*
 
 
 /bin/
+=======
+>>>>>>> Stashed changes

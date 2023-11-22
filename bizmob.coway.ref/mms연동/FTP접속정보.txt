@@ -1,8 +1,0 @@
-FTP 접속정보
-
-아이피 - 10.101.5.74
-아이디 - wjsms
-패스워드 -  !dnvwjsms1
-포트 : 22
-
-/oradata/WJSMSEXCEL/img

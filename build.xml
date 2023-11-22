@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Web Application Build" default="deployment" basedir=".">
+
+    <property name="java.web.src" value="src/java"/>
+    <property name="web-inf" value="./WebContent/WEB-INF"/>
+    <property name="class.main" value="./build/classes"/>
+    <property name="web-inf.lib" value="./WebContent/WEB-INF/lib"/>
+    <property name="appName.war" value="./bizmob.war"/>
+    <property name="java.webcontent" value="./WebContent"/>
+    <property name="bizmob.deploy.config" value="./bizmob.coway.SMART_HOME"/>
+
+
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="${class.main}" includes="**/*"/>
+        </delete>
+    </target>
+
+    <path id="build.classpath">
+        <fileset dir="${web-inf.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <fileset dir="${bizmob.deploy.config}/ext_lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="compileWeb" depends="clean" description="Compile web application">
+        <echo message="Compiling the web application"/>
+        <javac srcdir="${java.web.src}" destdir="${class.main}">
+            <classpath refid="build.classpath"/>
+        </javac>
+    </target>
+
+    <target name="packageWeb" depends="compileWeb"
+            description="Build the WAR file in one step">
+        <echo message="Building the WAR file in one step"/>
+        <war destfile="${appName.war}" basedir="${java.webcontent}" webxml="${web-inf}/web.xml">
+            <classes dir="${class.main}"/>
+        </war>
+    </target>
+
+
+    <target name="deployment" depends="packageWeb">
+        <!-- war file -->
+        <tstamp>
+            <format property="currentTime" pattern="yyyyMMdd_HHmmss" unit="second"/>
+        </tstamp>
+        <move file="${appName.war}" tofile="../DEPLOYMENT/${currentTime}/webapps/${appName.war}"/>
+
+
+        <!-- home dev dir  -->
+        <copy todir="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf">
+            <fileset dir="${bizmob.deploy.config}/conf"/>
+        </copy>
+        <copy file="${bizmob.deploy.config}/conf/license/license.json"
+              tofile="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf/license/license.json"/>
+        <copy file="${bizmob.deploy.config}/conf/license/license.sign"
+              tofile="../DEPLOYMENT/${currentTime}/dev/SMART_HOME/conf/license/license.sign"/>
+
+
+        <!-- home real dir  -->
+        <copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf">
+            <fileset dir="${bizmob.deploy.config}/conf"/>
+        </copy>
+        <copy file="${bizmob.deploy.config}/conf/license/license.json"
+              tofile="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf/license/license.json"/>
+        <copy file="${bizmob.deploy.config}/conf/license/license.sign"
+              tofile="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf/license/license.sign"/>
+
+
+        <!-- configuration -->
+        <copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf" overwrite="true">
+            <fileset dir="${bizmob.deploy.config}/deployment/real/conf"/>
+        </copy>
+
+        <copy todir="../DEPLOYMENT/${currentTime}/real/SMART_HOME/conf" overwrite="true">
+            <fileset dir="${bizmob.deploy.config}/deployment/real/conf"/>
+        </copy>
+
+    </target>
+
+</project>
